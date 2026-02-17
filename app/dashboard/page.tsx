@@ -142,7 +142,7 @@ export default function DashboardPage() {
                 Create New Invoice
               </Link>
               <Link
-                href="/clients/new"
+                href="/clients"
                 className="block w-full rounded-lg border-2 border-blue-600 px-4 py-2 text-center text-blue-600 hover:bg-blue-50"
               >
                 Add New Client
