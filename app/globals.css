@@ -23,11 +23,73 @@
 }
 
 body {
-  background: var(--custom-bg);
-  color: var(--custom-text);
+  background: var(--background);
+  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Apply custom colors when custom-colors class is present */
+body.custom-colors {
+  background: var(--custom-bg) !important;
+  color: var(--custom-text) !important;
+}
+
+body.custom-colors .bg-gray-50,
+body.custom-colors .bg-white,
+body.custom-colors nav.bg-white,
+body.custom-colors .rounded-lg.bg-white,
+body.custom-colors div.bg-white,
+body.custom-colors div.bg-gray-50,
+body.custom-colors .bg-gray-100 {
+  background-color: var(--custom-bg) !important;
+}
+
+body.custom-colors .text-gray-900,
+body.custom-colors .text-gray-700,
+body.custom-colors .text-gray-800,
+body.custom-colors .text-gray-600,
+body.custom-colors h1,
+body.custom-colors h2,
+body.custom-colors h3,
+body.custom-colors h4,
+body.custom-colors h5,
+body.custom-colors h6,
+body.custom-colors p,
+body.custom-colors span,
+body.custom-colors label,
+body.custom-colors td,
+body.custom-colors th,
+body.custom-colors a:not(.text-blue-600):not(.text-red-600) {
+  color: var(--custom-text) !important;
+}
+
+body.custom-colors .bg-blue-600,
+body.custom-colors button.bg-blue-600,
+body.custom-colors a.bg-blue-600,
+body.custom-colors .rounded-lg.bg-blue-600 {
+  background-color: var(--custom-button) !important;
+  border-color: var(--custom-button) !important;
+}
+
+body.custom-colors .border-blue-600 {
+  border-color: var(--custom-button) !important;
+  color: var(--custom-button) !important;
+}
+
+body.custom-colors .text-blue-600,
+body.custom-colors a.text-blue-600 {
+  color: var(--custom-button) !important;
+}
+
+body.custom-colors input,
+body.custom-colors textarea,
+body.custom-colors select {
+  background-color: var(--custom-bg) !important;
+  color: var(--custom-text) !important;
+  border-color: color-mix(in srgb, var(--custom-text) 30%, transparent) !important;
+}
+
+/* Utility classes */
 .custom-bg {
   background-color: var(--custom-bg) !important;
 }

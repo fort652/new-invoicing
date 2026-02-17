@@ -50,6 +50,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     root.style.setProperty('--custom-bg', colors.background);
     root.style.setProperty('--custom-text', colors.text);
     root.style.setProperty('--custom-button', colors.button);
+    document.body.classList.add('custom-colors');
   };
 
   const setTheme = async (newTheme: Theme) => {
