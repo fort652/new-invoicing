@@ -123,7 +123,7 @@ export default function NewInvoicePage() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="rounded-lg bg-white p-6 shadow">
-            <h3 className="text-lg font-semibold mb-4">Invoice Details</h3>
+            <h3 className="text-lg font-semibold mb-4 text-gray-900">Invoice Details</h3>
             <div className="grid gap-4 md:grid-cols-2">
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-1">
@@ -214,7 +214,7 @@ export default function NewInvoicePage() {
 
           <div className="rounded-lg bg-white p-6 shadow">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold">Line Items</h3>
+              <h3 className="text-lg font-semibold text-gray-900">Line Items</h3>
               <button
                 type="button"
                 onClick={addLineItem}

@@ -291,18 +291,18 @@ export default function InvoiceDetailPage() {
         <div className="rounded-lg bg-white p-8 shadow mb-6">
           <div className="mb-8 flex justify-between">
             <div>
-              <h3 className="text-2xl font-bold mb-4">INVOICE</h3>
-              <p className="text-gray-600">Invoice #: {invoice.invoiceNumber}</p>
-              <p className="text-gray-600">
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">INVOICE</h3>
+              <p className="text-gray-900">Invoice #: {invoice.invoiceNumber}</p>
+              <p className="text-gray-900">
                 Issue Date: {new Date(invoice.issueDate).toLocaleDateString()}
               </p>
-              <p className="text-gray-600">
+              <p className="text-gray-900">
                 Due Date: {new Date(invoice.dueDate).toLocaleDateString()}
               </p>
             </div>
             <div className="text-right">
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-900 mb-2">
                   Status
                 </label>
                 <select
@@ -337,23 +337,23 @@ export default function InvoiceDetailPage() {
           <div className="mb-8 grid gap-8 md:grid-cols-2">
             <div>
               <h4 className="font-semibold text-gray-900 mb-2">Bill To:</h4>
-              <p className="text-gray-700 font-medium">{invoice.client?.name}</p>
-              <p className="text-gray-600">{invoice.client?.email}</p>
+              <p className="text-gray-900 font-medium">{invoice.client?.name}</p>
+              <p className="text-gray-900">{invoice.client?.email}</p>
               {invoice.client?.phone && (
-                <p className="text-gray-600">{invoice.client.phone}</p>
+                <p className="text-gray-900">{invoice.client.phone}</p>
               )}
               {invoice.client?.address && (
-                <p className="text-gray-600">{invoice.client.address}</p>
+                <p className="text-gray-900">{invoice.client.address}</p>
               )}
               {(invoice.client?.city || invoice.client?.state || invoice.client?.zipCode) && (
-                <p className="text-gray-600">
+                <p className="text-gray-900">
                   {[invoice.client?.city, invoice.client?.state, invoice.client?.zipCode]
                     .filter(Boolean)
                     .join(", ")}
                 </p>
               )}
               {invoice.client?.country && (
-                <p className="text-gray-600">{invoice.client.country}</p>
+                <p className="text-gray-900">{invoice.client.country}</p>
               )}
             </div>
           </div>
@@ -362,16 +362,16 @@ export default function InvoiceDetailPage() {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                     Description
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase">
                     Quantity
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase">
                     Rate
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase">
                     Amount
                   </th>
                 </tr>
@@ -440,7 +440,7 @@ export default function InvoiceDetailPage() {
           )}
         </div>
 
-        <div className="text-center text-gray-500 text-sm">
+        <div className="text-center text-gray-900 text-sm">
           <button
             onClick={() => window.print()}
             className="text-blue-600 hover:text-blue-800"
@@ -456,7 +456,7 @@ export default function InvoiceDetailPage() {
             <h3 className="text-xl font-bold text-gray-900 mb-4">Send Invoice via Email</h3>
             
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Recipient Email
               </label>
               <input
@@ -512,7 +512,7 @@ export default function InvoiceDetailPage() {
               <h3 className="text-xl font-bold text-gray-900">Email Preview</h3>
               <button
                 onClick={() => setShowPreviewModal(false)}
-                className="text-gray-500 hover:text-gray-700 text-2xl leading-none"
+                className="text-gray-900 hover:text-gray-700 text-2xl leading-none"
               >
                 ×
               </button>

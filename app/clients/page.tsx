@@ -108,7 +108,7 @@ export default function ClientsPage() {
 
         {showForm && (
           <div className="mb-8 rounded-lg bg-white p-6 shadow">
-            <h3 className="text-xl font-semibold mb-4">New Client</h3>
+            <h3 className="text-xl font-semibold mb-4 text-gray-900">New Client</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
