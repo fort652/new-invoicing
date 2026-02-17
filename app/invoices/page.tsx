@@ -5,6 +5,7 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
 
+import Navigation from "@/app/components/Navigation";
 export default function InvoicesPage() {
   const { user } = useUser();
   const currentUser = useQuery(
@@ -18,51 +19,19 @@ export default function InvoicesPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <nav className="bg-white dark:bg-gray-800 shadow-sm">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Invoice App</h1>
-            <div className="flex gap-4">
-              <Link
-                href="/dashboard"
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-              >
-                Dashboard
-              </Link>
-              <Link
-                href="/invoices"
-                className="text-gray-900 dark:text-white font-semibold"
-              >
-                Invoices
-              </Link>
-              <Link
-                href="/clients"
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-              >
-                Clients
-              </Link>
-              <Link
-                href="/settings"
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-              >
-                Settings
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mb-8 flex justify-between items-center">
+      <main className="mx-auto max-w-7xl px-4 py-4 sm:py-8 sm:px-6 lg:px-8">
+        <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Invoices</h2>
-            <p className="mt-2 text-gray-900 dark:text-white">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Invoices</h2>
+            <p className="mt-2 text-sm sm:text-base text-gray-900 dark:text-white">
               Manage all your invoices in one place
             </p>
           </div>
           <Link
             href="/invoices/new"
-            className="rounded-lg bg-blue-600 px-6 py-3 text-white hover:bg-blue-700"
+            className="rounded-lg bg-blue-600 px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base text-white hover:bg-blue-700 whitespace-nowrap"
           >
             Create Invoice
           </Link>
@@ -82,29 +51,29 @@ export default function InvoicesPage() {
               </Link>
             </div>
           ) : (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto -mx-4 sm:mx-0">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-700">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
+                    <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
                       Invoice #
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
+                    <th className="hidden sm:table-cell px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
                       Client
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
+                    <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
                       Issue Date
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
+                    <th className="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
                       Due Date
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
+                    <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
                       Amount
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
+                    <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
                       Status
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
+                    <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
                       Actions
                     </th>
                   </tr>
@@ -112,7 +81,7 @@ export default function InvoicesPage() {
                 <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-800">
                   {invoices.map((invoice) => (
                     <tr key={invoice._id}>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm">
                         <Link
                           href={`/invoices/${invoice._id}`}
                           className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
@@ -120,19 +89,19 @@ export default function InvoicesPage() {
                           {invoice.invoiceNumber}
                         </Link>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-white">
+                      <td className="hidden sm:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                         {invoice.client?.name || "Unknown"}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                      <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                         {new Date(invoice.issueDate).toLocaleDateString()}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                      <td className="hidden lg:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                         {new Date(invoice.dueDate).toLocaleDateString()}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                      <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
                         R{invoice.total.toFixed(2)}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
                         <span
                           className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
                             invoice.status === "paid"
@@ -149,19 +118,21 @@ export default function InvoicesPage() {
                           {invoice.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm">
-                        <Link
-                          href={`/invoices/${invoice._id}`}
-                          className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 mr-4"
-                        >
-                          View
-                        </Link>
-                        <Link
-                          href={`/invoices/${invoice._id}/edit`}
-                          className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
-                        >
-                          Edit
-                        </Link>
+                      <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm">
+                        <div className="flex flex-col sm:flex-row gap-1 sm:gap-4">
+                          <Link
+                            href={`/invoices/${invoice._id}`}
+                            className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
+                          >
+                            View
+                          </Link>
+                          <Link
+                            href={`/invoices/${invoice._id}/edit`}
+                            className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+                          >
+                            Edit
+                          </Link>
+                        </div>
                       </td>
                     </tr>
                   ))}

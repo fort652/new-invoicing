@@ -102,3 +102,27 @@ body.custom-colors select {
   background-color: var(--custom-button) !important;
   border-color: var(--custom-button) !important;
 }
+
+/* Mobile-specific improvements */
+@media (max-width: 640px) {
+  /* Improve touch targets */
+  button, a, input, select, textarea {
+    min-height: 44px;
+  }
+  
+  /* Better spacing on mobile */
+  .px-6 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Prevent horizontal scroll */
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Make tables more readable on mobile */
+  table {
+    font-size: 0.875rem;
+  }
+}

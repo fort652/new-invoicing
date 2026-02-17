@@ -4,6 +4,7 @@ import { useUser } from "@clerk/nextjs";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
+import Navigation from "@/app/components/Navigation";
 import { useState } from "react";
 import { Id } from "@/convex/_generated/dataModel";
 
