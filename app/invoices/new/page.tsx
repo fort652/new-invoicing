@@ -123,9 +123,9 @@ export default function NewInvoicePage() {
         </div>
       </nav>
 
-      <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-5xl px-4 py-4 sm:py-8 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Create New Invoice</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Create New Invoice</h2>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">

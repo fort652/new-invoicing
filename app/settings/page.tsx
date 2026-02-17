@@ -1,6 +1,7 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
+import Navigation from "@/app/components/Navigation";
 import Link from "next/link";
 
 export default function SettingsPage() {
@@ -30,10 +31,10 @@ export default function SettingsPage() {
         </div>
       </nav>
 
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-7xl px-4 py-4 sm:py-8 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Settings</h2>
-          <p className="mt-2 text-gray-900 dark:text-gray-300">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Settings</h2>
+          <p className="mt-2 text-sm sm:text-base text-gray-900 dark:text-gray-300">
             Manage your application preferences
           </p>
         </div>

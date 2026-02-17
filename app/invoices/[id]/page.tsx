@@ -253,13 +253,13 @@ export default function InvoiceDetailPage() {
         </div>
       </nav>
 
-      <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-5xl px-4 py-4 sm:py-8 sm:px-6 lg:px-8">
         <div className="mb-8 flex justify-between items-center">
           <div>
             <Link href="/invoices" className="text-blue-600 hover:text-blue-800 mb-2 block">
               ← Back to Invoices
             </Link>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
               Invoice {invoice.invoiceNumber}
             </h2>
           </div>
@@ -365,16 +365,16 @@ export default function InvoiceDetailPage() {
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                     Description
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase">
+                  <th className="px-3 sm:px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase">
                     Quantity
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase">
+                  <th className="px-3 sm:px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase">
                     Rate
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase">
+                  <th className="px-3 sm:px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase">
                     Amount
                   </th>
                 </tr>
@@ -382,16 +382,16 @@ export default function InvoiceDetailPage() {
               <tbody className="divide-y divide-gray-200 bg-white">
                 {invoice.lineItems?.map((item, index) => (
                   <tr key={index}>
-                    <td className="px-6 py-4 text-sm text-gray-900 dark:text-white">
+                    <td className="px-3 sm:px-6 py-4 text-sm text-gray-900 dark:text-white">
                       {item.description}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-900 text-right">
+                    <td className="px-3 sm:px-6 py-4 text-sm text-gray-900 text-right">
                       {item.quantity}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-900 text-right">
+                    <td className="px-3 sm:px-6 py-4 text-sm text-gray-900 text-right">
                       ${item.rate.toFixed(2)}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-900 text-right">
+                    <td className="px-3 sm:px-6 py-4 text-sm text-gray-900 text-right">
                       ${item.amount.toFixed(2)}
                     </td>
                   </tr>
