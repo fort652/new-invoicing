@@ -41,6 +41,12 @@ export default function InvoicesPage() {
               >
                 Clients
               </Link>
+              <Link
+                href="/settings"
+                className="text-gray-700 hover:text-gray-900"
+              >
+                Settings
+              </Link>
             </div>
           </div>
         </div>

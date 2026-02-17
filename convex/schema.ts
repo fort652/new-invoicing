@@ -53,4 +53,11 @@ export default defineSchema({
     rate: v.number(),
     amount: v.number(),
   }).index("by_invoice", ["invoiceId"]),
+
+  templates: defineTable({
+    userId: v.id("users"),
+    name: v.string(),
+    content: v.string(),
+    type: v.union(v.literal("terms"), v.literal("notes")),
+  }).index("by_user", ["userId"]).index("by_user_and_type", ["userId", "type"]),
 });

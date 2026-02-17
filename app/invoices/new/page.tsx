@@ -26,6 +26,10 @@ export default function NewInvoicePage() {
     api.clients.list,
     currentUser ? { userId: currentUser._id } : "skip"
   );
+  const templates = useQuery(
+    api.templates.list,
+    currentUser ? { userId: currentUser._id } : "skip"
+  );
   const createInvoice = useMutation(api.invoices.create);
 
   const [formData, setFormData] = useState({
@@ -110,6 +114,9 @@ export default function NewInvoicePage() {
               </Link>
               <Link href="/clients" className="text-gray-700 hover:text-gray-900">
                 Clients
+              </Link>
+              <Link href="/settings" className="text-gray-700 hover:text-gray-900">
+                Settings
               </Link>
             </div>
           </div>
@@ -342,9 +349,29 @@ export default function NewInvoicePage() {
             <h3 className="text-lg font-semibold mb-4 text-gray-900">Additional Information</h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-1">
-                  Notes
-                </label>
+                <div className="flex justify-between items-center mb-1">
+                  <label className="block text-sm font-medium text-gray-900">
+                    Notes
+                  </label>
+                  {templates && templates.filter(t => t.type === "notes").length > 0 && (
+                    <select
+                      onChange={(e) => {
+                        const template = templates.find(t => t._id === e.target.value);
+                        if (template) {
+                          setFormData({ ...formData, notes: template.content });
+                        }
+                      }}
+                      className="text-sm rounded border border-gray-300 px-2 py-1 text-gray-900"
+                    >
+                      <option value="">Load template...</option>
+                      {templates.filter(t => t.type === "notes").map((template) => (
+                        <option key={template._id} value={template._id}>
+                          {template.name}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </div>
                 <textarea
                   rows={3}
                   value={formData.notes}
@@ -356,9 +383,29 @@ export default function NewInvoicePage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-1">
-                  Terms & Conditions
-                </label>
+                <div className="flex justify-between items-center mb-1">
+                  <label className="block text-sm font-medium text-gray-900">
+                    Terms & Conditions
+                  </label>
+                  {templates && templates.filter(t => t.type === "terms").length > 0 && (
+                    <select
+                      onChange={(e) => {
+                        const template = templates.find(t => t._id === e.target.value);
+                        if (template) {
+                          setFormData({ ...formData, terms: template.content });
+                        }
+                      }}
+                      className="text-sm rounded border border-gray-300 px-2 py-1 text-gray-900"
+                    >
+                      <option value="">Load template...</option>
+                      {templates.filter(t => t.type === "terms").map((template) => (
+                        <option key={template._id} value={template._id}>
+                          {template.name}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </div>
                 <textarea
                   rows={3}
                   value={formData.terms}
