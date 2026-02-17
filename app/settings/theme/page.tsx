@@ -3,10 +3,23 @@
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { useTheme } from "@/app/theme-provider";
+import { useState, useEffect } from "react";
 
 export default function ThemePage() {
   const { user } = useUser();
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, customColors, setCustomColors } = useTheme();
+  
+  const [colors, setColors] = useState({
+    background: "#ffffff",
+    text: "#171717",
+    button: "#2563eb",
+  });
+
+  useEffect(() => {
+    if (customColors) {
+      setColors(customColors);
+    }
+  }, [customColors]);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -110,6 +123,117 @@ export default function ThemePage() {
             <p className="text-sm text-gray-900 dark:text-gray-300">
               <strong>Current theme:</strong> {theme === "light" ? "Light Mode" : "Dark Mode"}
             </p>
+          </div>
+        </div>
+
+        <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow mt-8">
+          <h3 className="text-lg font-semibold mb-6 text-gray-900 dark:text-white">Custom Colors</h3>
+          <p className="text-sm text-gray-900 dark:text-gray-300 mb-6">
+            Personalize your app with custom colors for background, text, and buttons
+          </p>
+          
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2">
+                Background Color
+              </label>
+              <div className="flex items-center gap-4">
+                <input
+                  type="color"
+                  value={colors.background}
+                  onChange={(e) => setColors({ ...colors, background: e.target.value })}
+                  className="h-12 w-24 rounded border border-gray-300 dark:border-gray-600 cursor-pointer"
+                />
+                <input
+                  type="text"
+                  value={colors.background}
+                  onChange={(e) => setColors({ ...colors, background: e.target.value })}
+                  className="flex-1 rounded-lg border border-gray-300 dark:border-gray-600 px-3 py-2 text-gray-900 dark:text-white dark:bg-gray-700"
+                  placeholder="#ffffff"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2">
+                Text Color
+              </label>
+              <div className="flex items-center gap-4">
+                <input
+                  type="color"
+                  value={colors.text}
+                  onChange={(e) => setColors({ ...colors, text: e.target.value })}
+                  className="h-12 w-24 rounded border border-gray-300 dark:border-gray-600 cursor-pointer"
+                />
+                <input
+                  type="text"
+                  value={colors.text}
+                  onChange={(e) => setColors({ ...colors, text: e.target.value })}
+                  className="flex-1 rounded-lg border border-gray-300 dark:border-gray-600 px-3 py-2 text-gray-900 dark:text-white dark:bg-gray-700"
+                  placeholder="#171717"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2">
+                Button Color
+              </label>
+              <div className="flex items-center gap-4">
+                <input
+                  type="color"
+                  value={colors.button}
+                  onChange={(e) => setColors({ ...colors, button: e.target.value })}
+                  className="h-12 w-24 rounded border border-gray-300 dark:border-gray-600 cursor-pointer"
+                />
+                <input
+                  type="text"
+                  value={colors.button}
+                  onChange={(e) => setColors({ ...colors, button: e.target.value })}
+                  className="flex-1 rounded-lg border border-gray-300 dark:border-gray-600 px-3 py-2 text-gray-900 dark:text-white dark:bg-gray-700"
+                  placeholder="#2563eb"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-3 pt-4">
+              <button
+                onClick={() => setCustomColors(colors)}
+                className="rounded-lg px-6 py-2 text-white font-medium"
+                style={{ backgroundColor: colors.button }}
+              >
+                Apply Custom Colors
+              </button>
+              <button
+                onClick={() => {
+                  const defaultColors = {
+                    background: "#ffffff",
+                    text: "#171717",
+                    button: "#2563eb",
+                  };
+                  setColors(defaultColors);
+                  setCustomColors(defaultColors);
+                }}
+                className="rounded-lg border-2 border-gray-300 dark:border-gray-600 px-6 py-2 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
+              >
+                Reset to Default
+              </button>
+            </div>
+
+            <div className="mt-6 p-4 rounded-lg" style={{ backgroundColor: colors.background }}>
+              <p className="font-medium mb-2" style={{ color: colors.text }}>
+                Preview
+              </p>
+              <p className="text-sm mb-3" style={{ color: colors.text }}>
+                This is how your custom colors will look in the app.
+              </p>
+              <button
+                className="rounded-lg px-4 py-2 text-white text-sm font-medium"
+                style={{ backgroundColor: colors.button }}
+              >
+                Sample Button
+              </button>
+            </div>
           </div>
         </div>
       </main>

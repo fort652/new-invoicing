@@ -5,6 +5,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --custom-bg: #ffffff;
+  --custom-text: #171717;
+  --custom-button: #2563eb;
 }
 
 .dark {
@@ -20,7 +23,20 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--custom-bg);
+  color: var(--custom-text);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.custom-bg {
+  background-color: var(--custom-bg) !important;
+}
+
+.custom-text {
+  color: var(--custom-text) !important;
+}
+
+.custom-button {
+  background-color: var(--custom-button) !important;
+  border-color: var(--custom-button) !important;
 }
