@@ -41,3 +41,13 @@ export const getCurrentUser = query({
       .unique();
   },
 });
+
+export const updateTheme = mutation({
+  args: {
+    userId: v.id("users"),
+    theme: v.union(v.literal("light"), v.literal("dark")),
+  },
+  handler: async (ctx, args) => {
+    await ctx.db.patch(args.userId, { theme: args.theme });
+  },
+});

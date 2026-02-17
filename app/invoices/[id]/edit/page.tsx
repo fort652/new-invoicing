@@ -126,22 +126,22 @@ export default function EditInvoicePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <nav className="bg-white dark:bg-gray-800 shadow-sm">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">Invoice App</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Invoice App</h1>
             <div className="flex gap-4">
-              <Link href="/dashboard" className="text-gray-700 hover:text-gray-900">
+              <Link href="/dashboard" className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
                 Dashboard
               </Link>
-              <Link href="/invoices" className="text-gray-900 font-semibold">
+              <Link href="/invoices" className="text-gray-900 dark:text-white font-semibold">
                 Invoices
               </Link>
-              <Link href="/clients" className="text-gray-700 hover:text-gray-900">
+              <Link href="/clients" className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
                 Clients
               </Link>
-              <Link href="/settings" className="text-gray-700 hover:text-gray-900">
+              <Link href="/settings" className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
                 Settings
               </Link>
             </div>
@@ -154,15 +154,15 @@ export default function EditInvoicePage() {
           <Link href={`/invoices/${invoiceId}`} className="text-blue-600 hover:text-blue-800 mb-2 block">
             ← Back to Invoice
           </Link>
-          <h2 className="text-3xl font-bold text-gray-900">Edit Invoice</h2>
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Edit Invoice</h2>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="rounded-lg bg-white p-6 shadow">
-            <h3 className="text-lg font-semibold mb-4 text-gray-900">Invoice Details</h3>
+          <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow">
+            <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Invoice Details</h3>
             <div className="grid gap-4 md:grid-cols-2">
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-1">
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1">
                   Invoice Number *
                 </label>
                 <input
@@ -172,11 +172,11 @@ export default function EditInvoicePage() {
                   onChange={(e) =>
                     setFormData({ ...formData, invoiceNumber: e.target.value })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-1">
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1">
                   Client *
                 </label>
                 <select
@@ -185,7 +185,7 @@ export default function EditInvoicePage() {
                   onChange={(e) =>
                     setFormData({ ...formData, clientId: e.target.value as Id<"clients"> })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                 >
                   <option value="">Select a client</option>
                   {clients.map((client) => (
@@ -196,7 +196,7 @@ export default function EditInvoicePage() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-1">
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1">
                   Issue Date *
                 </label>
                 <input
@@ -206,11 +206,11 @@ export default function EditInvoicePage() {
                   onChange={(e) =>
                     setFormData({ ...formData, issueDate: e.target.value })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-1">
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1">
                   Due Date *
                 </label>
                 <input
@@ -220,11 +220,11 @@ export default function EditInvoicePage() {
                   onChange={(e) =>
                     setFormData({ ...formData, dueDate: e.target.value })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-1">
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1">
                   Status *
                 </label>
                 <select
@@ -236,7 +236,7 @@ export default function EditInvoicePage() {
                       status: e.target.value as "draft" | "sent" | "paid" | "overdue" | "cancelled",
                     })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                 >
                   <option value="draft">Draft</option>
                   <option value="sent">Sent</option>
@@ -248,9 +248,9 @@ export default function EditInvoicePage() {
             </div>
           </div>
 
-          <div className="rounded-lg bg-white p-6 shadow">
+          <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">Line Items</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Line Items</h3>
               <button
                 type="button"
                 onClick={addLineItem}
@@ -263,7 +263,7 @@ export default function EditInvoicePage() {
               {lineItems.map((item, index) => (
                 <div key={index} className="grid gap-4 md:grid-cols-12 items-end">
                   <div className="md:col-span-5">
-                    <label className="block text-sm font-medium text-gray-900 mb-1">
+                    <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1">
                       Description
                     </label>
                     <input
@@ -273,11 +273,11 @@ export default function EditInvoicePage() {
                       onChange={(e) =>
                         updateLineItem(index, "description", e.target.value)
                       }
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                     />
                   </div>
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-900 mb-1">
+                    <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1">
                       Quantity
                     </label>
                     <input
@@ -289,11 +289,11 @@ export default function EditInvoicePage() {
                       onChange={(e) =>
                         updateLineItem(index, "quantity", parseFloat(e.target.value) || 0)
                       }
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                     />
                   </div>
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-900 mb-1">
+                    <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1">
                       Rate
                     </label>
                     <input
@@ -305,18 +305,18 @@ export default function EditInvoicePage() {
                       onChange={(e) =>
                         updateLineItem(index, "rate", parseFloat(e.target.value) || 0)
                       }
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                     />
                   </div>
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-900 mb-1">
+                    <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1">
                       Amount
                     </label>
                     <input
                       type="text"
                       disabled
                       value={item.amount.toFixed(2)}
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2 bg-gray-50 text-gray-900"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2 bg-gray-50 text-gray-900 dark:text-white"
                     />
                   </div>
                   <div className="md:col-span-1">
@@ -337,11 +337,11 @@ export default function EditInvoicePage() {
             <div className="mt-6 border-t pt-4">
               <div className="flex justify-end space-y-2 flex-col items-end">
                 <div className="flex justify-between w-64">
-                  <span className="font-medium text-gray-900">Subtotal:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">Subtotal:</span>
                   <span className="text-gray-900">R{subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between w-64 items-center">
-                  <label className="font-medium text-gray-900">Tax:</label>
+                  <label className="font-medium text-gray-900 dark:text-white">Tax:</label>
                   <input
                     type="number"
                     min="0"
@@ -350,11 +350,11 @@ export default function EditInvoicePage() {
                     onChange={(e) =>
                       setFormData({ ...formData, tax: parseFloat(e.target.value) || 0 })
                     }
-                    className="w-32 rounded-lg border border-gray-300 px-3 py-1 text-right text-gray-900"
+                    className="w-32 rounded-lg border border-gray-300 px-3 py-1 text-right text-gray-900 dark:text-white"
                   />
                 </div>
                 <div className="flex justify-between w-64 items-center">
-                  <label className="font-medium text-gray-900">Delivery:</label>
+                  <label className="font-medium text-gray-900 dark:text-white">Delivery:</label>
                   <input
                     type="number"
                     min="0"
@@ -363,7 +363,7 @@ export default function EditInvoicePage() {
                     onChange={(e) =>
                       setFormData({ ...formData, deliveryCost: parseFloat(e.target.value) || 0 })
                     }
-                    className="w-32 rounded-lg border border-gray-300 px-3 py-1 text-right text-gray-900"
+                    className="w-32 rounded-lg border border-gray-300 px-3 py-1 text-right text-gray-900 dark:text-white"
                   />
                 </div>
                 <div className="flex justify-between w-64 text-lg font-bold">
@@ -374,12 +374,12 @@ export default function EditInvoicePage() {
             </div>
           </div>
 
-          <div className="rounded-lg bg-white p-6 shadow">
-            <h3 className="text-lg font-semibold mb-4 text-gray-900">Additional Information</h3>
+          <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow">
+            <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Additional Information</h3>
             <div className="space-y-4">
               <div>
                 <div className="flex justify-between items-center mb-1">
-                  <label className="block text-sm font-medium text-gray-900">
+                  <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 dark:text-white">
                     Notes
                   </label>
                   {templates && templates.filter(t => t.type === "notes").length > 0 && (
@@ -390,7 +390,7 @@ export default function EditInvoicePage() {
                           setFormData({ ...formData, notes: template.content });
                         }
                       }}
-                      className="text-sm rounded border border-gray-300 px-2 py-1 text-gray-900"
+                      className="text-sm rounded border border-gray-300 px-2 py-1 text-gray-900 dark:text-white"
                     >
                       <option value="">Load template...</option>
                       {templates.filter(t => t.type === "notes").map((template) => (
@@ -407,13 +407,13 @@ export default function EditInvoicePage() {
                   onChange={(e) =>
                     setFormData({ ...formData, notes: e.target.value })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                   placeholder="Any additional notes..."
                 />
               </div>
               <div>
                 <div className="flex justify-between items-center mb-1">
-                  <label className="block text-sm font-medium text-gray-900">
+                  <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 dark:text-white">
                     Terms & Conditions
                   </label>
                   {templates && templates.filter(t => t.type === "terms").length > 0 && (
@@ -424,7 +424,7 @@ export default function EditInvoicePage() {
                           setFormData({ ...formData, terms: template.content });
                         }
                       }}
-                      className="text-sm rounded border border-gray-300 px-2 py-1 text-gray-900"
+                      className="text-sm rounded border border-gray-300 px-2 py-1 text-gray-900 dark:text-white"
                     >
                       <option value="">Load template...</option>
                       {templates.filter(t => t.type === "terms").map((template) => (
@@ -441,7 +441,7 @@ export default function EditInvoicePage() {
                   onChange={(e) =>
                     setFormData({ ...formData, terms: e.target.value })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                   placeholder="Payment terms, conditions..."
                 />
               </div>

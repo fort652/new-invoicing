@@ -61,33 +61,33 @@ export default function ClientsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <nav className="bg-white dark:bg-gray-800 shadow-sm">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">Invoice App</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Invoice App</h1>
             <div className="flex gap-4">
               <Link
                 href="/dashboard"
-                className="text-gray-700 hover:text-gray-900"
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
               >
                 Dashboard
               </Link>
               <Link
                 href="/invoices"
-                className="text-gray-700 hover:text-gray-900"
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
               >
                 Invoices
               </Link>
               <Link
                 href="/clients"
-                className="text-gray-900 font-semibold"
+                className="text-gray-900 dark:text-white font-semibold"
               >
                 Clients
               </Link>
               <Link
                 href="/settings"
-                className="text-gray-700 hover:text-gray-900"
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
               >
                 Settings
               </Link>
@@ -99,8 +99,8 @@ export default function ClientsPage() {
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8 flex justify-between items-center">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900">Clients</h2>
-            <p className="mt-2 text-gray-900">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Clients</h2>
+            <p className="mt-2 text-gray-900 dark:text-white">
               Manage your client information
             </p>
           </div>
@@ -113,12 +113,12 @@ export default function ClientsPage() {
         </div>
 
         {showForm && (
-          <div className="mb-8 rounded-lg bg-white p-6 shadow">
-            <h3 className="text-xl font-semibold mb-4 text-gray-900">New Client</h3>
+          <div className="mb-8 rounded-lg bg-white dark:bg-gray-800 p-6 shadow">
+            <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">New Client</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium text-gray-900 mb-1">
+                  <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1">
                     Name *
                   </label>
                   <input
@@ -128,7 +128,7 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                   />
                 </div>
                 <div>
@@ -142,7 +142,7 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                   />
                 </div>
                 <div>
@@ -155,7 +155,7 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, phone: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                   />
                 </div>
                 <div>
@@ -168,7 +168,7 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, address: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                   />
                 </div>
                 <div>
@@ -181,7 +181,7 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, city: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                   />
                 </div>
                 <div>
@@ -194,7 +194,7 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, state: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                   />
                 </div>
                 <div>
@@ -207,7 +207,7 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, zipCode: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                   />
                 </div>
                 <div>
@@ -220,7 +220,7 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, country: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
                   />
                 </div>
               </div>
@@ -234,22 +234,22 @@ export default function ClientsPage() {
           </div>
         )}
 
-        <div className="rounded-lg bg-white shadow">
+        <div className="rounded-lg bg-white dark:bg-gray-800 shadow">
           {!clients ? (
             <div className="p-8 text-center">Loading...</div>
           ) : clients.length === 0 ? (
             <div className="p-8 text-center">
-              <p className="text-gray-900 mb-4">No clients yet</p>
+              <p className="text-gray-900 dark:text-white mb-4">No clients yet</p>
               <button
                 onClick={() => setShowForm(true)}
-                className="text-blue-600 hover:text-blue-800"
+                className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
               >
                 Add your first client
               </button>
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
@@ -272,16 +272,16 @@ export default function ClientsPage() {
                 <tbody className="divide-y divide-gray-200 bg-white">
                   {clients.map((client) => (
                     <tr key={client._id}>
-                      <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-white">
                         {client.name}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                         {client.email}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                         {client.phone || "-"}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                         {client.city && client.state
                           ? `${client.city}, ${client.state}`
                           : client.city || client.state || "-"}

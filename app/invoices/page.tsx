@@ -17,33 +17,33 @@ export default function InvoicesPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <nav className="bg-white dark:bg-gray-800 shadow-sm">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">Invoice App</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Invoice App</h1>
             <div className="flex gap-4">
               <Link
                 href="/dashboard"
-                className="text-gray-700 hover:text-gray-900"
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
               >
                 Dashboard
               </Link>
               <Link
                 href="/invoices"
-                className="text-gray-900 font-semibold"
+                className="text-gray-900 dark:text-white font-semibold"
               >
                 Invoices
               </Link>
               <Link
                 href="/clients"
-                className="text-gray-700 hover:text-gray-900"
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
               >
                 Clients
               </Link>
               <Link
                 href="/settings"
-                className="text-gray-700 hover:text-gray-900"
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
               >
                 Settings
               </Link>
@@ -55,8 +55,8 @@ export default function InvoicesPage() {
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8 flex justify-between items-center">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900">Invoices</h2>
-            <p className="mt-2 text-gray-900">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Invoices</h2>
+            <p className="mt-2 text-gray-900 dark:text-white">
               Manage all your invoices in one place
             </p>
           </div>
@@ -68,22 +68,22 @@ export default function InvoicesPage() {
           </Link>
         </div>
 
-        <div className="rounded-lg bg-white shadow">
+        <div className="rounded-lg bg-white dark:bg-gray-800 shadow">
           {!invoices ? (
             <div className="p-8 text-center">Loading...</div>
           ) : invoices.length === 0 ? (
             <div className="p-8 text-center">
-              <p className="text-gray-900 mb-4">No invoices yet</p>
+              <p className="text-gray-900 dark:text-white mb-4">No invoices yet</p>
               <Link
                 href="/invoices/new"
-                className="text-blue-600 hover:text-blue-800"
+                className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
               >
                 Create your first invoice
               </Link>
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
@@ -120,16 +120,16 @@ export default function InvoicesPage() {
                           {invoice.invoiceNumber}
                         </Link>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-white">
                         {invoice.client?.name || "Unknown"}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                         {new Date(invoice.issueDate).toLocaleDateString()}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                         {new Date(invoice.dueDate).toLocaleDateString()}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
                         R{invoice.total.toFixed(2)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">

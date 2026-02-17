@@ -230,22 +230,22 @@ export default function InvoiceDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <nav className="bg-white dark:bg-gray-800 shadow-sm">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">Invoice App</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Invoice App</h1>
             <div className="flex gap-4">
-              <Link href="/dashboard" className="text-gray-700 hover:text-gray-900">
+              <Link href="/dashboard" className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
                 Dashboard
               </Link>
-              <Link href="/invoices" className="text-gray-900 font-semibold">
+              <Link href="/invoices" className="text-gray-900 dark:text-white font-semibold">
                 Invoices
               </Link>
-              <Link href="/clients" className="text-gray-700 hover:text-gray-900">
+              <Link href="/clients" className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
                 Clients
               </Link>
-              <Link href="/settings" className="text-gray-700 hover:text-gray-900">
+              <Link href="/settings" className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
                 Settings
               </Link>
             </div>
@@ -259,7 +259,7 @@ export default function InvoiceDetailPage() {
             <Link href="/invoices" className="text-blue-600 hover:text-blue-800 mb-2 block">
               ← Back to Invoices
             </Link>
-            <h2 className="text-3xl font-bold text-gray-900">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
               Invoice {invoice.invoiceNumber}
             </h2>
           </div>
@@ -291,10 +291,10 @@ export default function InvoiceDetailPage() {
           </div>
         </div>
 
-        <div className="rounded-lg bg-white p-8 shadow mb-6">
+        <div className="rounded-lg bg-white dark:bg-gray-800 p-8 shadow mb-6">
           <div className="mb-8 flex justify-between">
             <div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">INVOICE</h3>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">INVOICE</h3>
               <p className="text-gray-900">Invoice #: {invoice.invoiceNumber}</p>
               <p className="text-gray-900">
                 Issue Date: {new Date(invoice.issueDate).toLocaleDateString()}
@@ -305,7 +305,7 @@ export default function InvoiceDetailPage() {
             </div>
             <div className="text-right">
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-900 mb-2">
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2">
                   Status
                 </label>
                 <select
@@ -339,7 +339,7 @@ export default function InvoiceDetailPage() {
 
           <div className="mb-8 grid gap-8 md:grid-cols-2">
             <div>
-              <h4 className="font-semibold text-gray-900 mb-2">Bill To:</h4>
+              <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Bill To:</h4>
               <p className="text-gray-900 font-medium">{invoice.client?.name}</p>
               <p className="text-gray-900">{invoice.client?.email}</p>
               {invoice.client?.phone && (
@@ -362,7 +362,7 @@ export default function InvoiceDetailPage() {
           </div>
 
           <div className="mb-8">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
@@ -382,7 +382,7 @@ export default function InvoiceDetailPage() {
               <tbody className="divide-y divide-gray-200 bg-white">
                 {invoice.lineItems?.map((item, index) => (
                   <tr key={index}>
-                    <td className="px-6 py-4 text-sm text-gray-900">
+                    <td className="px-6 py-4 text-sm text-gray-900 dark:text-white">
                       {item.description}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-900 text-right">
@@ -427,13 +427,13 @@ export default function InvoiceDetailPage() {
             <div className="border-t pt-6 space-y-4">
               {invoice.notes && (
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">Notes:</h4>
+                  <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Notes:</h4>
                   <p className="text-gray-600 whitespace-pre-wrap">{invoice.notes}</p>
                 </div>
               )}
               {invoice.terms && (
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">
+                  <h4 className="font-semibold text-gray-900 dark:text-white mb-2">
                     Terms & Conditions:
                   </h4>
                   <p className="text-gray-600 whitespace-pre-wrap">{invoice.terms}</p>
@@ -446,7 +446,7 @@ export default function InvoiceDetailPage() {
         <div className="text-center text-gray-900 text-sm">
           <button
             onClick={() => window.print()}
-            className="text-blue-600 hover:text-blue-800"
+            className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
           >
             Print Invoice
           </button>
@@ -456,10 +456,10 @@ export default function InvoiceDetailPage() {
       {showEmailModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-xl font-bold text-gray-900 mb-4">Send Invoice via Email</h3>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Send Invoice via Email</h3>
             
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-900 mb-2">
+              <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2">
                 Recipient Email
               </label>
               <input
@@ -512,7 +512,7 @@ export default function InvoiceDetailPage() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
             <div className="flex justify-between items-center p-6 border-b">
-              <h3 className="text-xl font-bold text-gray-900">Email Preview</h3>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">Email Preview</h3>
               <button
                 onClick={() => setShowPreviewModal(false)}
                 className="text-gray-900 hover:text-gray-700 text-2xl leading-none"

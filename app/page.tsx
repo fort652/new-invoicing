@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="mx-auto max-w-4xl px-6 text-center">
-        <h1 className="mb-6 text-6xl font-bold text-gray-900">
+        <h1 className="mb-6 text-6xl font-bold text-gray-900 dark:text-white">
           Invoice Management
         </h1>
         <p className="mb-8 text-xl text-gray-600">
@@ -25,19 +25,19 @@ export default function Home() {
           </Link>
         </div>
         <div className="mt-16 grid gap-8 md:grid-cols-3">
-          <div className="rounded-lg bg-white p-6 shadow-md">
+          <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-md">
             <h3 className="mb-2 text-xl font-semibold">Real-time Updates</h3>
             <p className="text-gray-600">
               See changes instantly across all devices with Convex sync engine
             </p>
           </div>
-          <div className="rounded-lg bg-white p-6 shadow-md">
+          <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-md">
             <h3 className="mb-2 text-xl font-semibold">Client Management</h3>
             <p className="text-gray-600">
               Keep track of all your clients and their information in one place
             </p>
           </div>
-          <div className="rounded-lg bg-white p-6 shadow-md">
+          <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-md">
             <h3 className="mb-2 text-xl font-semibold">Invoice Tracking</h3>
             <p className="text-gray-600">
               Monitor invoice status from draft to paid with detailed analytics
