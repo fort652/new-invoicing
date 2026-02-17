@@ -37,7 +37,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (currentUser?.theme) {
       setThemeState(currentUser.theme);
-      document.documentElement.classList.toggle("dark", currentUser.theme === "dark");
+      if (currentUser.theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
     }
     if (currentUser?.customColors) {
       setCustomColorsState(currentUser.customColors);
@@ -55,7 +59,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const setTheme = async (newTheme: Theme) => {
     setThemeState(newTheme);
-    document.documentElement.classList.toggle("dark", newTheme === "dark");
+    if (newTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
     
     if (currentUser) {
       await updateTheme({
