@@ -31,7 +31,7 @@ export default function NewInvoicePage() {
   const [formData, setFormData] = useState({
     clientId: "" as Id<"clients"> | "",
     invoiceNumber: `INV-${Date.now()}`,
-    status: "draft" as const,
+    status: "draft" as "draft" | "sent" | "paid" | "overdue" | "cancelled",
     issueDate: new Date().toISOString().split("T")[0],
     dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
       .toISOString()
