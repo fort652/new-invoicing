@@ -112,19 +112,19 @@ export default function DashboardPage() {
               <div className="flex justify-between">
                 <span className="text-gray-600">Total Revenue</span>
                 <span className="font-semibold">
-                  ${stats.totalRevenue.toFixed(2)}
+                  R{stats.totalRevenue.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Paid</span>
                 <span className="font-semibold text-green-600">
-                  ${stats.paidRevenue.toFixed(2)}
+                  R{stats.paidRevenue.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Pending</span>
                 <span className="font-semibold text-yellow-600">
-                  ${stats.pendingRevenue.toFixed(2)}
+                  R{stats.pendingRevenue.toFixed(2)}
                 </span>
               </div>
             </div>
@@ -192,7 +192,7 @@ export default function DashboardPage() {
                         {invoice.client?.name || "Unknown"}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        ${invoice.total.toFixed(2)}
+                        R{invoice.total.toFixed(2)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span

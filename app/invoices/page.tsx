@@ -124,7 +124,7 @@ export default function InvoicesPage() {
                         {new Date(invoice.dueDate).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        ${invoice.total.toFixed(2)}
+                        R{invoice.total.toFixed(2)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span

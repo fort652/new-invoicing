@@ -87,8 +87,8 @@ export default function InvoiceDetailPage() {
         <tr>
           <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">${item.description}</td>
           <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right;">${item.quantity}</td>
-          <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right;">$${item.rate.toFixed(2)}</td>
-          <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right; font-weight: 600;">$${item.amount.toFixed(2)}</td>
+          <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right;">R${item.rate.toFixed(2)}</td>
+          <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right; font-weight: 600;">R${item.amount.toFixed(2)}</td>
         </tr>
       `
       )
@@ -159,15 +159,15 @@ export default function InvoiceDetailPage() {
                 <div style="max-width: 300px; margin-left: auto;">
                   <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
                     <span style="color: #6b7280;">Subtotal:</span>
-                    <span style="font-weight: 600;">$${invoice.subtotal.toFixed(2)}</span>
+                    <span style="font-weight: 600;">R${invoice.subtotal.toFixed(2)}</span>
                   </div>
                   <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
                     <span style="color: #6b7280;">Tax:</span>
-                    <span style="font-weight: 600;">$${invoice.tax.toFixed(2)}</span>
+                    <span style="font-weight: 600;">R${invoice.tax.toFixed(2)}</span>
                   </div>
                   <div style="display: flex; justify-content: space-between; padding: 16px 0; border-top: 2px solid #2563eb; margin-top: 8px;">
                     <span style="font-size: 18px; font-weight: 700; color: #111827;">Total:</span>
-                    <span style="font-size: 18px; font-weight: 700; color: #2563eb;">$${invoice.total.toFixed(2)}</span>
+                    <span style="font-size: 18px; font-weight: 700; color: #2563eb;">R${invoice.total.toFixed(2)}</span>
                   </div>
                 </div>
               </div>

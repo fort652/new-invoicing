@@ -300,7 +300,7 @@ export default function NewInvoicePage() {
               <div className="flex justify-end space-y-2 flex-col items-end">
                 <div className="flex justify-between w-64">
                   <span className="font-medium">Subtotal:</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>R{subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between w-64 items-center">
                   <label className="font-medium">Tax:</label>
@@ -317,7 +317,7 @@ export default function NewInvoicePage() {
                 </div>
                 <div className="flex justify-between w-64 text-lg font-bold">
                   <span>Total:</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>R{total.toFixed(2)}</span>
                 </div>
               </div>
             </div>
