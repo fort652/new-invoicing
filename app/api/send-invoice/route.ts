@@ -155,7 +155,7 @@ export async function POST(request: NextRequest) {
     `;
 
     const { data, error } = await resend.emails.send({
-      from: "Invoice App <onboarding@resend.dev>",
+      from: "Invoice App <invoices@invoice-snap-demo.co.za>",
       to: [to],
       subject: `Invoice ${invoice.invoiceNumber} from Invoice App`,
       html: emailHtml,
