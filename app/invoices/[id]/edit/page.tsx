@@ -330,11 +330,11 @@ export default function EditInvoicePage() {
             <div className="mt-6 border-t pt-4">
               <div className="flex justify-end space-y-2 flex-col items-end">
                 <div className="flex justify-between w-64">
-                  <span className="font-medium">Subtotal:</span>
-                  <span>R{subtotal.toFixed(2)}</span>
+                  <span className="font-medium text-gray-900">Subtotal:</span>
+                  <span className="text-gray-900">R{subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between w-64 items-center">
-                  <label className="font-medium">Tax:</label>
+                  <label className="font-medium text-gray-900">Tax:</label>
                   <input
                     type="number"
                     min="0"
@@ -343,11 +343,11 @@ export default function EditInvoicePage() {
                     onChange={(e) =>
                       setFormData({ ...formData, tax: parseFloat(e.target.value) || 0 })
                     }
-                    className="w-32 rounded-lg border border-gray-300 px-3 py-1 text-right"
+                    className="w-32 rounded-lg border border-gray-300 px-3 py-1 text-right text-gray-900"
                   />
                 </div>
                 <div className="flex justify-between w-64 items-center">
-                  <label className="font-medium">Delivery:</label>
+                  <label className="font-medium text-gray-900">Delivery:</label>
                   <input
                     type="number"
                     min="0"
@@ -356,22 +356,22 @@ export default function EditInvoicePage() {
                     onChange={(e) =>
                       setFormData({ ...formData, deliveryCost: parseFloat(e.target.value) || 0 })
                     }
-                    className="w-32 rounded-lg border border-gray-300 px-3 py-1 text-right"
+                    className="w-32 rounded-lg border border-gray-300 px-3 py-1 text-right text-gray-900"
                   />
                 </div>
                 <div className="flex justify-between w-64 text-lg font-bold">
-                  <span>Total:</span>
-                  <span>R{total.toFixed(2)}</span>
+                  <span className="text-gray-900">Total:</span>
+                  <span className="text-gray-900">R{total.toFixed(2)}</span>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="rounded-lg bg-white p-6 shadow">
-            <h3 className="text-lg font-semibold mb-4">Additional Information</h3>
+            <h3 className="text-lg font-semibold mb-4 text-gray-900">Additional Information</h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-900 mb-1">
                   Notes
                 </label>
                 <textarea
@@ -380,12 +380,12 @@ export default function EditInvoicePage() {
                   onChange={(e) =>
                     setFormData({ ...formData, notes: e.target.value })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                   placeholder="Any additional notes..."
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-900 mb-1">
                   Terms & Conditions
                 </label>
                 <textarea
@@ -394,7 +394,7 @@ export default function EditInvoicePage() {
                   onChange={(e) =>
                     setFormData({ ...formData, terms: e.target.value })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                   placeholder="Payment terms, conditions..."
                 />
               </div>
