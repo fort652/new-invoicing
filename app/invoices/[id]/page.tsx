@@ -3,6 +3,8 @@
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
+import Navigation from "@/app/components/Navigation";
+import PageHeader from "@/app/components/PageHeader";
 import { useParams, useRouter } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
 import { useState } from "react";
@@ -231,34 +233,15 @@ export default function InvoiceDetailPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <nav className="bg-white dark:bg-gray-800 shadow-sm">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Invoice App</h1>
-            <div className="flex gap-4">
-              <Link href="/dashboard" className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
-                Dashboard
-              </Link>
-              <Link href="/invoices" className="text-gray-900 dark:text-white font-semibold">
-                Invoices
-              </Link>
-              <Link href="/clients" className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
-                Clients
-              </Link>
-              <Link href="/settings" className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
-                Settings
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
       <main className="mx-auto max-w-5xl px-4 py-4 sm:py-8 sm:px-6 lg:px-8">
-        <div className="mb-8 flex justify-between items-center">
-          <div>
-            <Link href="/invoices" className="text-blue-600 hover:text-blue-800 mb-2 block">
-              ← Back to Invoices
-            </Link>
+        <Link href="/invoices" className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 mb-4 block">
+          ← Back to Invoices
+        </Link>
+        <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="flex-1">
+            <PageHeader showWelcome={false} />
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
               Invoice {invoice.invoiceNumber}
             </h2>

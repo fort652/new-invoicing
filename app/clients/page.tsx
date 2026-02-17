@@ -64,39 +64,7 @@ export default function ClientsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <nav className="bg-white dark:bg-gray-800 shadow-sm">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Invoice App</h1>
-            <div className="flex gap-4">
-              <Link
-                href="/dashboard"
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-              >
-                Dashboard
-              </Link>
-              <Link
-                href="/invoices"
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-              >
-                Invoices
-              </Link>
-              <Link
-                href="/clients"
-                className="text-gray-900 dark:text-white font-semibold"
-              >
-                Clients
-              </Link>
-              <Link
-                href="/settings"
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-              >
-                Settings
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
       <main className="mx-auto max-w-7xl px-4 py-4 sm:py-8 sm:px-6 lg:px-8">
         <PageHeader description="Manage your client information" />

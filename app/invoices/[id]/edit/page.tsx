@@ -4,6 +4,8 @@ import { useUser } from "@clerk/nextjs";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
+import Navigation from "@/app/components/Navigation";
+import PageHeader from "@/app/components/PageHeader";
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
@@ -127,35 +129,13 @@ export default function EditInvoicePage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <nav className="bg-white dark:bg-gray-800 shadow-sm">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Invoice App</h1>
-            <div className="flex gap-4">
-              <Link href="/dashboard" className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
-                Dashboard
-              </Link>
-              <Link href="/invoices" className="text-gray-900 dark:text-white font-semibold">
-                Invoices
-              </Link>
-              <Link href="/clients" className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
-                Clients
-              </Link>
-              <Link href="/settings" className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
-                Settings
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
       <main className="mx-auto max-w-5xl px-4 py-4 sm:py-8 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <Link href={`/invoices/${invoiceId}`} className="text-blue-600 hover:text-blue-800 mb-2 block">
-            ← Back to Invoice
-          </Link>
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Edit Invoice</h2>
-        </div>
+        <Link href={`/invoices/${invoiceId}`} className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 mb-4 block">
+          ← Back to Invoice
+        </Link>
+        <PageHeader description="Update invoice details and line items" />
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow">
