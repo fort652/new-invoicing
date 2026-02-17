@@ -2,7 +2,6 @@
 
 import { useUser } from "@clerk/nextjs";
 import Navigation from "@/app/components/Navigation";
-import PageHeader from "@/app/components/PageHeader";
 import Link from "next/link";
 
 export default function SettingsPage() {
@@ -13,7 +12,12 @@ export default function SettingsPage() {
       <Navigation />
 
       <main className="mx-auto max-w-7xl px-4 py-4 sm:py-8 sm:px-6 lg:px-8">
-        <PageHeader description="Manage your application preferences" />
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Settings</h2>
+          <p className="mt-2 text-sm sm:text-base text-gray-900 dark:text-gray-300">
+            Manage your application preferences
+          </p>
+        </div>
 
         <div className="grid gap-6 md:grid-cols-2">
           <Link

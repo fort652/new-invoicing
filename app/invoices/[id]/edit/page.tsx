@@ -5,7 +5,6 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
 import Navigation from "@/app/components/Navigation";
-import PageHeader from "@/app/components/PageHeader";
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
@@ -135,7 +134,13 @@ export default function EditInvoicePage() {
         <Link href={`/invoices/${invoiceId}`} className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 mb-4 block">
           ← Back to Invoice
         </Link>
-        <PageHeader description="Update invoice details and line items" />
+        
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Edit Invoice</h2>
+          <p className="mt-2 text-sm sm:text-base text-gray-900 dark:text-gray-300">
+            Update invoice details and line items
+          </p>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow">

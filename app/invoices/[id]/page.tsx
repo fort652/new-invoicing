@@ -4,7 +4,6 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
 import Navigation from "@/app/components/Navigation";
-import PageHeader from "@/app/components/PageHeader";
 import { useParams, useRouter } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
 import { useState } from "react";
@@ -241,7 +240,6 @@ export default function InvoiceDetailPage() {
         </Link>
         <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="flex-1">
-            <PageHeader showWelcome={false} />
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
               Invoice {invoice.invoiceNumber}
             </h2>

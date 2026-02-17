@@ -5,7 +5,6 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
 import Navigation from "@/app/components/Navigation";
-import PageHeader from "@/app/components/PageHeader";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
@@ -106,7 +105,12 @@ export default function NewInvoicePage() {
       <Navigation />
 
       <main className="mx-auto max-w-5xl px-4 py-4 sm:py-8 sm:px-6 lg:px-8">
-        <PageHeader description="Create a new invoice for your client" />
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Create Invoice</h2>
+          <p className="mt-2 text-sm sm:text-base text-gray-900 dark:text-gray-300">
+            Create a new invoice for your client
+          </p>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow">

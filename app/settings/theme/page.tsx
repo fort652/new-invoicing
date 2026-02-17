@@ -2,7 +2,6 @@
 
 import { useUser } from "@clerk/nextjs";
 import Navigation from "@/app/components/Navigation";
-import PageHeader from "@/app/components/PageHeader";
 import Link from "next/link";
 import { useTheme } from "@/app/theme-provider";
 import { useState, useEffect } from "react";
@@ -31,7 +30,13 @@ export default function ThemePage() {
         <Link href="/settings" className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 mb-4 block">
           ← Back to Settings
         </Link>
-        <PageHeader description="Choose your preferred color theme" />
+        
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Theme</h2>
+          <p className="mt-2 text-sm sm:text-base text-gray-900 dark:text-gray-300">
+            Choose your preferred color theme
+          </p>
+        </div>
 
         <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow">
           <h3 className="text-lg font-semibold mb-6 text-gray-900 dark:text-white">Appearance</h3>

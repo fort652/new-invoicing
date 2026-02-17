@@ -5,7 +5,6 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
 import Navigation from "@/app/components/Navigation";
-import PageHeader from "@/app/components/PageHeader";
 import { useState } from "react";
 import { Id } from "@/convex/_generated/dataModel";
 
@@ -67,9 +66,13 @@ export default function ClientsPage() {
       <Navigation />
 
       <main className="mx-auto max-w-7xl px-4 py-4 sm:py-8 sm:px-6 lg:px-8">
-        <PageHeader description="Manage your client information" />
-        
-        <div className="mb-6 flex justify-end">
+        <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Clients</h2>
+            <p className="mt-2 text-sm sm:text-base text-gray-900 dark:text-white">
+              Manage your client information
+            </p>
+          </div>
           <button
             onClick={() => setShowForm(!showForm)}
             className="rounded-lg bg-blue-600 px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base text-white hover:bg-blue-700"
