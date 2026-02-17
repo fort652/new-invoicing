@@ -5,6 +5,7 @@ import { api } from "@/convex/_generated/api";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
+import { useState } from "react";
 
 export default function InvoiceDetailPage() {
   const params = useParams();
@@ -14,6 +15,11 @@ export default function InvoiceDetailPage() {
   const invoice = useQuery(api.invoices.get, { id: invoiceId });
   const updateInvoice = useMutation(api.invoices.update);
   const deleteInvoice = useMutation(api.invoices.remove);
+
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [emailTo, setEmailTo] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [emailStatus, setEmailStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
   const handleStatusChange = async (
     status: "draft" | "sent" | "paid" | "overdue" | "cancelled"
@@ -26,6 +32,49 @@ export default function InvoiceDetailPage() {
       await deleteInvoice({ id: invoiceId });
       router.push("/invoices");
     }
+  };
+
+  const handleSendEmail = async () => {
+    if (!emailTo || !invoice) return;
+
+    setIsSending(true);
+    setEmailStatus(null);
+
+    try {
+      const response = await fetch("/api/send-invoice", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          to: emailTo,
+          invoice,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send email");
+      }
+
+      setEmailStatus({ type: "success", message: "Invoice sent successfully!" });
+      setTimeout(() => {
+        setShowEmailModal(false);
+        setEmailTo("");
+        setEmailStatus(null);
+      }, 2000);
+    } catch (error: any) {
+      setEmailStatus({ type: "error", message: error.message || "Failed to send email" });
+    } finally {
+      setIsSending(false);
+    }
+  };
+
+  const openEmailModal = () => {
+    setEmailTo(invoice?.client?.email || "");
+    setShowEmailModal(true);
+    setEmailStatus(null);
   };
 
   if (!invoice) {
@@ -73,6 +122,12 @@ export default function InvoiceDetailPage() {
               className="rounded-lg border-2 border-red-600 px-4 py-2 text-red-600 hover:bg-red-50"
             >
               Delete
+            </button>
+            <button
+              onClick={openEmailModal}
+              className="rounded-lg border-2 border-blue-600 px-4 py-2 text-blue-600 hover:bg-blue-50"
+            >
+              Send Email
             </button>
             <Link
               href={`/invoices/${invoiceId}/edit`}
@@ -238,6 +293,61 @@ export default function InvoiceDetailPage() {
           </button>
         </div>
       </main>
+
+      {showEmailModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 className="text-xl font-bold text-gray-900 mb-4">Send Invoice via Email</h3>
+            
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Recipient Email
+              </label>
+              <input
+                type="email"
+                value={emailTo}
+                onChange={(e) => setEmailTo(e.target.value)}
+                placeholder="client@example.com"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                disabled={isSending}
+              />
+            </div>
+
+            {emailStatus && (
+              <div
+                className={`mb-4 p-3 rounded-lg ${
+                  emailStatus.type === "success"
+                    ? "bg-green-50 text-green-800"
+                    : "bg-red-50 text-red-800"
+                }`}
+              >
+                {emailStatus.message}
+              </div>
+            )}
+
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => {
+                  setShowEmailModal(false);
+                  setEmailTo("");
+                  setEmailStatus(null);
+                }}
+                className="rounded-lg border-2 border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50"
+                disabled={isSending}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSendEmail}
+                disabled={!emailTo || isSending}
+                className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSending ? "Sending..." : "Send Email"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
