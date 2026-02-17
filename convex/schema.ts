@@ -8,11 +8,8 @@ export default defineSchema({
     name: v.optional(v.string()),
     imageUrl: v.optional(v.string()),
     theme: v.optional(v.union(v.literal("light"), v.literal("dark"))),
-    customColors: v.optional(v.object({
-      background: v.string(),
-      text: v.string(),
-      button: v.string(),
-    })),
+    // Deprecated: customColors field is no longer used but kept for backwards compatibility
+    customColors: v.optional(v.any()),
   }).index("by_clerk_id", ["clerkId"]),
 
   clients: defineTable({

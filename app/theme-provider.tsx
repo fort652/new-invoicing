@@ -7,17 +7,9 @@ import { api } from "@/convex/_generated/api";
 
 type Theme = "light" | "dark";
 
-type CustomColors = {
-  background: string;
-  text: string;
-  button: string;
-};
-
 type ThemeContextType = {
   theme: Theme;
   setTheme: (theme: Theme) => void;
-  customColors: CustomColors | null;
-  setCustomColors: (colors: CustomColors) => void;
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -29,10 +21,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     user ? { clerkId: user.id } : "skip"
   );
   const updateTheme = useMutation(api.users.updateTheme);
-  const updateCustomColors = useMutation(api.users.updateCustomColors);
   
   const [theme, setThemeState] = useState<Theme>("light");
-  const [customColors, setCustomColorsState] = useState<CustomColors | null>(null);
 
   useEffect(() => {
     if (currentUser?.theme) {
@@ -43,19 +33,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         document.documentElement.classList.remove("dark");
       }
     }
-    if (currentUser?.customColors) {
-      setCustomColorsState(currentUser.customColors);
-      applyCustomColors(currentUser.customColors);
-    }
-  }, [currentUser?.theme, currentUser?.customColors]);
-
-  const applyCustomColors = (colors: CustomColors) => {
-    const root = document.documentElement;
-    root.style.setProperty('--custom-bg', colors.background);
-    root.style.setProperty('--custom-text', colors.text);
-    root.style.setProperty('--custom-button', colors.button);
-    document.body.classList.add('custom-colors');
-  };
+  }, [currentUser?.theme]);
 
   const setTheme = async (newTheme: Theme) => {
     setThemeState(newTheme);
@@ -73,20 +51,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const setCustomColors = async (colors: CustomColors) => {
-    setCustomColorsState(colors);
-    applyCustomColors(colors);
-    
-    if (currentUser) {
-      await updateCustomColors({
-        userId: currentUser._id,
-        customColors: colors,
-      });
-    }
-  };
-
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, customColors, setCustomColors }}>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   );

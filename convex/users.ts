@@ -51,17 +51,3 @@ export const updateTheme = mutation({
     await ctx.db.patch(args.userId, { theme: args.theme });
   },
 });
-
-export const updateCustomColors = mutation({
-  args: {
-    userId: v.id("users"),
-    customColors: v.object({
-      background: v.string(),
-      text: v.string(),
-      button: v.string(),
-    }),
-  },
-  handler: async (ctx, args) => {
-    await ctx.db.patch(args.userId, { customColors: args.customColors });
-  },
-});
