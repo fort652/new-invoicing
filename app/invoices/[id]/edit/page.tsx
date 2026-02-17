@@ -155,7 +155,7 @@ export default function EditInvoicePage() {
             <h3 className="text-lg font-semibold mb-4">Invoice Details</h3>
             <div className="grid gap-4 md:grid-cols-2">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-900 mb-1">
                   Invoice Number *
                 </label>
                 <input
@@ -165,11 +165,11 @@ export default function EditInvoicePage() {
                   onChange={(e) =>
                     setFormData({ ...formData, invoiceNumber: e.target.value })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-900 mb-1">
                   Client *
                 </label>
                 <select
@@ -178,7 +178,7 @@ export default function EditInvoicePage() {
                   onChange={(e) =>
                     setFormData({ ...formData, clientId: e.target.value as Id<"clients"> })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                 >
                   <option value="">Select a client</option>
                   {clients.map((client) => (
@@ -189,7 +189,7 @@ export default function EditInvoicePage() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-900 mb-1">
                   Issue Date *
                 </label>
                 <input
@@ -199,11 +199,11 @@ export default function EditInvoicePage() {
                   onChange={(e) =>
                     setFormData({ ...formData, issueDate: e.target.value })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-900 mb-1">
                   Due Date *
                 </label>
                 <input
@@ -213,11 +213,11 @@ export default function EditInvoicePage() {
                   onChange={(e) =>
                     setFormData({ ...formData, dueDate: e.target.value })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-900 mb-1">
                   Status *
                 </label>
                 <select
@@ -229,7 +229,7 @@ export default function EditInvoicePage() {
                       status: e.target.value as "draft" | "sent" | "paid" | "overdue" | "cancelled",
                     })
                   }
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                 >
                   <option value="draft">Draft</option>
                   <option value="sent">Sent</option>
@@ -256,7 +256,7 @@ export default function EditInvoicePage() {
               {lineItems.map((item, index) => (
                 <div key={index} className="grid gap-4 md:grid-cols-12 items-end">
                   <div className="md:col-span-5">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-900 mb-1">
                       Description
                     </label>
                     <input
@@ -266,11 +266,11 @@ export default function EditInvoicePage() {
                       onChange={(e) =>
                         updateLineItem(index, "description", e.target.value)
                       }
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                     />
                   </div>
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-900 mb-1">
                       Quantity
                     </label>
                     <input
@@ -282,11 +282,11 @@ export default function EditInvoicePage() {
                       onChange={(e) =>
                         updateLineItem(index, "quantity", parseFloat(e.target.value) || 0)
                       }
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                     />
                   </div>
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-900 mb-1">
                       Rate
                     </label>
                     <input
@@ -298,18 +298,18 @@ export default function EditInvoicePage() {
                       onChange={(e) =>
                         updateLineItem(index, "rate", parseFloat(e.target.value) || 0)
                       }
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                     />
                   </div>
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-900 mb-1">
                       Amount
                     </label>
                     <input
                       type="text"
                       disabled
                       value={item.amount.toFixed(2)}
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2 bg-gray-50"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2 bg-gray-50 text-gray-900"
                     />
                   </div>
                   <div className="md:col-span-1">

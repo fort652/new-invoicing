@@ -77,29 +77,29 @@ export default function DashboardPage() {
           <h2 className="text-3xl font-bold text-gray-900">
             Welcome, {user?.firstName || "User"}!
           </h2>
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-gray-900">
             Here's an overview of your invoicing activity
           </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
           <div className="rounded-lg bg-white p-6 shadow">
-            <h3 className="text-sm font-medium text-gray-500">Total Invoices</h3>
+            <h3 className="text-sm font-medium text-gray-700">Total Invoices</h3>
             <p className="mt-2 text-3xl font-bold text-gray-900">{stats.total}</p>
           </div>
           <div className="rounded-lg bg-white p-6 shadow">
-            <h3 className="text-sm font-medium text-gray-500">Paid</h3>
+            <h3 className="text-sm font-medium text-gray-700">Paid</h3>
             <p className="mt-2 text-3xl font-bold text-green-600">{stats.paid}</p>
           </div>
           <div className="rounded-lg bg-white p-6 shadow">
-            <h3 className="text-sm font-medium text-gray-500">Pending</h3>
+            <h3 className="text-sm font-medium text-gray-700">Pending</h3>
             <p className="mt-2 text-3xl font-bold text-yellow-600">
               {stats.sent + stats.overdue}
             </p>
           </div>
           <div className="rounded-lg bg-white p-6 shadow">
-            <h3 className="text-sm font-medium text-gray-500">Draft</h3>
-            <p className="mt-2 text-3xl font-bold text-gray-600">{stats.draft}</p>
+            <h3 className="text-sm font-medium text-gray-700">Draft</h3>
+            <p className="mt-2 text-3xl font-bold text-gray-900">{stats.draft}</p>
           </div>
         </div>
 
@@ -110,19 +110,19 @@ export default function DashboardPage() {
             </h3>
             <div className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-gray-600">Total Revenue</span>
-                <span className="font-semibold">
+                <span className="text-gray-900">Total Revenue</span>
+                <span className="font-semibold text-gray-900">
                   R{stats.totalRevenue.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Paid</span>
+                <span className="text-gray-900">Paid</span>
                 <span className="font-semibold text-green-600">
                   R{stats.paidRevenue.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Pending</span>
+                <span className="text-gray-900">Pending</span>
                 <span className="font-semibold text-yellow-600">
                   R{stats.pendingRevenue.toFixed(2)}
                 </span>
@@ -160,19 +160,19 @@ export default function DashboardPage() {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead>
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                       Invoice #
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                       Client
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                       Amount
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                       Status
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                       Due Date
                     </th>
                   </tr>
@@ -188,10 +188,10 @@ export default function DashboardPage() {
                           {invoice.invoiceNumber}
                         </Link>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-900">
                         {invoice.client?.name || "Unknown"}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-900">
                         R{invoice.total.toFixed(2)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -211,7 +211,7 @@ export default function DashboardPage() {
                           {invoice.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {new Date(invoice.dueDate).toLocaleDateString()}
                       </td>
                     </tr>
@@ -220,7 +220,7 @@ export default function DashboardPage() {
               </table>
             </div>
           ) : (
-            <p className="text-gray-500">No invoices yet. Create your first invoice!</p>
+            <p className="text-gray-900">No invoices yet. Create your first invoice!</p>
           )}
         </div>
       </main>

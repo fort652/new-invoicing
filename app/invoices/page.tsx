@@ -50,7 +50,7 @@ export default function InvoicesPage() {
         <div className="mb-8 flex justify-between items-center">
           <div>
             <h2 className="text-3xl font-bold text-gray-900">Invoices</h2>
-            <p className="mt-2 text-gray-600">
+            <p className="mt-2 text-gray-900">
               Manage all your invoices in one place
             </p>
           </div>
@@ -67,7 +67,7 @@ export default function InvoicesPage() {
             <div className="p-8 text-center">Loading...</div>
           ) : invoices.length === 0 ? (
             <div className="p-8 text-center">
-              <p className="text-gray-500 mb-4">No invoices yet</p>
+              <p className="text-gray-900 mb-4">No invoices yet</p>
               <Link
                 href="/invoices/new"
                 className="text-blue-600 hover:text-blue-800"
@@ -80,25 +80,25 @@ export default function InvoicesPage() {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                       Invoice #
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                       Client
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                       Issue Date
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                       Due Date
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                       Amount
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                       Status
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                       Actions
                     </th>
                   </tr>
@@ -114,16 +114,16 @@ export default function InvoicesPage() {
                           {invoice.invoiceNumber}
                         </Link>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-900">
                         {invoice.client?.name || "Unknown"}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {new Date(invoice.issueDate).toLocaleDateString()}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {new Date(invoice.dueDate).toLocaleDateString()}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         R{invoice.total.toFixed(2)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -152,7 +152,7 @@ export default function InvoicesPage() {
                         </Link>
                         <Link
                           href={`/invoices/${invoice._id}/edit`}
-                          className="text-gray-600 hover:text-gray-800"
+                          className="text-gray-900 hover:text-gray-700"
                         >
                           Edit
                         </Link>

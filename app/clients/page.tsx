@@ -94,7 +94,7 @@ export default function ClientsPage() {
         <div className="mb-8 flex justify-between items-center">
           <div>
             <h2 className="text-3xl font-bold text-gray-900">Clients</h2>
-            <p className="mt-2 text-gray-600">
+            <p className="mt-2 text-gray-900">
               Manage your client information
             </p>
           </div>
@@ -112,7 +112,7 @@ export default function ClientsPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-900 mb-1">
                     Name *
                   </label>
                   <input
@@ -122,7 +122,7 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                   />
                 </div>
                 <div>
@@ -136,7 +136,7 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                   />
                 </div>
                 <div>
@@ -149,7 +149,7 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, phone: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                   />
                 </div>
                 <div>
@@ -162,7 +162,7 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, address: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                   />
                 </div>
                 <div>
@@ -175,7 +175,7 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, city: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                   />
                 </div>
                 <div>
@@ -188,7 +188,7 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, state: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                   />
                 </div>
                 <div>
@@ -201,7 +201,7 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, zipCode: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                   />
                 </div>
                 <div>
@@ -214,7 +214,7 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, country: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
                   />
                 </div>
               </div>
@@ -233,7 +233,7 @@ export default function ClientsPage() {
             <div className="p-8 text-center">Loading...</div>
           ) : clients.length === 0 ? (
             <div className="p-8 text-center">
-              <p className="text-gray-500 mb-4">No clients yet</p>
+              <p className="text-gray-900 mb-4">No clients yet</p>
               <button
                 onClick={() => setShowForm(true)}
                 className="text-blue-600 hover:text-blue-800"
@@ -246,19 +246,19 @@ export default function ClientsPage() {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                       Name
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                       Email
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                       Phone
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                       Location
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                       Actions
                     </th>
                   </tr>
@@ -266,16 +266,16 @@ export default function ClientsPage() {
                 <tbody className="divide-y divide-gray-200 bg-white">
                   {clients.map((client) => (
                     <tr key={client._id}>
-                      <td className="px-6 py-4 whitespace-nowrap font-medium">
+                      <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
                         {client.name}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {client.email}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {client.phone || "-"}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {client.city && client.state
                           ? `${client.city}, ${client.state}`
                           : client.city || client.state || "-"}
