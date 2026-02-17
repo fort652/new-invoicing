@@ -165,6 +165,14 @@ export default function InvoiceDetailPage() {
                     <span style="color: #6b7280;">Tax:</span>
                     <span style="font-weight: 600;">R${invoice.tax.toFixed(2)}</span>
                   </div>
+                  ${
+                    invoice.deliveryCost
+                      ? `<div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
+                    <span style="color: #6b7280;">Delivery:</span>
+                    <span style="font-weight: 600;">R${invoice.deliveryCost.toFixed(2)}</span>
+                  </div>`
+                      : ""
+                  }
                   <div style="display: flex; justify-content: space-between; padding: 16px 0; border-top: 2px solid #2563eb; margin-top: 8px;">
                     <span style="font-size: 18px; font-weight: 700; color: #111827;">Total:</span>
                     <span style="font-size: 18px; font-weight: 700; color: #2563eb;">R${invoice.total.toFixed(2)}</span>
@@ -393,15 +401,21 @@ export default function InvoiceDetailPage() {
             <div className="w-64 space-y-2">
               <div className="flex justify-between">
                 <span className="font-medium">Subtotal:</span>
-                <span>${invoice.subtotal.toFixed(2)}</span>
+                <span>R{invoice.subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="font-medium">Tax:</span>
-                <span>${invoice.tax.toFixed(2)}</span>
+                <span>R{invoice.tax.toFixed(2)}</span>
               </div>
+              {invoice.deliveryCost && invoice.deliveryCost > 0 && (
+                <div className="flex justify-between">
+                  <span className="font-medium">Delivery:</span>
+                  <span>R{invoice.deliveryCost.toFixed(2)}</span>
+                </div>
+              )}
               <div className="flex justify-between border-t pt-2 text-lg font-bold">
                 <span>Total:</span>
-                <span>${invoice.total.toFixed(2)}</span>
+                <span>R{invoice.total.toFixed(2)}</span>
               </div>
             </div>
           </div>

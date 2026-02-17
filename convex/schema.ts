@@ -36,6 +36,7 @@ export default defineSchema({
     dueDate: v.number(),
     subtotal: v.number(),
     tax: v.number(),
+    deliveryCost: v.optional(v.number()),
     total: v.number(),
     notes: v.optional(v.string()),
     terms: v.optional(v.string()),

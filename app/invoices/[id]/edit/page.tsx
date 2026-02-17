@@ -39,6 +39,7 @@ export default function EditInvoicePage() {
     issueDate: "",
     dueDate: "",
     tax: 0,
+    deliveryCost: 0,
     notes: "",
     terms: "",
   });
@@ -58,6 +59,7 @@ export default function EditInvoicePage() {
         issueDate: new Date(invoice.issueDate).toISOString().split("T")[0],
         dueDate: new Date(invoice.dueDate).toISOString().split("T")[0],
         tax: invoice.tax,
+        deliveryCost: invoice.deliveryCost || 0,
         notes: invoice.notes || "",
         terms: invoice.terms || "",
       });
@@ -90,7 +92,7 @@ export default function EditInvoicePage() {
   };
 
   const subtotal = lineItems.reduce((sum, item) => sum + item.amount, 0);
-  const total = subtotal + formData.tax;
+  const total = subtotal + formData.tax + formData.deliveryCost;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -105,6 +107,7 @@ export default function EditInvoicePage() {
       dueDate: new Date(formData.dueDate).getTime(),
       subtotal,
       tax: formData.tax,
+      deliveryCost: formData.deliveryCost || undefined,
       total,
       notes: formData.notes || undefined,
       terms: formData.terms || undefined,
@@ -339,6 +342,19 @@ export default function EditInvoicePage() {
                     value={formData.tax}
                     onChange={(e) =>
                       setFormData({ ...formData, tax: parseFloat(e.target.value) || 0 })
+                    }
+                    className="w-32 rounded-lg border border-gray-300 px-3 py-1 text-right"
+                  />
+                </div>
+                <div className="flex justify-between w-64 items-center">
+                  <label className="font-medium">Delivery:</label>
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={formData.deliveryCost}
+                    onChange={(e) =>
+                      setFormData({ ...formData, deliveryCost: parseFloat(e.target.value) || 0 })
                     }
                     className="w-32 rounded-lg border border-gray-300 px-3 py-1 text-right"
                   />
