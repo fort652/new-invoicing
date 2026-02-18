@@ -7,7 +7,7 @@ import { useState } from "react";
 import PageHeader from "@/app/components/PageHeader";
 
 export default function SubscriptionPage() {
-  const { user } = useUser();
+  const { user, isLoaded } = useUser();
   const currentUser = useQuery(api.users.getCurrentUser, user?.id ? { clerkId: user.id } : "skip");
   const subscription = useQuery(
     api.subscriptions.getUserSubscription,
@@ -17,6 +17,14 @@ export default function SubscriptionPage() {
     api.subscriptions.getUsageTracking,
     currentUser?._id ? { userId: currentUser._id } : "skip"
   );
+
+  if (!isLoaded || currentUser === undefined) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="text-xl text-gray-900 dark:text-white">Loading...</div>
+      </div>
+    );
+  }
 
   const [isUpgrading, setIsUpgrading] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
