@@ -2,26 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
-import { useQuery, useMutation } from 'convex/react';
+import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
-import { Id } from '@/convex/_generated/dataModel';
 import PageHeader from '../components/PageHeader';
-
-interface PaystackPopup {
-  checkout: (config: PaystackConfig) => Promise<void>;
-}
-
-interface PaystackConfig {
-  key: string;
-  email: string;
-  amount: number;
-  currency: string;
-  planInterval: 'monthly' | 'quarterly' | 'annually';
-  onSuccess?: (transaction: PaystackTransaction) => void;
-  onLoad?: (response: any) => void;
-  onCancel?: () => void;
-  onError?: (error: Error) => void;
-}
 
 interface PaystackTransaction {
   reference: string;
@@ -66,7 +49,7 @@ const subscriptionPlans: Record<string, SubscriptionPlan> = {
 export default function SubscriptionPage() {
   const { user: clerkUser } = useUser();
   const [selectedPlan, setSelectedPlan] = useState<string>('monthly');
-  const [popup, setPopup] = useState<PaystackPopup | null>(null);
+  const [popup, setPopup] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
@@ -82,8 +65,10 @@ export default function SubscriptionPage() {
 
   useEffect(() => {
     const loadPaystack = async () => {
-      const Paystack = (await import('@paystack/inline-js')).default;
-      setPopup(new Paystack());
+      if (typeof window !== 'undefined') {
+        const Paystack = (await import('@paystack/inline-js')).default;
+        setPopup(new Paystack());
+      }
     };
     loadPaystack();
   }, []);
@@ -105,7 +90,7 @@ export default function SubscriptionPage() {
         amount: plan.amount,
         currency: 'ZAR',
         planInterval: plan.interval,
-        onSuccess: (transaction) => {
+        onSuccess: (transaction: PaystackTransaction) => {
           setMessage({
             type: 'success',
             text: `Subscription activated! Reference: ${transaction.reference}`,
@@ -116,7 +101,7 @@ export default function SubscriptionPage() {
           setMessage({ type: 'error', text: 'Payment was cancelled' });
           setLoading(false);
         },
-        onError: (error) => {
+        onError: (error: Error) => {
           setMessage({ type: 'error', text: `Payment error: ${error.message}` });
           setLoading(false);
         },
