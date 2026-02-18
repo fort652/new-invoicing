@@ -235,7 +235,7 @@ export default function InvoiceDetailPage() {
       <Navigation />
 
       <main className="mx-auto max-w-6xl px-4 py-4 sm:py-8 sm:px-6 lg:px-8">
-        <div className="mb-6">
+        <div className="mb-6 no-print">
           <Link href="/invoices" className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium">
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -244,7 +244,7 @@ export default function InvoiceDetailPage() {
           </Link>
         </div>
 
-        <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 no-print">
           <div>
             <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2">
               {invoice.invoiceNumber}
@@ -317,39 +317,58 @@ export default function InvoiceDetailPage() {
           </div>
         </div>
 
-        <div className="rounded-xl bg-white dark:bg-gray-800 shadow-lg overflow-hidden mb-6">
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 px-8 py-6">
+        <div id="invoice-content" className="rounded-xl bg-white dark:bg-gray-800 shadow-lg overflow-hidden mb-6">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 px-8 py-6 print:bg-white print:text-gray-900">
             <div className="flex justify-between items-start">
               <div>
-                <h2 className="text-3xl font-bold text-white mb-2">INVOICE</h2>
-                <p className="text-blue-100">#{invoice.invoiceNumber}</p>
+                <h2 className="text-3xl font-bold text-white print:text-gray-900 mb-2">INVOICE</h2>
+                <p className="text-blue-100 print:text-gray-600">#{invoice.invoiceNumber}</p>
               </div>
               <div className="text-right">
-                <select
-                  value={invoice.status}
-                  onChange={(e) =>
-                    handleStatusChange(
-                      e.target.value as "draft" | "sent" | "paid" | "overdue" | "cancelled"
-                    )
-                  }
-                  className={`rounded-lg border-2 px-4 py-2 text-sm font-semibold bg-white dark:bg-gray-700 cursor-pointer ${
-                    invoice.status === "paid"
-                      ? "border-green-500 text-green-600 dark:text-green-400"
-                      : invoice.status === "sent"
-                      ? "border-blue-500 text-blue-600 dark:text-blue-400"
-                      : invoice.status === "overdue"
-                      ? "border-red-500 text-red-600 dark:text-red-400"
-                      : invoice.status === "draft"
-                      ? "border-gray-500 text-gray-600 dark:text-gray-400"
-                      : "border-yellow-500 text-yellow-600 dark:text-yellow-400"
-                  }`}
-                >
-                  <option value="draft">Draft</option>
-                  <option value="sent">Sent</option>
-                  <option value="paid">Paid</option>
-                  <option value="overdue">Overdue</option>
-                  <option value="cancelled">Cancelled</option>
-                </select>
+                <div className="no-print">
+                  <select
+                    value={invoice.status}
+                    onChange={(e) =>
+                      handleStatusChange(
+                        e.target.value as "draft" | "sent" | "paid" | "overdue" | "cancelled"
+                      )
+                    }
+                    className={`rounded-lg border-2 px-4 py-2 text-sm font-semibold bg-white dark:bg-gray-700 cursor-pointer ${
+                      invoice.status === "paid"
+                        ? "border-green-500 text-green-600 dark:text-green-400"
+                        : invoice.status === "sent"
+                        ? "border-blue-500 text-blue-600 dark:text-blue-400"
+                        : invoice.status === "overdue"
+                        ? "border-red-500 text-red-600 dark:text-red-400"
+                        : invoice.status === "draft"
+                        ? "border-gray-500 text-gray-600 dark:text-gray-400"
+                        : "border-yellow-500 text-yellow-600 dark:text-yellow-400"
+                    }`}
+                  >
+                    <option value="draft">Draft</option>
+                    <option value="sent">Sent</option>
+                    <option value="paid">Paid</option>
+                    <option value="overdue">Overdue</option>
+                    <option value="cancelled">Cancelled</option>
+                  </select>
+                </div>
+                <div className="hidden print:block">
+                  <span
+                    className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${
+                      invoice.status === "paid"
+                        ? "bg-green-100 text-green-800"
+                        : invoice.status === "sent"
+                        ? "bg-blue-100 text-blue-800"
+                        : invoice.status === "overdue"
+                        ? "bg-red-100 text-red-800"
+                        : invoice.status === "draft"
+                        ? "bg-gray-100 text-gray-800"
+                        : "bg-yellow-100 text-yellow-800"
+                    }`}
+                  >
+                    {invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}
+                  </span>
+                </div>
               </div>
             </div>
           </div>

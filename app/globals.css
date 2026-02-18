@@ -66,3 +66,92 @@ body {
     font-size: 0.875rem;
   }
 }
+
+/* Print styles - only print the invoice content */
+@media print {
+  /* Hide everything by default */
+  body * {
+    visibility: hidden;
+  }
+  
+  /* Show only the invoice content */
+  #invoice-content,
+  #invoice-content * {
+    visibility: visible;
+  }
+  
+  /* Position invoice at top of page */
+  #invoice-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  
+  /* Hide navigation, buttons, and other UI elements */
+  nav,
+  button,
+  a[href*="back"],
+  .no-print {
+    display: none !important;
+  }
+  
+  /* Ensure proper page breaks */
+  .invoice-page-break {
+    page-break-after: always;
+  }
+  
+  /* Remove shadows and adjust colors for print */
+  .shadow,
+  .shadow-lg,
+  .shadow-md {
+    box-shadow: none !important;
+  }
+  
+  /* Ensure backgrounds print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  /* Remove rounded corners for cleaner print */
+  .rounded-xl,
+  .rounded-lg {
+    border-radius: 0 !important;
+  }
+  
+  /* Adjust padding for print */
+  #invoice-content {
+    padding: 20px !important;
+    margin: 0 !important;
+  }
+  
+  /* Make sure text is black for print */
+  #invoice-content {
+    color: #000 !important;
+  }
+  
+  /* Ensure table borders are visible */
+  #invoice-content table,
+  #invoice-content th,
+  #invoice-content td {
+    border-color: #000 !important;
+  }
+  
+  /* Hide status badge on small header */
+  .no-print {
+    display: none !important;
+  }
+  
+  /* Optimize page size */
+  @page {
+    margin: 1cm;
+    size: A4;
+  }
+  
+  /* Prevent page breaks inside important elements */
+  #invoice-content table,
+  #invoice-content .bg-gradient-to-r {
+    page-break-inside: avoid;
+  }
+}
