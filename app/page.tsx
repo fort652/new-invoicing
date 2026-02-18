@@ -7,7 +7,7 @@ export default function Home() {
         <h1 className="mb-6 text-6xl font-bold text-gray-900 dark:text-white">
           Invoice Management
         </h1>
-        <p className="mb-8 text-xl text-gray-600">
+        <p className="mb-8 text-xl text-gray-600 dark:text-gray-300">
           Create, manage, and track your invoices with real-time updates powered by Convex
         </p>
         <div className="flex gap-4 justify-center">
@@ -26,20 +26,20 @@ export default function Home() {
         </div>
         <div className="mt-16 grid gap-8 md:grid-cols-3">
           <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-md">
-            <h3 className="mb-2 text-xl font-semibold">Real-time Updates</h3>
-            <p className="text-gray-600">
+            <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">Real-time Updates</h3>
+            <p className="text-gray-600 dark:text-gray-300">
               See changes instantly across all devices with Convex sync engine
             </p>
           </div>
           <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-md">
-            <h3 className="mb-2 text-xl font-semibold">Client Management</h3>
-            <p className="text-gray-600">
+            <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">Client Management</h3>
+            <p className="text-gray-600 dark:text-gray-300">
               Keep track of all your clients and their information in one place
             </p>
           </div>
           <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-md">
-            <h3 className="mb-2 text-xl font-semibold">Invoice Tracking</h3>
-            <p className="text-gray-600">
+            <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">Invoice Tracking</h3>
+            <p className="text-gray-600 dark:text-gray-300">
               Monitor invoice status from draft to paid with detailed analytics
             </p>
           </div>

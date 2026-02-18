@@ -97,11 +97,11 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
+                    className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1">
                     Email *
                   </label>
                   <input
@@ -111,11 +111,11 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
+                    className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1">
                     Phone
                   </label>
                   <input
@@ -124,11 +124,11 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, phone: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
+                    className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1">
                     Address
                   </label>
                   <input
@@ -137,11 +137,11 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, address: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
+                    className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1">
                     City
                   </label>
                   <input
@@ -150,11 +150,11 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, city: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
+                    className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1">
                     State
                   </label>
                   <input
@@ -163,11 +163,11 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, state: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
+                    className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1">
                     Zip Code
                   </label>
                   <input
@@ -176,11 +176,11 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, zipCode: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
+                    className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1">
                     Country
                   </label>
                   <input
@@ -189,7 +189,7 @@ export default function ClientsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, country: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 dark:text-white"
+                    className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-white"
                   />
                 </div>
               </div>
