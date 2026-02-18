@@ -15,6 +15,7 @@ npx convex dev
 ```
 
 **What this does:**
+
 - Opens browser for GitHub authentication
 - Creates a new Convex project
 - Generates `.env.local` with `NEXT_PUBLIC_CONVEX_URL`
@@ -24,11 +25,13 @@ npx convex dev
 ## 3. Set Up Clerk Authentication
 
 ### Create Clerk Account
+
 1. Go to https://clerk.com and sign up
 2. Create a new application
 3. Choose "Email" and "Google" (or your preferred providers)
 
 ### Get Your API Keys
+
 1. In Clerk dashboard, go to **API Keys**
 2. Copy the keys and add to `.env.local`:
 
@@ -38,6 +41,7 @@ CLERK_SECRET_KEY=sk_test_...
 ```
 
 ### Configure Clerk with Convex
+
 1. In Clerk dashboard, go to **JWT Templates**
 2. Create a new template named "convex"
 3. Copy the **Issuer URL** (looks like: `https://your-app.clerk.accounts.dev`)
@@ -80,16 +84,19 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
 ## Troubleshooting
 
 ### "Convex client not configured"
+
 - Make sure `npx convex dev` is running
 - Check that `NEXT_PUBLIC_CONVEX_URL` is in `.env.local`
 - Restart your Next.js dev server
 
 ### "Clerk authentication failed"
+
 - Verify both Clerk keys are in `.env.local`
 - Make sure you configured Clerk in Convex dashboard
 - Check that the Issuer URL matches exactly
 
 ### "Cannot find module 'convex/react'"
+
 - Run `npm install` again
 - Delete `node_modules` and `package-lock.json`, then run `npm install`
 
@@ -122,3 +129,5 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
 6. Print an invoice
 
 Enjoy your new invoice management app! 🎉
+
+.
