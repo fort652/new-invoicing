@@ -18,14 +18,6 @@ export default function SubscriptionPage() {
     currentUser?._id ? { userId: currentUser._id } : "skip"
   );
 
-  if (!isLoaded || currentUser === undefined) {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="text-xl text-gray-900 dark:text-white">Loading...</div>
-      </div>
-    );
-  }
-
   const [isUpgrading, setIsUpgrading] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
 
@@ -103,6 +95,14 @@ export default function SubscriptionPage() {
   };
 
   const currentLimits = limits[planType];
+
+  if (!isLoaded || currentUser === undefined) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="text-xl text-gray-900 dark:text-white">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
