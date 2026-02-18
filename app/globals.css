@@ -69,6 +69,15 @@ body {
 
 /* Print styles - only print the invoice content */
 @media print {
+  /* Force light mode for printing */
+  html {
+    color-scheme: light !important;
+  }
+  
+  body {
+    background: white !important;
+  }
+  
   /* Hide everything by default */
   body * {
     visibility: hidden;
@@ -86,6 +95,7 @@ body {
     left: 0;
     top: 0;
     width: 100%;
+    background: white !important;
   }
   
   /* Hide navigation, buttons, and other UI elements */
@@ -126,21 +136,88 @@ body {
     margin: 0 !important;
   }
   
-  /* Make sure text is black for print */
-  #invoice-content {
-    color: #000 !important;
+  /* Force light mode colors for all text */
+  #invoice-content,
+  #invoice-content * {
+    color: #1f2937 !important;
+    background-color: white !important;
+  }
+  
+  /* Override dark mode backgrounds */
+  #invoice-content .dark\:bg-gray-800,
+  #invoice-content .dark\:bg-gray-900,
+  #invoice-content .dark\:bg-gray-700 {
+    background-color: white !important;
+  }
+  
+  /* Keep gradient header colors */
+  #invoice-content .bg-gradient-to-r {
+    background: linear-gradient(to right, #2563eb, #1d4ed8) !important;
+    color: white !important;
+  }
+  
+  #invoice-content .bg-gradient-to-r * {
+    color: white !important;
+  }
+  
+  /* Keep blue accent colors */
+  #invoice-content .text-blue-600,
+  #invoice-content .text-blue-400 {
+    color: #2563eb !important;
+  }
+  
+  /* Keep status badge colors */
+  #invoice-content .bg-green-100 {
+    background-color: #dcfce7 !important;
+    color: #166534 !important;
+  }
+  
+  #invoice-content .bg-blue-100 {
+    background-color: #dbeafe !important;
+    color: #1e40af !important;
+  }
+  
+  #invoice-content .bg-red-100 {
+    background-color: #fee2e2 !important;
+    color: #991b1b !important;
+  }
+  
+  #invoice-content .bg-gray-100 {
+    background-color: #f3f4f6 !important;
+    color: #374151 !important;
+  }
+  
+  #invoice-content .bg-yellow-100 {
+    background-color: #fef3c7 !important;
+    color: #92400e !important;
+  }
+  
+  /* Keep notes and terms backgrounds */
+  #invoice-content .bg-blue-50 {
+    background-color: #eff6ff !important;
+  }
+  
+  #invoice-content .bg-gray-50 {
+    background-color: #f9fafb !important;
   }
   
   /* Ensure table borders are visible */
   #invoice-content table,
   #invoice-content th,
   #invoice-content td {
-    border-color: #000 !important;
+    border-color: #e5e7eb !important;
   }
   
-  /* Hide status badge on small header */
-  .no-print {
-    display: none !important;
+  /* Table header background */
+  #invoice-content thead tr {
+    background-color: transparent !important;
+  }
+  
+  /* Gray text for secondary info */
+  #invoice-content .text-gray-600,
+  #invoice-content .text-gray-500,
+  #invoice-content .text-gray-400 {
+    color: #6b7280 !important;
   }
   
   /* Optimize page size */
