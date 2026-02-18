@@ -234,61 +234,97 @@ export default function InvoiceDetailPage() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navigation />
 
-      <main className="mx-auto max-w-5xl px-4 py-4 sm:py-8 sm:px-6 lg:px-8">
-        <Link href="/invoices" className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 mb-4 block">
-          ← Back to Invoices
-        </Link>
-        <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div className="flex-1">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
-              Invoice {invoice.invoiceNumber}
-            </h2>
+      <main className="mx-auto max-w-6xl px-4 py-4 sm:py-8 sm:px-6 lg:px-8">
+        <div className="mb-6">
+          <Link href="/invoices" className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium">
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Invoices
+          </Link>
+        </div>
+
+        <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2">
+              {invoice.invoiceNumber}
+            </h1>
+            <div className="flex items-center gap-2">
+              <span
+                className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${
+                  invoice.status === "paid"
+                    ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300"
+                    : invoice.status === "sent"
+                    ? "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300"
+                    : invoice.status === "overdue"
+                    ? "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300"
+                    : invoice.status === "draft"
+                    ? "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300"
+                    : "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300"
+                }`}
+              >
+                {invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}
+              </span>
+            </div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button
-              onClick={handleDelete}
-              className="rounded-lg border-2 border-red-600 dark:border-red-400 px-4 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+              onClick={() => window.print()}
+              className="inline-flex items-center rounded-lg border-2 border-gray-300 dark:border-gray-600 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
             >
-              Delete
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+              </svg>
+              Print
             </button>
             <button
               onClick={() => setShowPreviewModal(true)}
-              className="rounded-lg border-2 border-gray-300 dark:border-gray-600 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+              className="inline-flex items-center rounded-lg border-2 border-gray-300 dark:border-gray-600 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
             >
-              Preview Email
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              Preview
             </button>
             <button
               onClick={openEmailModal}
-              className="rounded-lg border-2 border-blue-600 dark:border-blue-400 px-4 py-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+              className="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
             >
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
               Send Email
             </button>
             <Link
               href={`/invoices/${invoiceId}/edit`}
-              className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+              className="inline-flex items-center rounded-lg bg-gray-900 dark:bg-gray-700 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 dark:hover:bg-gray-600"
             >
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
               Edit
             </Link>
+            <button
+              onClick={handleDelete}
+              className="inline-flex items-center rounded-lg border-2 border-red-600 dark:border-red-400 px-4 py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+            >
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              Delete
+            </button>
           </div>
         </div>
 
-        <div className="rounded-lg bg-white dark:bg-gray-800 p-8 shadow mb-6">
-          <div className="mb-8 flex justify-between">
-            <div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">INVOICE</h3>
-              <p className="text-gray-900 dark:text-white">Invoice #: {invoice.invoiceNumber}</p>
-              <p className="text-gray-900 dark:text-white">
-                Issue Date: {new Date(invoice.issueDate).toLocaleDateString()}
-              </p>
-              <p className="text-gray-900 dark:text-white">
-                Due Date: {new Date(invoice.dueDate).toLocaleDateString()}
-              </p>
-            </div>
-            <div className="text-right">
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2">
-                  Status
-                </label>
+        <div className="rounded-xl bg-white dark:bg-gray-800 shadow-lg overflow-hidden mb-6">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 px-8 py-6">
+            <div className="flex justify-between items-start">
+              <div>
+                <h2 className="text-3xl font-bold text-white mb-2">INVOICE</h2>
+                <p className="text-blue-100">#{invoice.invoiceNumber}</p>
+              </div>
+              <div className="text-right">
                 <select
                   value={invoice.status}
                   onChange={(e) =>
@@ -296,16 +332,16 @@ export default function InvoiceDetailPage() {
                       e.target.value as "draft" | "sent" | "paid" | "overdue" | "cancelled"
                     )
                   }
-                  className={`rounded-lg border-2 px-4 py-2 font-semibold bg-white dark:bg-gray-700 ${
+                  className={`rounded-lg border-2 px-4 py-2 text-sm font-semibold bg-white dark:bg-gray-700 cursor-pointer ${
                     invoice.status === "paid"
-                      ? "border-green-600 dark:border-green-400 text-green-600 dark:text-green-400"
+                      ? "border-green-500 text-green-600 dark:text-green-400"
                       : invoice.status === "sent"
-                      ? "border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400"
+                      ? "border-blue-500 text-blue-600 dark:text-blue-400"
                       : invoice.status === "overdue"
-                      ? "border-red-600 dark:border-red-400 text-red-600 dark:text-red-400"
+                      ? "border-red-500 text-red-600 dark:text-red-400"
                       : invoice.status === "draft"
-                      ? "border-gray-600 dark:border-gray-400 text-gray-600 dark:text-gray-400"
-                      : "border-yellow-600 dark:border-yellow-400 text-yellow-600 dark:text-yellow-400"
+                      ? "border-gray-500 text-gray-600 dark:text-gray-400"
+                      : "border-yellow-500 text-yellow-600 dark:text-yellow-400"
                   }`}
                 >
                   <option value="draft">Draft</option>
@@ -318,119 +354,137 @@ export default function InvoiceDetailPage() {
             </div>
           </div>
 
-          <div className="mb-8 grid gap-8 md:grid-cols-2">
-            <div>
-              <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Bill To:</h4>
-              <p className="text-gray-900 dark:text-white font-medium">{invoice.client?.name}</p>
-              <p className="text-gray-900 dark:text-white">{invoice.client?.email}</p>
-              {invoice.client?.phone && (
-                <p className="text-gray-900 dark:text-white">{invoice.client.phone}</p>
-              )}
-              {invoice.client?.address && (
-                <p className="text-gray-900 dark:text-white">{invoice.client.address}</p>
-              )}
-              {(invoice.client?.city || invoice.client?.state || invoice.client?.zipCode) && (
-                <p className="text-gray-900 dark:text-white">
-                  {[invoice.client?.city, invoice.client?.state, invoice.client?.zipCode]
-                    .filter(Boolean)
-                    .join(", ")}
-                </p>
-              )}
-              {invoice.client?.country && (
-                <p className="text-gray-900 dark:text-white">{invoice.client.country}</p>
-              )}
+          <div className="p-8">
+            <div className="grid md:grid-cols-3 gap-8 mb-8">
+              <div>
+                <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Issue Date</h3>
+                <p className="text-lg font-medium text-gray-900 dark:text-white">{new Date(invoice.issueDate).toLocaleDateString()}</p>
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Due Date</h3>
+                <p className="text-lg font-medium text-gray-900 dark:text-white">{new Date(invoice.dueDate).toLocaleDateString()}</p>
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Amount Due</h3>
+                <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">R{invoice.total.toFixed(2)}</p>
+              </div>
             </div>
-          </div>
 
-          <div className="mb-8">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead className="bg-gray-50 dark:bg-gray-700">
-                <tr>
-                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
-                    Description
-                  </th>
-                  <th className="px-3 sm:px-6 py-3 text-right text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
-                    Quantity
-                  </th>
-                  <th className="px-3 sm:px-6 py-3 text-right text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
-                    Rate
-                  </th>
-                  <th className="px-3 sm:px-6 py-3 text-right text-xs font-medium text-gray-700 dark:text-gray-300 uppercase">
-                    Amount
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-800">
-                {invoice.lineItems?.map((item, index) => (
-                  <tr key={index}>
-                    <td className="px-3 sm:px-6 py-4 text-sm text-gray-900 dark:text-white">
-                      {item.description}
-                    </td>
-                    <td className="px-3 sm:px-6 py-4 text-sm text-gray-900 dark:text-white text-right">
-                      {item.quantity}
-                    </td>
-                    <td className="px-3 sm:px-6 py-4 text-sm text-gray-900 dark:text-white text-right">
-                      ${item.rate.toFixed(2)}
-                    </td>
-                    <td className="px-3 sm:px-6 py-4 text-sm text-gray-900 dark:text-white text-right">
-                      ${item.amount.toFixed(2)}
-                    </td>
+            <div className="border-t dark:border-gray-700 pt-8 mb-8">
+              <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-6">
+                <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Bill To</h3>
+                <p className="text-lg font-bold text-gray-900 dark:text-white mb-1">{invoice.client?.name}</p>
+                <p className="text-gray-600 dark:text-gray-300">{invoice.client?.email}</p>
+                {invoice.client?.phone && (
+                  <p className="text-gray-600 dark:text-gray-300">{invoice.client.phone}</p>
+                )}
+                {invoice.client?.address && (
+                  <p className="text-gray-600 dark:text-gray-300 mt-2">{invoice.client.address}</p>
+                )}
+                {(invoice.client?.city || invoice.client?.state || invoice.client?.zipCode) && (
+                  <p className="text-gray-600 dark:text-gray-300">
+                    {[invoice.client?.city, invoice.client?.state, invoice.client?.zipCode]
+                      .filter(Boolean)
+                      .join(", ")}
+                  </p>
+                )}
+                {invoice.client?.country && (
+                  <p className="text-gray-600 dark:text-gray-300">{invoice.client.country}</p>
+                )}
+              </div>
+            </div>
+
+            <div className="mb-8 overflow-x-auto">
+              <table className="min-w-full">
+                <thead>
+                  <tr className="border-b-2 border-gray-200 dark:border-gray-700">
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                      Description
+                    </th>
+                    <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                      Qty
+                    </th>
+                    <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                      Rate
+                    </th>
+                    <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                      Amount
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
+                  {invoice.lineItems?.map((item, index) => (
+                    <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+                      <td className="px-4 py-4 text-sm text-gray-900 dark:text-white">
+                        {item.description}
+                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-600 dark:text-gray-300 text-right">
+                        {item.quantity}
+                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-600 dark:text-gray-300 text-right">
+                        R{item.rate.toFixed(2)}
+                      </td>
+                      <td className="px-4 py-4 text-sm font-medium text-gray-900 dark:text-white text-right">
+                        R{item.amount.toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
-          <div className="flex justify-end mb-8">
-            <div className="w-64 space-y-2">
-              <div className="flex justify-between text-gray-900 dark:text-white">
-                <span className="font-medium">Subtotal:</span>
-                <span>R{invoice.subtotal.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between text-gray-900 dark:text-white">
-                <span className="font-medium">Tax:</span>
-                <span>R{invoice.tax.toFixed(2)}</span>
-              </div>
-              {invoice.deliveryCost && invoice.deliveryCost > 0 && (
-                <div className="flex justify-between text-gray-900 dark:text-white">
-                  <span className="font-medium">Delivery:</span>
-                  <span>R{invoice.deliveryCost.toFixed(2)}</span>
+            <div className="border-t-2 border-gray-200 dark:border-gray-700 pt-6">
+              <div className="flex justify-end">
+                <div className="w-full sm:w-80 space-y-3">
+                  <div className="flex justify-between text-gray-600 dark:text-gray-300">
+                    <span>Subtotal</span>
+                    <span className="font-medium">R{invoice.subtotal.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-gray-600 dark:text-gray-300">
+                    <span>Tax</span>
+                    <span className="font-medium">R{invoice.tax.toFixed(2)}</span>
+                  </div>
+                  {invoice.deliveryCost && invoice.deliveryCost > 0 && (
+                    <div className="flex justify-between text-gray-600 dark:text-gray-300">
+                      <span>Delivery</span>
+                      <span className="font-medium">R{invoice.deliveryCost.toFixed(2)}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between border-t-2 border-blue-600 dark:border-blue-500 pt-3 text-xl font-bold text-gray-900 dark:text-white">
+                    <span>Total</span>
+                    <span className="text-blue-600 dark:text-blue-400">R{invoice.total.toFixed(2)}</span>
+                  </div>
                 </div>
-              )}
-              <div className="flex justify-between border-t dark:border-gray-600 pt-2 text-lg font-bold text-gray-900 dark:text-white">
-                <span>Total:</span>
-                <span>R{invoice.total.toFixed(2)}</span>
               </div>
             </div>
+
+            {(invoice.notes || invoice.terms) && (
+              <div className="border-t dark:border-gray-700 mt-8 pt-8 space-y-6">
+                {invoice.notes && (
+                  <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
+                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2 flex items-center">
+                      <svg className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                      </svg>
+                      Notes
+                    </h4>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{invoice.notes}</p>
+                  </div>
+                )}
+                {invoice.terms && (
+                  <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-4">
+                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2 flex items-center">
+                      <svg className="w-5 h-5 mr-2 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      Terms & Conditions
+                    </h4>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{invoice.terms}</p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
-
-          {(invoice.notes || invoice.terms) && (
-            <div className="border-t dark:border-gray-600 pt-6 space-y-4">
-              {invoice.notes && (
-                <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Notes:</h4>
-                  <p className="text-gray-600 dark:text-gray-300 whitespace-pre-wrap">{invoice.notes}</p>
-                </div>
-              )}
-              {invoice.terms && (
-                <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white mb-2">
-                    Terms & Conditions:
-                  </h4>
-                  <p className="text-gray-600 dark:text-gray-300 whitespace-pre-wrap">{invoice.terms}</p>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
-        <div className="text-center text-gray-900 dark:text-white text-sm">
-          <button
-            onClick={() => window.print()}
-            className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
-          >
-            Print Invoice
-          </button>
         </div>
       </main>
 
