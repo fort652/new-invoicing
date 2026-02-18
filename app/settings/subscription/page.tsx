@@ -9,13 +9,15 @@ import PageHeader from "@/app/components/PageHeader";
 export default function SubscriptionPage() {
   const { user, isLoaded } = useUser();
   const currentUser = useQuery(api.users.getCurrentUser, user?.id ? { clerkId: user.id } : "skip");
+  
+  // Only query subscription and usage if we have a valid user ID
   const subscription = useQuery(
     api.subscriptions.getUserSubscription,
-    currentUser?._id ? { userId: currentUser._id } : "skip"
+    currentUser && currentUser._id ? { userId: currentUser._id } : "skip"
   );
   const usage = useQuery(
     api.subscriptions.getUsageTracking,
-    currentUser?._id ? { userId: currentUser._id } : "skip"
+    currentUser && currentUser._id ? { userId: currentUser._id } : "skip"
   );
 
   const [isUpgrading, setIsUpgrading] = useState(false);
@@ -96,7 +98,8 @@ export default function SubscriptionPage() {
 
   const currentLimits = limits[planType];
 
-  if (!isLoaded || currentUser === undefined) {
+  // Show loading state while data is being fetched
+  if (!isLoaded || currentUser === undefined || subscription === undefined || usage === undefined) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-xl text-gray-900 dark:text-white">Loading...</div>

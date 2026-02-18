@@ -4,12 +4,17 @@ import { mutation, query } from "./_generated/server";
 export const getUserSubscription = query({
   args: { userId: v.id("users") },
   handler: async (ctx, args) => {
-    const subscription = await ctx.db
-      .query("subscriptions")
-      .withIndex("by_user", (q) => q.eq("userId", args.userId))
-      .first();
+    try {
+      const subscription = await ctx.db
+        .query("subscriptions")
+        .withIndex("by_user", (q) => q.eq("userId", args.userId))
+        .first();
 
-    return subscription;
+      return subscription || null;
+    } catch (error) {
+      console.error("Error fetching subscription:", error);
+      return null;
+    }
   },
 });
 
@@ -113,12 +118,17 @@ export const cancelSubscription = mutation({
 export const getUsageTracking = query({
   args: { userId: v.id("users") },
   handler: async (ctx, args) => {
-    const usage = await ctx.db
-      .query("usageTracking")
-      .withIndex("by_user", (q) => q.eq("userId", args.userId))
-      .first();
+    try {
+      const usage = await ctx.db
+        .query("usageTracking")
+        .withIndex("by_user", (q) => q.eq("userId", args.userId))
+        .first();
 
-    return usage;
+      return usage || null;
+    } catch (error) {
+      console.error("Error fetching usage tracking:", error);
+      return null;
+    }
   },
 });
 
