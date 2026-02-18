@@ -15,11 +15,27 @@ export const syncUser = mutation({
       .unique();
 
     if (existingUser) {
-      await ctx.db.patch(existingUser._id, {
+      const updates: any = {
         email: args.email,
         name: args.name,
         imageUrl: args.imageUrl,
-      });
+      };
+      
+      // Initialize subscription fields if they don't exist
+      if (!existingUser.subscriptionStatus) {
+        updates.subscriptionStatus = "free";
+      }
+      if (existingUser.clientsCreated === undefined) {
+        updates.clientsCreated = 0;
+      }
+      if (existingUser.invoicesCreated === undefined) {
+        updates.invoicesCreated = 0;
+      }
+      if (existingUser.emailsSent === undefined) {
+        updates.emailsSent = 0;
+      }
+      
+      await ctx.db.patch(existingUser._id, updates);
       return existingUser._id;
     }
 
@@ -69,16 +85,23 @@ export const checkUsageLimits = query({
     const user = await ctx.db.get(args.userId);
     if (!user) return null;
 
-    const isPro = user.subscriptionStatus === "pro";
+    // Default to free tier if subscriptionStatus is not set
+    const subscriptionStatus = user.subscriptionStatus || "free";
+    const isPro = subscriptionStatus === "pro";
+    
+    // Default counters to 0 if not set
+    const clientsCreated = user.clientsCreated ?? 0;
+    const invoicesCreated = user.invoicesCreated ?? 0;
+    const emailsSent = user.emailsSent ?? 0;
     
     return {
       isPro,
-      canCreateClient: isPro || (user.clientsCreated || 0) < 3,
-      canCreateInvoice: isPro || (user.invoicesCreated || 0) < 5,
-      canSendEmail: isPro || (user.emailsSent || 0) < 5,
-      clientsUsed: user.clientsCreated || 0,
-      invoicesUsed: user.invoicesCreated || 0,
-      emailsUsed: user.emailsSent || 0,
+      canCreateClient: isPro || clientsCreated < 3,
+      canCreateInvoice: isPro || invoicesCreated < 5,
+      canSendEmail: isPro || emailsSent < 5,
+      clientsUsed: clientsCreated,
+      invoicesUsed: invoicesCreated,
+      emailsUsed: emailsSent,
       clientsLimit: isPro ? -1 : 3,
       invoicesLimit: isPro ? -1 : 5,
       emailsLimit: isPro ? -1 : 5,
@@ -143,5 +166,38 @@ export const updateSubscription = mutation({
   handler: async (ctx, args) => {
     const { userId, ...updates } = args;
     await ctx.db.patch(userId, updates);
+  },
+});
+
+// Migration function to initialize subscription fields for existing users
+export const migrateExistingUsers = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const users = await ctx.db.query("users").collect();
+    let updated = 0;
+    
+    for (const user of users) {
+      const updates: any = {};
+      
+      if (!user.subscriptionStatus) {
+        updates.subscriptionStatus = "free";
+      }
+      if (user.clientsCreated === undefined) {
+        updates.clientsCreated = 0;
+      }
+      if (user.invoicesCreated === undefined) {
+        updates.invoicesCreated = 0;
+      }
+      if (user.emailsSent === undefined) {
+        updates.emailsSent = 0;
+      }
+      
+      if (Object.keys(updates).length > 0) {
+        await ctx.db.patch(user._id, updates);
+        updated++;
+      }
+    }
+    
+    return { total: users.length, updated };
   },
 });
