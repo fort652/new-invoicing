@@ -4,7 +4,7 @@ import { useUser } from "@clerk/nextjs";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useState } from "react";
-import { PageHeader } from "@/app/components/PageHeader";
+import PageHeader from "@/app/components/PageHeader";
 
 export default function SubscriptionPage() {
   const { user } = useUser();
