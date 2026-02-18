@@ -87,12 +87,15 @@ body {
   
   /* Show only the invoice content */
   #invoice-content,
-  #invoice-content * {
+  #invoice-content *,
+  #invoice-print,
+  #invoice-print * {
     visibility: visible;
   }
   
   /* Position invoice at top of page */
-  #invoice-content {
+  #invoice-content,
+  #invoice-print {
     position: absolute;
     left: 0;
     top: 0;

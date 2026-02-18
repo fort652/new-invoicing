@@ -7,6 +7,7 @@ import Navigation from "@/app/components/Navigation";
 import { useParams, useRouter } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
 import { useState } from "react";
+import InvoiceTemplate, { generateInvoiceHTML } from "@/app/components/InvoiceTemplate";
 
 export default function InvoiceDetailPage() {
   const params = useParams();
@@ -509,6 +510,23 @@ export default function InvoiceDetailPage() {
             )}
           </div>
         </div>
+
+        <div id="invoice-print" className="hidden print:block">
+          <InvoiceTemplate
+            invoiceNumber={invoice.invoiceNumber}
+            status={invoice.status}
+            issueDate={invoice.issueDate}
+            dueDate={invoice.dueDate}
+            client={invoice.client || { name: "N/A", email: "" }}
+            lineItems={invoice.lineItems || []}
+            subtotal={invoice.subtotal}
+            tax={invoice.tax}
+            deliveryCost={invoice.deliveryCost}
+            total={invoice.total}
+            notes={invoice.notes}
+            terms={invoice.terms}
+          />
+        </div>
       </main>
 
       {showEmailModal && (
@@ -570,7 +588,7 @@ export default function InvoiceDetailPage() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-gray-800 rounded-lg w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
             <div className="flex justify-between items-center p-6 border-b dark:border-gray-700">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">Email Preview</h3>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">Invoice Preview</h3>
               <button
                 onClick={() => setShowPreviewModal(false)}
                 className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 text-2xl leading-none"
@@ -579,9 +597,19 @@ export default function InvoiceDetailPage() {
               </button>
             </div>
             <div className="flex-1 overflow-auto p-6 bg-gray-50 dark:bg-gray-900">
-              <div 
-                dangerouslySetInnerHTML={{ __html: generateEmailHTML() }}
-                className="bg-white"
+              <InvoiceTemplate
+                invoiceNumber={invoice.invoiceNumber}
+                status={invoice.status}
+                issueDate={invoice.issueDate}
+                dueDate={invoice.dueDate}
+                client={invoice.client || { name: "N/A", email: "" }}
+                lineItems={invoice.lineItems || []}
+                subtotal={invoice.subtotal}
+                tax={invoice.tax}
+                deliveryCost={invoice.deliveryCost}
+                total={invoice.total}
+                notes={invoice.notes}
+                terms={invoice.terms}
               />
             </div>
             <div className="p-6 border-t dark:border-gray-700 bg-white dark:bg-gray-800">
