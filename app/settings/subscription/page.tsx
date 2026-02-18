@@ -10,18 +10,12 @@ export default function SubscriptionPage() {
   const { user, isLoaded } = useUser();
   const currentUser = useQuery(api.users.getCurrentUser, user?.id ? { clerkId: user.id } : "skip");
   
-  // Only query subscription and usage if we have a valid user ID
-  const subscription = useQuery(
-    api.subscriptions.getUserSubscription,
-    currentUser && currentUser._id ? { userId: currentUser._id } : "skip"
-  );
-  const usage = useQuery(
-    api.subscriptions.getUsageTracking,
-    currentUser && currentUser._id ? { userId: currentUser._id } : "skip"
-  );
-
   const [isUpgrading, setIsUpgrading] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
+  
+  // Skip subscription queries for now - these require the schema to be deployed
+  const subscription = null;
+  const usage = null;
 
   const planType = currentUser?.planType || "free";
 
@@ -99,7 +93,7 @@ export default function SubscriptionPage() {
   const currentLimits = limits[planType];
 
   // Show loading state while data is being fetched
-  if (!isLoaded || currentUser === undefined || subscription === undefined || usage === undefined) {
+  if (!isLoaded || currentUser === undefined) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-xl text-gray-900 dark:text-white">Loading...</div>
