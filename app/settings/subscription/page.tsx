@@ -14,16 +14,20 @@ export default function SubscriptionPage() {
   const [isCancelling, setIsCancelling] = useState(false);
   
   // Skip subscription queries for now - these require the schema to be deployed
-  const subscription: {
+  type Subscription = {
     cancelAtPeriodEnd?: boolean;
     currentPeriodEnd?: number;
-  } | null = null;
-  const usage: {
+  } | null;
+  
+  type Usage = {
     invoiceCount?: number;
     clientCount?: number;
     emailSendCount?: number;
     resetAt?: number;
-  } | null = null;
+  } | null;
+  
+  const subscription = null as Subscription;
+  const usage = null as Usage;
 
   const planType = currentUser?.planType || "free";
 
