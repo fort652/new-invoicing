@@ -76,6 +76,8 @@ body {
   
   body {
     background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   
   /* Hide everything by default */
@@ -96,6 +98,9 @@ body {
     top: 0;
     width: 100%;
     background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
   }
   
   /* Hide navigation, buttons, and other UI elements */
@@ -106,129 +111,215 @@ body {
     display: none !important;
   }
   
-  /* Ensure proper page breaks */
-  .invoice-page-break {
-    page-break-after: always;
-  }
-  
-  /* Remove shadows and adjust colors for print */
-  .shadow,
-  .shadow-lg,
-  .shadow-md {
-    box-shadow: none !important;
-  }
-  
   /* Ensure backgrounds print */
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
   
-  /* Remove rounded corners for cleaner print */
-  .rounded-xl,
-  .rounded-lg {
+  /* Remove rounded corners */
+  #invoice-content,
+  #invoice-content * {
     border-radius: 0 !important;
   }
   
-  /* Adjust padding for print */
-  #invoice-content {
-    padding: 20px !important;
-    margin: 0 !important;
-  }
-  
   /* Force light mode colors for all text */
-  #invoice-content,
-  #invoice-content * {
-    color: #1f2937 !important;
+  #invoice-content {
+    color: #111827 !important;
     background-color: white !important;
   }
   
-  /* Override dark mode backgrounds */
-  #invoice-content .dark\:bg-gray-800,
-  #invoice-content .dark\:bg-gray-900,
-  #invoice-content .dark\:bg-gray-700 {
+  /* Override all dark backgrounds */
+  #invoice-content *:not(.bg-gradient-to-r):not(.bg-gradient-to-r *) {
     background-color: white !important;
   }
   
-  /* Keep gradient header colors */
+  /* Keep gradient header - make it solid blue for better print */
   #invoice-content .bg-gradient-to-r {
-    background: linear-gradient(to right, #2563eb, #1d4ed8) !important;
+    background: #2563eb !important;
+    background-image: none !important;
     color: white !important;
+    padding: 2rem !important;
+    margin: 0 !important;
   }
   
   #invoice-content .bg-gradient-to-r * {
     color: white !important;
   }
   
-  /* Keep blue accent colors */
+  /* Main content padding */
+  #invoice-content > div:last-child {
+    padding: 2rem !important;
+  }
+  
+  /* Status badge styling for print */
+  #invoice-content .bg-green-100,
+  #invoice-content .bg-green-100 * {
+    background-color: #dcfce7 !important;
+    color: #166534 !important;
+    border: 1px solid #86efac !important;
+    padding: 0.25rem 0.75rem !important;
+  }
+  
+  #invoice-content .bg-blue-100,
+  #invoice-content .bg-blue-100 * {
+    background-color: #dbeafe !important;
+    color: #1e40af !important;
+    border: 1px solid #93c5fd !important;
+    padding: 0.25rem 0.75rem !important;
+  }
+  
+  #invoice-content .bg-red-100,
+  #invoice-content .bg-red-100 * {
+    background-color: #fee2e2 !important;
+    color: #991b1b !important;
+    border: 1px solid #fca5a5 !important;
+    padding: 0.25rem 0.75rem !important;
+  }
+  
+  #invoice-content .bg-gray-100,
+  #invoice-content .bg-gray-100 * {
+    background-color: #f3f4f6 !important;
+    color: #374151 !important;
+    border: 1px solid #d1d5db !important;
+    padding: 0.25rem 0.75rem !important;
+  }
+  
+  #invoice-content .bg-yellow-100,
+  #invoice-content .bg-yellow-100 * {
+    background-color: #fef3c7 !important;
+    color: #92400e !important;
+    border: 1px solid #fde68a !important;
+    padding: 0.25rem 0.75rem !important;
+  }
+  
+  /* Date and amount grid */
+  #invoice-content .grid {
+    display: grid !important;
+    gap: 1.5rem !important;
+    margin-bottom: 2rem !important;
+  }
+  
+  /* Bill To section */
+  #invoice-content .bg-gray-50:not(.bg-gradient-to-r),
+  #invoice-content .bg-gray-900\/50 {
+    background-color: #f9fafb !important;
+    border: 1px solid #e5e7eb !important;
+    padding: 1.5rem !important;
+    margin-bottom: 2rem !important;
+  }
+  
+  /* Table styling */
+  #invoice-content table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin-bottom: 2rem !important;
+  }
+  
+  #invoice-content thead {
+    background-color: #f9fafb !important;
+    border-bottom: 2px solid #2563eb !important;
+  }
+  
+  #invoice-content th {
+    padding: 0.75rem 1rem !important;
+    text-align: left !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+  }
+  
+  #invoice-content td {
+    padding: 1rem !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    color: #111827 !important;
+    font-size: 0.875rem !important;
+  }
+  
+  #invoice-content tbody tr:hover {
+    background-color: white !important;
+  }
+  
+  /* Totals section */
+  #invoice-content .border-t-2 {
+    border-top: 2px solid #e5e7eb !important;
+    padding-top: 1.5rem !important;
+    margin-top: 1rem !important;
+  }
+  
+  #invoice-content .border-t-2.border-blue-600 {
+    border-top-color: #2563eb !important;
+  }
+  
+  /* Blue accent colors */
   #invoice-content .text-blue-600,
   #invoice-content .text-blue-400 {
     color: #2563eb !important;
   }
   
-  /* Keep status badge colors */
-  #invoice-content .bg-green-100 {
-    background-color: #dcfce7 !important;
-    color: #166534 !important;
-  }
-  
-  #invoice-content .bg-blue-100 {
-    background-color: #dbeafe !important;
-    color: #1e40af !important;
-  }
-  
-  #invoice-content .bg-red-100 {
-    background-color: #fee2e2 !important;
-    color: #991b1b !important;
-  }
-  
-  #invoice-content .bg-gray-100 {
-    background-color: #f3f4f6 !important;
-    color: #374151 !important;
-  }
-  
-  #invoice-content .bg-yellow-100 {
-    background-color: #fef3c7 !important;
-    color: #92400e !important;
-  }
-  
-  /* Keep notes and terms backgrounds */
-  #invoice-content .bg-blue-50 {
-    background-color: #eff6ff !important;
-  }
-  
-  #invoice-content .bg-gray-50 {
-    background-color: #f9fafb !important;
-  }
-  
-  /* Ensure table borders are visible */
-  #invoice-content table,
-  #invoice-content th,
-  #invoice-content td {
-    border-color: #e5e7eb !important;
-  }
-  
-  /* Table header background */
-  #invoice-content thead tr {
-    background-color: transparent !important;
-  }
-  
-  /* Gray text for secondary info */
+  /* Gray text for labels */
   #invoice-content .text-gray-600,
   #invoice-content .text-gray-500,
   #invoice-content .text-gray-400 {
     color: #6b7280 !important;
   }
   
+  /* Dark text for values */
+  #invoice-content .text-gray-900,
+  #invoice-content .font-bold,
+  #invoice-content .font-semibold {
+    color: #111827 !important;
+  }
+  
+  /* Notes and terms sections */
+  #invoice-content .bg-blue-50:not(.bg-gradient-to-r),
+  #invoice-content .bg-blue-900\/20 {
+    background-color: #eff6ff !important;
+    border-left: 4px solid #2563eb !important;
+    padding: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  /* SVG icons in notes/terms */
+  #invoice-content svg {
+    color: #2563eb !important;
+  }
+  
   /* Optimize page size */
   @page {
-    margin: 1cm;
+    margin: 0.5cm;
     size: A4;
   }
   
-  /* Prevent page breaks inside important elements */
+  /* Prevent page breaks */
   #invoice-content table,
-  #invoice-content .bg-gradient-to-r {
-    page-break-inside: avoid;
+  #invoice-content .bg-gradient-to-r,
+  #invoice-content .grid {
+    page-break-inside: avoid !important;
+  }
+  
+  /* Remove shadows */
+  #invoice-content,
+  #invoice-content * {
+    box-shadow: none !important;
+  }
+  
+  /* Ensure proper font sizes */
+  #invoice-content h1,
+  #invoice-content h2 {
+    font-size: 1.875rem !important;
+    font-weight: 700 !important;
+  }
+  
+  #invoice-content h3 {
+    font-size: 1.125rem !important;
+    font-weight: 600 !important;
+  }
+  
+  #invoice-content h4 {
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
   }
 }
