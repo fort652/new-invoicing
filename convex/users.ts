@@ -42,24 +42,6 @@ export const getCurrentUser = query({
   },
 });
 
-export const getUserByClerkId = query({
-  args: { clerkId: v.string() },
-  handler: async (ctx, args) => {
-    return await ctx.db
-      .query("users")
-      .withIndex("by_clerk_id", (q) => q.eq("clerkId", args.clerkId))
-      .unique();
-  },
-});
-
-export const getUserByEmail = query({
-  args: { email: v.string() },
-  handler: async (ctx, args) => {
-    const users = await ctx.db.query("users").collect();
-    return users.find((user) => user.email === args.email);
-  },
-});
-
 export const updateTheme = mutation({
   args: {
     userId: v.id("users"),
