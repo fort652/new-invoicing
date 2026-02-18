@@ -86,10 +86,10 @@ export default function InvoiceDetailPage() {
       ?.map(
         (item) => `
         <tr>
-          <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">${item.description}</td>
-          <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right;">${item.quantity}</td>
-          <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right;">R${item.rate.toFixed(2)}</td>
-          <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right; font-weight: 600;">R${item.amount.toFixed(2)}</td>
+          <td style="padding: 16px; border-bottom: 1px solid #e5e7eb; color: #111827;">${item.description}</td>
+          <td style="padding: 16px; border-bottom: 1px solid #e5e7eb; text-align: right; color: #111827;">${item.quantity}</td>
+          <td style="padding: 16px; border-bottom: 1px solid #e5e7eb; text-align: right; color: #111827;">R${item.rate.toFixed(2)}</td>
+          <td style="padding: 16px; border-bottom: 1px solid #e5e7eb; text-align: right; font-weight: 600; color: #000000;">R${item.amount.toFixed(2)}</td>
         </tr>
       `
       )
@@ -103,51 +103,55 @@ export default function InvoiceDetailPage() {
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>Invoice ${invoice.invoiceNumber}</title>
         </head>
-        <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #374151; margin: 0; padding: 0; background-color: #f9fafb;">
-          <div style="max-width: 800px; margin: 40px auto; background-color: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden;">
+        <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #111827; margin: 0; padding: 0; background-color: #ffffff;">
+          <div style="max-width: 800px; margin: 40px auto; background-color: white; border: 1px solid #e5e7eb; overflow: hidden;">
             
-            <div style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); padding: 40px; text-align: center;">
-              <h1 style="color: white; margin: 0; font-size: 32px; font-weight: bold;">INVOICE</h1>
-              <p style="color: rgba(255,255,255,0.9); margin: 8px 0 0 0; font-size: 18px;">#${invoice.invoiceNumber}</p>
+            <div style="background: white; border: 3px solid #000000; padding: 40px; text-align: center; margin-bottom: 32px;">
+              <h1 style="color: #000000; margin: 0; font-size: 32px; font-weight: bold; letter-spacing: 0.1em;">INVOICE</h1>
+              <p style="color: #000000; margin: 8px 0 0 0; font-size: 18px; font-weight: 600;">#${invoice.invoiceNumber}</p>
             </div>
 
             <div style="padding: 40px;">
               
               <div style="margin-bottom: 32px;">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
                   <div>
-                    <p style="color: #6b7280; margin: 0 0 4px 0; font-size: 14px;">Issue Date</p>
-                    <p style="margin: 0; font-weight: 600;">${new Date(invoice.issueDate).toLocaleDateString()}</p>
+                    <p style="color: #6b7280; margin: 0 0 4px 0; font-size: 12px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em;">Issue Date</p>
+                    <p style="margin: 0; font-weight: 600; color: #111827; font-size: 16px;">${new Date(invoice.issueDate).toLocaleDateString()}</p>
                   </div>
                   <div>
-                    <p style="color: #6b7280; margin: 0 0 4px 0; font-size: 14px;">Due Date</p>
-                    <p style="margin: 0; font-weight: 600;">${new Date(invoice.dueDate).toLocaleDateString()}</p>
+                    <p style="color: #6b7280; margin: 0 0 4px 0; font-size: 12px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em;">Due Date</p>
+                    <p style="margin: 0; font-weight: 600; color: #111827; font-size: 16px;">${new Date(invoice.dueDate).toLocaleDateString()}</p>
+                  </div>
+                  <div>
+                    <p style="color: #6b7280; margin: 0 0 4px 0; font-size: 12px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em;">Amount Due</p>
+                    <p style="margin: 0; font-weight: 700; color: #000000; font-size: 20px;">R${invoice.total.toFixed(2)}</p>
                   </div>
                 </div>
               </div>
 
-              <div style="margin-bottom: 32px; padding: 20px; background-color: #f9fafb; border-radius: 8px;">
-                <h3 style="margin: 0 0 12px 0; color: #111827; font-size: 16px;">Bill To:</h3>
-                <p style="margin: 0; font-weight: 600; color: #111827;">${invoice.client?.name || "N/A"}</p>
-                ${invoice.client?.email ? `<p style="margin: 4px 0 0 0; color: #6b7280;">${invoice.client.email}</p>` : ""}
-                ${invoice.client?.phone ? `<p style="margin: 4px 0 0 0; color: #6b7280;">${invoice.client.phone}</p>` : ""}
-                ${invoice.client?.address ? `<p style="margin: 4px 0 0 0; color: #6b7280;">${invoice.client.address}</p>` : ""}
+              <div style="margin-bottom: 32px; padding: 24px; background-color: white; border: 2px solid #000000;">
+                <h3 style="margin: 0 0 12px 0; color: #000000; font-size: 12px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em;">Bill To</h3>
+                <p style="margin: 0; font-weight: 700; color: #000000; font-size: 16px;">${invoice.client?.name || "N/A"}</p>
+                ${invoice.client?.email ? `<p style="margin: 4px 0 0 0; color: #111827;">${invoice.client.email}</p>` : ""}
+                ${invoice.client?.phone ? `<p style="margin: 4px 0 0 0; color: #111827;">${invoice.client.phone}</p>` : ""}
+                ${invoice.client?.address ? `<p style="margin: 8px 0 0 0; color: #111827;">${invoice.client.address}</p>` : ""}
                 ${
                   invoice.client?.city || invoice.client?.state || invoice.client?.zipCode
-                    ? `<p style="margin: 4px 0 0 0; color: #6b7280;">${[invoice.client?.city, invoice.client?.state, invoice.client?.zipCode].filter(Boolean).join(", ")}</p>`
+                    ? `<p style="margin: 4px 0 0 0; color: #111827;">${[invoice.client?.city, invoice.client?.state, invoice.client?.zipCode].filter(Boolean).join(", ")}</p>`
                     : ""
                 }
-                ${invoice.client?.country ? `<p style="margin: 4px 0 0 0; color: #6b7280;">${invoice.client.country}</p>` : ""}
+                ${invoice.client?.country ? `<p style="margin: 4px 0 0 0; color: #111827;">${invoice.client.country}</p>` : ""}
               </div>
 
               <div style="margin-bottom: 32px; overflow-x: auto;">
                 <table style="width: 100%; border-collapse: collapse;">
                   <thead>
-                    <tr style="background-color: #f9fafb;">
-                      <th style="padding: 12px; text-align: left; font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; border-bottom: 2px solid #e5e7eb;">Description</th>
-                      <th style="padding: 12px; text-align: right; font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; border-bottom: 2px solid #e5e7eb;">Qty</th>
-                      <th style="padding: 12px; text-align: right; font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; border-bottom: 2px solid #e5e7eb;">Rate</th>
-                      <th style="padding: 12px; text-align: right; font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; border-bottom: 2px solid #e5e7eb;">Amount</th>
+                    <tr style="background-color: white; border-bottom: 2px solid #000000;">
+                      <th style="padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #000000; text-transform: uppercase; letter-spacing: 0.05em;">Description</th>
+                      <th style="padding: 12px 16px; text-align: right; font-size: 11px; font-weight: 600; color: #000000; text-transform: uppercase; letter-spacing: 0.05em;">Qty</th>
+                      <th style="padding: 12px 16px; text-align: right; font-size: 11px; font-weight: 600; color: #000000; text-transform: uppercase; letter-spacing: 0.05em;">Rate</th>
+                      <th style="padding: 12px 16px; text-align: right; font-size: 11px; font-weight: 600; color: #000000; text-transform: uppercase; letter-spacing: 0.05em;">Amount</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -157,26 +161,26 @@ export default function InvoiceDetailPage() {
               </div>
 
               <div style="margin-bottom: 32px;">
-                <div style="max-width: 300px; margin-left: auto;">
-                  <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-                    <span style="color: #6b7280;">Subtotal:</span>
-                    <span style="font-weight: 600;">R${invoice.subtotal.toFixed(2)}</span>
+                <div style="max-width: 400px; margin-left: auto;">
+                  <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
+                    <span style="color: #6b7280; font-size: 14px;">Subtotal</span>
+                    <span style="font-weight: 600; color: #111827; font-size: 14px;">R${invoice.subtotal.toFixed(2)}</span>
                   </div>
-                  <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-                    <span style="color: #6b7280;">Tax:</span>
-                    <span style="font-weight: 600;">R${invoice.tax.toFixed(2)}</span>
+                  <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
+                    <span style="color: #6b7280; font-size: 14px;">Tax</span>
+                    <span style="font-weight: 600; color: #111827; font-size: 14px;">R${invoice.tax.toFixed(2)}</span>
                   </div>
                   ${
                     invoice.deliveryCost
-                      ? `<div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-                    <span style="color: #6b7280;">Delivery:</span>
-                    <span style="font-weight: 600;">R${invoice.deliveryCost.toFixed(2)}</span>
+                      ? `<div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
+                    <span style="color: #6b7280; font-size: 14px;">Delivery</span>
+                    <span style="font-weight: 600; color: #111827; font-size: 14px;">R${invoice.deliveryCost.toFixed(2)}</span>
                   </div>`
                       : ""
                   }
-                  <div style="display: flex; justify-content: space-between; padding: 16px 0; border-top: 2px solid #2563eb; margin-top: 8px;">
-                    <span style="font-size: 18px; font-weight: 700; color: #111827;">Total:</span>
-                    <span style="font-size: 18px; font-weight: 700; color: #2563eb;">R${invoice.total.toFixed(2)}</span>
+                  <div style="display: flex; justify-content: space-between; padding: 16px 0; border-top: 3px solid #000000; margin-top: 8px;">
+                    <span style="font-size: 20px; font-weight: 700; color: #000000;">Total</span>
+                    <span style="font-size: 24px; font-weight: 700; color: #000000;">R${invoice.total.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
@@ -184,13 +188,13 @@ export default function InvoiceDetailPage() {
               ${
                 invoice.notes || invoice.terms
                   ? `
-                <div style="padding-top: 32px; border-top: 1px solid #e5e7eb;">
+                <div style="padding-top: 32px; border-top: 2px solid #e5e7eb; margin-top: 32px;">
                   ${
                     invoice.notes
                       ? `
-                    <div style="margin-bottom: 24px;">
-                      <h4 style="margin: 0 0 8px 0; color: #111827; font-size: 14px; font-weight: 600;">Notes:</h4>
-                      <p style="margin: 0; color: #6b7280; white-space: pre-wrap;">${invoice.notes}</p>
+                    <div style="margin-bottom: 24px; padding: 16px; background-color: #f9fafb; border-left: 4px solid #000000;">
+                      <h4 style="margin: 0 0 8px 0; color: #000000; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Notes</h4>
+                      <p style="margin: 0; color: #111827; white-space: pre-wrap; font-size: 14px; line-height: 1.6;">${invoice.notes}</p>
                     </div>
                   `
                       : ""
@@ -198,9 +202,9 @@ export default function InvoiceDetailPage() {
                   ${
                     invoice.terms
                       ? `
-                    <div>
-                      <h4 style="margin: 0 0 8px 0; color: #111827; font-size: 14px; font-weight: 600;">Terms & Conditions:</h4>
-                      <p style="margin: 0; color: #6b7280; white-space: pre-wrap;">${invoice.terms}</p>
+                    <div style="padding: 16px; background-color: #f9fafb; border-left: 4px solid #000000;">
+                      <h4 style="margin: 0 0 8px 0; color: #000000; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Terms & Conditions</h4>
+                      <p style="margin: 0; color: #111827; white-space: pre-wrap; font-size: 14px; line-height: 1.6;">${invoice.terms}</p>
                     </div>
                   `
                       : ""
@@ -212,8 +216,8 @@ export default function InvoiceDetailPage() {
 
             </div>
 
-            <div style="background-color: #f9fafb; padding: 24px; text-align: center; border-top: 1px solid #e5e7eb;">
-              <p style="margin: 0; color: #6b7280; font-size: 14px;">Thank you for your business!</p>
+            <div style="background-color: white; padding: 24px; text-align: center; border-top: 2px solid #000000;">
+              <p style="margin: 0; color: #111827; font-size: 14px; font-weight: 500;">Thank you for your business!</p>
             </div>
 
           </div>
