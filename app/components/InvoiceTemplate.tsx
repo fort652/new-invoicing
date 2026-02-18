@@ -29,6 +29,7 @@ interface InvoiceTemplateProps {
   total: number;
   notes?: string;
   terms?: string;
+  darkModeSupport?: boolean;
 }
 
 export default function InvoiceTemplate({
@@ -44,94 +45,97 @@ export default function InvoiceTemplate({
   total,
   notes,
   terms,
+  darkModeSupport = false,
 }: InvoiceTemplateProps) {
+  const dark = darkModeSupport;
+
   return (
-    <div className="bg-white text-black">
-      <div style={{ border: "3px solid #000000", padding: "2rem", marginBottom: "2rem", textAlign: "center" }}>
-        <h1 style={{ fontSize: "2.25rem", fontWeight: "700", color: "#000000", margin: "0 0 0.5rem 0", letterSpacing: "0.1em" }}>
+    <div className={dark ? "bg-white dark:bg-gray-800" : "bg-white"}>
+      <div className={`border-3 p-8 mb-8 text-center ${dark ? "border-black dark:border-gray-600" : "border-black"}`}>
+        <h1 className={`text-4xl font-bold mb-2 tracking-wider ${dark ? "text-black dark:text-white" : "text-black"}`}>
           INVOICE
         </h1>
-        <p style={{ fontSize: "1.125rem", fontWeight: "600", color: "#000000", margin: "0" }}>
+        <p className={`text-lg font-semibold ${dark ? "text-black dark:text-gray-300" : "text-black"}`}>
           #{invoiceNumber}
         </p>
-        <div style={{ marginTop: "1rem" }}>
-          <span style={{ border: "2px solid #000000", padding: "0.25rem 1rem", display: "inline-block", fontSize: "0.875rem", fontWeight: "600" }}>
+        <div className="mt-4">
+          <span className={`inline-block border-2 px-4 py-1 text-sm font-semibold ${dark ? "border-black dark:border-gray-600 text-black dark:text-white" : "border-black text-black"}`}>
             {status.charAt(0).toUpperCase() + status.slice(1)}
           </span>
         </div>
       </div>
 
-      <div style={{ padding: "0 2rem" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem", marginBottom: "2rem" }}>
+      <div className="px-8">
+        <div className="grid grid-cols-3 gap-6 mb-8">
           <div>
-            <p style={{ fontSize: "0.75rem", fontWeight: "600", color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.25rem" }}>
+            <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">
               Issue Date
             </p>
-            <p style={{ fontSize: "1rem", fontWeight: "600", color: "#000000" }}>
+            <p className={`text-base font-semibold ${dark ? "text-black dark:text-white" : "text-black"}`}>
               {new Date(issueDate).toLocaleDateString()}
             </p>
           </div>
           <div>
-            <p style={{ fontSize: "0.75rem", fontWeight: "600", color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.25rem" }}>
+            <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">
               Due Date
             </p>
-            <p style={{ fontSize: "1rem", fontWeight: "600", color: "#000000" }}>
+            <p className={`text-base font-semibold ${dark ? "text-black dark:text-white" : "text-black"}`}>
               {new Date(dueDate).toLocaleDateString()}
             </p>
           </div>
           <div>
-            <p style={{ fontSize: "0.75rem", fontWeight: "600", color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.25rem" }}>
+            <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">
               Amount Due
             </p>
-            <p style={{ fontSize: "1.25rem", fontWeight: "700", color: "#000000" }}>
+            <p className={`text-xl font-bold ${dark ? "text-black dark:text-white" : "text-black"}`}>
               R{total.toFixed(2)}
             </p>
           </div>
         </div>
 
-        <div style={{ border: "2px solid #000000", padding: "1.5rem", marginBottom: "2rem" }}>
-          <h3 style={{ fontSize: "0.75rem", fontWeight: "600", color: "#000000", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.75rem" }}>
+        <div className={`border-2 p-6 mb-8 ${dark ? "border-black dark:border-gray-600" : "border-black"}`}>
+          <h3 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${dark ? "text-black dark:text-white" : "text-black"}`}>
             Bill To
           </h3>
-          <p style={{ fontSize: "1.125rem", fontWeight: "700", color: "#000000", marginBottom: "0.25rem" }}>
+          <p className={`text-lg font-bold mb-1 ${dark ? "text-black dark:text-white" : "text-black"}`}>
             {client.name}
           </p>
-          <p style={{ fontSize: "0.875rem", color: "#000000" }}>{client.email}</p>
-          {client.phone && <p style={{ fontSize: "0.875rem", color: "#000000" }}>{client.phone}</p>}
-          {client.address && <p style={{ fontSize: "0.875rem", color: "#000000", marginTop: "0.5rem" }}>{client.address}</p>}
+          <p className={`text-sm ${dark ? "text-black dark:text-gray-300" : "text-black"}`}>{client.email}</p>
+          {client.phone && <p className={`text-sm ${dark ? "text-black dark:text-gray-300" : "text-black"}`}>{client.phone}</p>}
+          {client.address && <p className={`text-sm mt-2 ${dark ? "text-black dark:text-gray-300" : "text-black"}`}>{client.address}</p>}
           {(client.city || client.state || client.zipCode) && (
-            <p style={{ fontSize: "0.875rem", color: "#000000" }}>
+            <p className={`text-sm ${dark ? "text-black dark:text-gray-300" : "text-black"}`}>
               {[client.city, client.state, client.zipCode].filter(Boolean).join(", ")}
             </p>
           )}
-          {client.country && <p style={{ fontSize: "0.875rem", color: "#000000" }}>{client.country}</p>}
+          {client.country && <p className={`text-sm ${dark ? "text-black dark:text-gray-300" : "text-black"}`}>{client.country}</p>}
         </div>
 
-        <div style={{ marginBottom: "2rem" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <div className="mb-8">
+          <table className="w-full border-collapse">
             <thead>
-              <tr style={{ borderBottom: "2px solid #000000" }}>
-                <th style={{ padding: "0.75rem 1rem", textAlign: "left", fontSize: "0.6875rem", fontWeight: "600", color: "#000000", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              <tr className={`border-b-2 ${dark ? "border-black dark:border-gray-600" : "border-black"}`}>
+                <th className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider ${dark ? "text-black dark:text-white" : "text-black"}`}>
                   Description
                 </th>
-                <th style={{ padding: "0.75rem 1rem", textAlign: "right", fontSize: "0.6875rem", fontWeight: "600", color: "#000000", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                <th className={`px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider ${dark ? "text-black dark:text-white" : "text-black"}`}>
                   Qty
                 </th>
-                <th style={{ padding: "0.75rem 1rem", textAlign: "right", fontSize: "0.6875rem", fontWeight: "600", color: "#000000", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                <th className={`px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider ${dark ? "text-black dark:text-white" : "text-black"}`}>
                   Rate
                 </th>
-                <th style={{ padding: "0.75rem 1rem", textAlign: "right", fontSize: "0.6875rem", fontWeight: "600", color: "#000000", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                <th className={`px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider ${dark ? "text-black dark:text-white" : "text-black"}`}>
                   Amount
                 </th>
               </tr>
             </thead>
             <tbody>
               {lineItems.map((item, index) => (
-                <tr key={index} style={{ borderBottom: "1px solid #e5e7eb" }}>
-                  <td style={{ padding: "1rem", fontSize: "0.875rem", color: "#000000" }}>{item.description}</td>
-                  <td style={{ padding: "1rem", fontSize: "0.875rem", color: "#000000", textAlign: "right" }}>{item.quantity}</td>
-                  <td style={{ padding: "1rem", fontSize: "0.875rem", color: "#000000", textAlign: "right" }}>R{item.rate.toFixed(2)}</td>
-                  <td style={{ padding: "1rem", fontSize: "0.875rem", fontWeight: "600", color: "#000000", textAlign: "right" }}>
+                <tr key={index} className={`border-b ${dark ? "border-gray-200 dark:border-gray-700" : "border-gray-200"}`}>
+                  <td className={`px-4 py-4 text-sm ${dark ? "text-black dark:text-white" : "text-black"}`}>{item.description}</td>
+                  <td className={`px-4 py-4 text-sm text-right ${dark ? "text-black dark:text-white" : "text-black"}`}>{item.quantity}</td>
+                  <td className={`px-4 py-4 text-sm text-right ${dark ? "text-black dark:text-white" : "text-black"}`}>R{item.rate.toFixed(2)}</td>
+                  <td className={`px-4 py-4 text-sm font-semibold text-right ${dark ? "text-black dark:text-white" : "text-black"}`}>
                     R{item.amount.toFixed(2)}
                   </td>
                 </tr>
@@ -140,47 +144,47 @@ export default function InvoiceTemplate({
           </table>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "2rem" }}>
-          <div style={{ width: "100%", maxWidth: "24rem" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", padding: "0.75rem 0", borderBottom: "1px solid #e5e7eb" }}>
-              <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>Subtotal</span>
-              <span style={{ fontSize: "0.875rem", fontWeight: "600", color: "#000000" }}>R{subtotal.toFixed(2)}</span>
+        <div className="flex justify-end mb-8">
+          <div className="w-full sm:w-96">
+            <div className="flex justify-between py-3 border-b border-gray-200">
+              <span className="text-sm text-gray-600">Subtotal</span>
+              <span className={`text-sm font-semibold ${dark ? "text-black dark:text-white" : "text-black"}`}>R{subtotal.toFixed(2)}</span>
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", padding: "0.75rem 0", borderBottom: "1px solid #e5e7eb" }}>
-              <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>Tax</span>
-              <span style={{ fontSize: "0.875rem", fontWeight: "600", color: "#000000" }}>R{tax.toFixed(2)}</span>
+            <div className="flex justify-between py-3 border-b border-gray-200">
+              <span className="text-sm text-gray-600">Tax</span>
+              <span className={`text-sm font-semibold ${dark ? "text-black dark:text-white" : "text-black"}`}>R{tax.toFixed(2)}</span>
             </div>
             {deliveryCost && deliveryCost > 0 && (
-              <div style={{ display: "flex", justifyContent: "space-between", padding: "0.75rem 0", borderBottom: "1px solid #e5e7eb" }}>
-                <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>Delivery</span>
-                <span style={{ fontSize: "0.875rem", fontWeight: "600", color: "#000000" }}>R{deliveryCost.toFixed(2)}</span>
+              <div className="flex justify-between py-3 border-b border-gray-200">
+                <span className="text-sm text-gray-600">Delivery</span>
+                <span className={`text-sm font-semibold ${dark ? "text-black dark:text-white" : "text-black"}`}>R{deliveryCost.toFixed(2)}</span>
               </div>
             )}
-            <div style={{ display: "flex", justifyContent: "space-between", padding: "1rem 0", borderTop: "3px solid #000000", marginTop: "0.5rem" }}>
-              <span style={{ fontSize: "1.25rem", fontWeight: "700", color: "#000000" }}>Total</span>
-              <span style={{ fontSize: "1.5rem", fontWeight: "700", color: "#000000" }}>R{total.toFixed(2)}</span>
+            <div className={`flex justify-between py-4 border-t-3 mt-2 ${dark ? "border-black dark:border-gray-600" : "border-black"}`}>
+              <span className={`text-xl font-bold ${dark ? "text-black dark:text-white" : "text-black"}`}>Total</span>
+              <span className={`text-2xl font-bold ${dark ? "text-black dark:text-white" : "text-black"}`}>R{total.toFixed(2)}</span>
             </div>
           </div>
         </div>
 
         {(notes || terms) && (
-          <div style={{ borderTop: "2px solid #e5e7eb", paddingTop: "2rem", marginTop: "2rem" }}>
+          <div className={`border-t-2 pt-8 space-y-6 ${dark ? "border-gray-200 dark:border-gray-700" : "border-gray-200"}`}>
             {notes && (
-              <div style={{ marginBottom: "1.5rem", padding: "1rem", backgroundColor: "#f9fafb", borderLeft: "4px solid #000000" }}>
-                <h4 style={{ fontSize: "0.75rem", fontWeight: "600", color: "#000000", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.5rem" }}>
+              <div className={`p-4 border-l-4 ${dark ? "bg-gray-50 dark:bg-gray-900/50 border-black dark:border-gray-600" : "bg-gray-50 border-black"}`}>
+                <h4 className={`text-xs font-semibold uppercase tracking-wider mb-2 ${dark ? "text-black dark:text-white" : "text-black"}`}>
                   Notes
                 </h4>
-                <p style={{ fontSize: "0.875rem", color: "#000000", whiteSpace: "pre-wrap", lineHeight: "1.6", margin: "0" }}>
+                <p className={`text-sm whitespace-pre-wrap leading-relaxed ${dark ? "text-black dark:text-gray-300" : "text-black"}`}>
                   {notes}
                 </p>
               </div>
             )}
             {terms && (
-              <div style={{ padding: "1rem", backgroundColor: "#f9fafb", borderLeft: "4px solid #000000" }}>
-                <h4 style={{ fontSize: "0.75rem", fontWeight: "600", color: "#000000", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.5rem" }}>
+              <div className={`p-4 border-l-4 ${dark ? "bg-gray-50 dark:bg-gray-900/50 border-black dark:border-gray-600" : "bg-gray-50 border-black"}`}>
+                <h4 className={`text-xs font-semibold uppercase tracking-wider mb-2 ${dark ? "text-black dark:text-white" : "text-black"}`}>
                   Terms & Conditions
                 </h4>
-                <p style={{ fontSize: "0.875rem", color: "#000000", whiteSpace: "pre-wrap", lineHeight: "1.6", margin: "0" }}>
+                <p className={`text-sm whitespace-pre-wrap leading-relaxed ${dark ? "text-black dark:text-gray-300" : "text-black"}`}>
                   {terms}
                 </p>
               </div>
@@ -188,8 +192,8 @@ export default function InvoiceTemplate({
           </div>
         )}
 
-        <div style={{ borderTop: "2px solid #000000", marginTop: "2rem", paddingTop: "1.5rem", paddingBottom: "1.5rem", textAlign: "center" }}>
-          <p style={{ fontSize: "0.875rem", fontWeight: "500", color: "#000000", margin: "0" }}>
+        <div className={`border-t-2 mt-8 pt-6 pb-6 text-center ${dark ? "border-black dark:border-gray-600" : "border-black"}`}>
+          <p className={`text-sm font-medium ${dark ? "text-black dark:text-white" : "text-black"}`}>
             Thank you for your business!
           </p>
         </div>

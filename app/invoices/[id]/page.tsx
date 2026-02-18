@@ -322,193 +322,53 @@ export default function InvoiceDetailPage() {
           </div>
         </div>
 
-        <div id="invoice-content" className="rounded-xl bg-white dark:bg-gray-800 shadow-lg overflow-hidden mb-6">
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 px-8 py-6 print:bg-white print:text-gray-900">
-            <div className="flex justify-between items-start">
-              <div>
-                <h2 className="text-3xl font-bold text-white print:text-gray-900 mb-2">INVOICE</h2>
-                <p className="text-blue-100 print:text-gray-600">#{invoice.invoiceNumber}</p>
-              </div>
-              <div className="text-right">
-                <div className="no-print">
-                  <select
-                    value={invoice.status}
-                    onChange={(e) =>
-                      handleStatusChange(
-                        e.target.value as "draft" | "sent" | "paid" | "overdue" | "cancelled"
-                      )
-                    }
-                    className={`rounded-lg border-2 px-4 py-2 text-sm font-semibold bg-white dark:bg-gray-700 cursor-pointer ${
-                      invoice.status === "paid"
-                        ? "border-green-500 text-green-600 dark:text-green-400"
-                        : invoice.status === "sent"
-                        ? "border-blue-500 text-blue-600 dark:text-blue-400"
-                        : invoice.status === "overdue"
-                        ? "border-red-500 text-red-600 dark:text-red-400"
-                        : invoice.status === "draft"
-                        ? "border-gray-500 text-gray-600 dark:text-gray-400"
-                        : "border-yellow-500 text-yellow-600 dark:text-yellow-400"
-                    }`}
-                  >
-                    <option value="draft">Draft</option>
-                    <option value="sent">Sent</option>
-                    <option value="paid">Paid</option>
-                    <option value="overdue">Overdue</option>
-                    <option value="cancelled">Cancelled</option>
-                  </select>
-                </div>
-                <div className="hidden print:block">
-                  <span
-                    className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${
-                      invoice.status === "paid"
-                        ? "bg-green-100 text-green-800"
-                        : invoice.status === "sent"
-                        ? "bg-blue-100 text-blue-800"
-                        : invoice.status === "overdue"
-                        ? "bg-red-100 text-red-800"
-                        : invoice.status === "draft"
-                        ? "bg-gray-100 text-gray-800"
-                        : "bg-yellow-100 text-yellow-800"
-                    }`}
-                  >
-                    {invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}
-                  </span>
-                </div>
-              </div>
-            </div>
+        <div className="mb-4 no-print flex justify-end">
+          <div className="flex items-center gap-3">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Status:</label>
+            <select
+              value={invoice.status}
+              onChange={(e) =>
+                handleStatusChange(
+                  e.target.value as "draft" | "sent" | "paid" | "overdue" | "cancelled"
+                )
+              }
+              className={`rounded-lg border-2 px-4 py-2 text-sm font-semibold bg-white dark:bg-gray-700 text-gray-900 dark:text-white cursor-pointer ${
+                invoice.status === "paid"
+                  ? "border-green-500"
+                  : invoice.status === "sent"
+                  ? "border-blue-500"
+                  : invoice.status === "overdue"
+                  ? "border-red-500"
+                  : invoice.status === "draft"
+                  ? "border-gray-500"
+                  : "border-yellow-500"
+              }`}
+            >
+              <option value="draft">Draft</option>
+              <option value="sent">Sent</option>
+              <option value="paid">Paid</option>
+              <option value="overdue">Overdue</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
           </div>
+        </div>
 
-          <div className="p-8">
-            <div className="grid md:grid-cols-3 gap-8 mb-8">
-              <div>
-                <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Issue Date</h3>
-                <p className="text-lg font-medium text-gray-900 dark:text-white">{new Date(invoice.issueDate).toLocaleDateString()}</p>
-              </div>
-              <div>
-                <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Due Date</h3>
-                <p className="text-lg font-medium text-gray-900 dark:text-white">{new Date(invoice.dueDate).toLocaleDateString()}</p>
-              </div>
-              <div>
-                <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Amount Due</h3>
-                <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">R{invoice.total.toFixed(2)}</p>
-              </div>
-            </div>
-
-            <div className="border-t dark:border-gray-700 pt-8 mb-8">
-              <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-6">
-                <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Bill To</h3>
-                <p className="text-lg font-bold text-gray-900 dark:text-white mb-1">{invoice.client?.name}</p>
-                <p className="text-gray-600 dark:text-gray-300">{invoice.client?.email}</p>
-                {invoice.client?.phone && (
-                  <p className="text-gray-600 dark:text-gray-300">{invoice.client.phone}</p>
-                )}
-                {invoice.client?.address && (
-                  <p className="text-gray-600 dark:text-gray-300 mt-2">{invoice.client.address}</p>
-                )}
-                {(invoice.client?.city || invoice.client?.state || invoice.client?.zipCode) && (
-                  <p className="text-gray-600 dark:text-gray-300">
-                    {[invoice.client?.city, invoice.client?.state, invoice.client?.zipCode]
-                      .filter(Boolean)
-                      .join(", ")}
-                  </p>
-                )}
-                {invoice.client?.country && (
-                  <p className="text-gray-600 dark:text-gray-300">{invoice.client.country}</p>
-                )}
-              </div>
-            </div>
-
-            <div className="mb-8 overflow-x-auto">
-              <table className="min-w-full">
-                <thead>
-                  <tr className="border-b-2 border-gray-200 dark:border-gray-700">
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                      Description
-                    </th>
-                    <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                      Qty
-                    </th>
-                    <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                      Rate
-                    </th>
-                    <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                      Amount
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
-                  {invoice.lineItems?.map((item, index) => (
-                    <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-900/50">
-                      <td className="px-4 py-4 text-sm text-gray-900 dark:text-white">
-                        {item.description}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-600 dark:text-gray-300 text-right">
-                        {item.quantity}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-600 dark:text-gray-300 text-right">
-                        R{item.rate.toFixed(2)}
-                      </td>
-                      <td className="px-4 py-4 text-sm font-medium text-gray-900 dark:text-white text-right">
-                        R{item.amount.toFixed(2)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <div className="border-t-2 border-gray-200 dark:border-gray-700 pt-6">
-              <div className="flex justify-end">
-                <div className="w-full sm:w-80 space-y-3">
-                  <div className="flex justify-between text-gray-600 dark:text-gray-300">
-                    <span>Subtotal</span>
-                    <span className="font-medium">R{invoice.subtotal.toFixed(2)}</span>
-                  </div>
-                  <div className="flex justify-between text-gray-600 dark:text-gray-300">
-                    <span>Tax</span>
-                    <span className="font-medium">R{invoice.tax.toFixed(2)}</span>
-                  </div>
-                  {invoice.deliveryCost && invoice.deliveryCost > 0 && (
-                    <div className="flex justify-between text-gray-600 dark:text-gray-300">
-                      <span>Delivery</span>
-                      <span className="font-medium">R{invoice.deliveryCost.toFixed(2)}</span>
-                    </div>
-                  )}
-                  <div className="flex justify-between border-t-2 border-blue-600 dark:border-blue-500 pt-3 text-xl font-bold text-gray-900 dark:text-white">
-                    <span>Total</span>
-                    <span className="text-blue-600 dark:text-blue-400">R{invoice.total.toFixed(2)}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {(invoice.notes || invoice.terms) && (
-              <div className="border-t dark:border-gray-700 mt-8 pt-8 space-y-6">
-                {invoice.notes && (
-                  <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
-                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2 flex items-center">
-                      <svg className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                      </svg>
-                      Notes
-                    </h4>
-                    <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{invoice.notes}</p>
-                  </div>
-                )}
-                {invoice.terms && (
-                  <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-4">
-                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2 flex items-center">
-                      <svg className="w-5 h-5 mr-2 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                      Terms & Conditions
-                    </h4>
-                    <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{invoice.terms}</p>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+        <div id="invoice-content" className="rounded-xl shadow-lg overflow-hidden mb-6">
+          <InvoiceTemplate
+            invoiceNumber={invoice.invoiceNumber}
+            status={invoice.status}
+            issueDate={invoice.issueDate}
+            dueDate={invoice.dueDate}
+            client={invoice.client || { name: "N/A", email: "" }}
+            lineItems={invoice.lineItems || []}
+            subtotal={invoice.subtotal}
+            tax={invoice.tax}
+            deliveryCost={invoice.deliveryCost}
+            total={invoice.total}
+            notes={invoice.notes}
+            terms={invoice.terms}
+            darkModeSupport={true}
+          />
         </div>
 
         <div id="invoice-print" className="hidden print:block">
