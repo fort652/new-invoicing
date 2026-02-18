@@ -16,7 +16,10 @@ export async function POST(request: NextRequest) {
     const signature = request.headers.get("x-paystack-signature");
     const payload = await request.text();
 
+    console.log("Webhook received:", { event: JSON.parse(payload).event });
+
     if (!signature || !verifyPaystackSignature(payload, signature)) {
+      console.error("Invalid signature");
       return NextResponse.json(
         { error: "Invalid signature" },
         { status: 401 }
@@ -27,24 +30,35 @@ export async function POST(request: NextRequest) {
     const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
 
     if (!convexUrl) {
+      console.error("Convex URL not configured");
       return NextResponse.json(
         { error: "Convex URL not configured" },
         { status: 500 }
       );
     }
 
+    console.log("Processing event:", event.event, "Data:", JSON.stringify(event.data));
+
     switch (event.event) {
       case "subscription.create":
       case "charge.success": {
         const { customer, subscription, plan, authorization } = event.data;
         
-        if (!subscription && !authorization) break;
+        console.log("Customer:", customer?.email);
+        console.log("Has subscription:", !!subscription);
+        console.log("Has authorization:", !!authorization);
+        
+        if (!subscription && !authorization) {
+          console.log("No subscription or authorization, skipping");
+          break;
+        }
 
         const email = customer.email;
         const subscriptionCode = subscription?.subscription_code;
         const customerCode = customer.customer_code;
         const authorizationCode = authorization?.authorization_code;
 
+        console.log("Fetching users from Convex...");
         const usersResponse = await fetch(`${convexUrl}/api/query`, {
           method: "POST",
           headers: {
@@ -57,18 +71,29 @@ export async function POST(request: NextRequest) {
           }),
         });
 
-        if (!usersResponse.ok) break;
+        if (!usersResponse.ok) {
+          console.error("Failed to fetch users:", usersResponse.status);
+          break;
+        }
 
         const usersData = await usersResponse.json();
         const users = usersData.value || [];
+        console.log("Found users:", users.length);
+        
         const user = users.find((u: any) => u.email === email);
 
-        if (!user) break;
+        if (!user) {
+          console.error("User not found with email:", email);
+          break;
+        }
+
+        console.log("Found user:", user._id, user.email);
 
         const now = Date.now();
         const endDate = now + 30 * 24 * 60 * 60 * 1000;
 
-        await fetch(`${convexUrl}/api/mutation`, {
+        console.log("Creating subscription...");
+        const subscriptionResponse = await fetch(`${convexUrl}/api/mutation`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -89,6 +114,15 @@ export async function POST(request: NextRequest) {
             format: "json",
           }),
         });
+
+        if (!subscriptionResponse.ok) {
+          console.error("Failed to create subscription:", subscriptionResponse.status);
+          const errorText = await subscriptionResponse.text();
+          console.error("Error:", errorText);
+        } else {
+          const result = await subscriptionResponse.json();
+          console.log("Subscription created successfully:", result);
+        }
 
         break;
       }
