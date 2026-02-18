@@ -5,6 +5,7 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
 import Navigation from "@/app/components/Navigation";
+import UsageBanner from "@/app/components/UsageBanner";
 import { useState } from "react";
 import { Id } from "@/convex/_generated/dataModel";
 
@@ -22,6 +23,7 @@ export default function ClientsPage() {
   const deleteClient = useMutation(api.clients.remove);
 
   const [showForm, setShowForm] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -37,22 +39,27 @@ export default function ClientsPage() {
     e.preventDefault();
     if (!currentUser) return;
 
-    await createClient({
-      userId: currentUser._id,
-      ...formData,
-    });
+    try {
+      setError(null);
+      await createClient({
+        userId: currentUser._id,
+        ...formData,
+      });
 
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      address: "",
-      city: "",
-      state: "",
-      zipCode: "",
-      country: "",
-    });
-    setShowForm(false);
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        country: "",
+      });
+      setShowForm(false);
+    } catch (err: any) {
+      setError(err.message || "Failed to create client");
+    }
   };
 
   const handleDelete = async (id: Id<"clients">) => {
@@ -81,9 +88,16 @@ export default function ClientsPage() {
           </button>
         </div>
 
+        <UsageBanner />
+
         {showForm && (
           <div className="mb-8 rounded-lg bg-white dark:bg-gray-800 p-6 shadow">
             <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">New Client</h3>
+            {error && (
+              <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+                {error}
+              </div>
+            )}
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <div>

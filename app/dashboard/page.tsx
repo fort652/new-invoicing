@@ -5,7 +5,6 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useEffect } from "react";
 import Link from "next/link";
-import { Id } from "@/convex/_generated/dataModel";
 import Navigation from "@/app/components/Navigation";
 
 export default function DashboardPage() {
@@ -21,6 +20,10 @@ export default function DashboardPage() {
   );
   const recentInvoices = useQuery(
     api.invoices.list,
+    currentUser ? { userId: currentUser._id } : "skip"
+  );
+  const usageLimits = useQuery(
+    api.users.checkUsageLimits,
     currentUser ? { userId: currentUser._id } : "skip"
   );
 
@@ -53,7 +56,7 @@ export default function DashboardPage() {
             Welcome, {user?.firstName || "User"}!
           </h2>
           <p className="mt-2 text-sm sm:text-base text-gray-900 dark:text-gray-300">
-            Here's an overview of your invoicing activity
+            Here&apos;s an overview of your invoicing activity
           </p>
         </div>
 
@@ -78,7 +81,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 mb-8">
+        <div className="grid gap-6 md:grid-cols-3 mb-8">
           <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
               Revenue Overview
@@ -104,6 +107,59 @@ export default function DashboardPage() {
               </div>
             </div>
           </div>
+
+          {usageLimits && (
+            <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  Subscription
+                </h3>
+                {usageLimits.isPro ? (
+                  <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">
+                    PRO
+                  </span>
+                ) : (
+                  <span className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-xs font-semibold">
+                    FREE
+                  </span>
+                )}
+              </div>
+              {usageLimits.isPro ? (
+                <div className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                  <p>✓ Unlimited clients</p>
+                  <p>✓ Unlimited invoices</p>
+                  <p>✓ Unlimited emails</p>
+                </div>
+              ) : (
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between text-gray-700 dark:text-gray-300">
+                    <span>Clients:</span>
+                    <span className={usageLimits.canCreateClient ? '' : 'text-red-600 font-semibold'}>
+                      {usageLimits.clientsUsed}/{usageLimits.clientsLimit}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-gray-700 dark:text-gray-300">
+                    <span>Invoices:</span>
+                    <span className={usageLimits.canCreateInvoice ? '' : 'text-red-600 font-semibold'}>
+                      {usageLimits.invoicesUsed}/{usageLimits.invoicesLimit}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-gray-700 dark:text-gray-300">
+                    <span>Emails:</span>
+                    <span className={usageLimits.canSendEmail ? '' : 'text-red-600 font-semibold'}>
+                      {usageLimits.emailsUsed}/{usageLimits.emailsLimit}
+                    </span>
+                  </div>
+                </div>
+              )}
+              <Link
+                href="/subscription"
+                className="block w-full mt-4 rounded-lg bg-blue-600 px-4 py-2 text-center text-white hover:bg-blue-700 text-sm"
+              >
+                {usageLimits.isPro ? 'Manage Subscription' : 'Upgrade to Pro'}
+              </Link>
+            </div>
+          )}
 
           <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">

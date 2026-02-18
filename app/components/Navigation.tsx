@@ -14,6 +14,7 @@ export default function Navigation() {
     { href: "/dashboard", label: "Dashboard" },
     { href: "/invoices", label: "Invoices" },
     { href: "/clients", label: "Clients" },
+    { href: "/subscription", label: "Subscription" },
     { href: "/settings", label: "Settings" },
   ];
 

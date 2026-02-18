@@ -6,12 +6,59 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { to, invoice } = body;
+    const { to, invoice, userId } = body;
 
-    if (!to || !invoice) {
+    if (!to || !invoice || !userId) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
+      );
+    }
+
+    const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
+    if (!convexUrl) {
+      return NextResponse.json(
+        { error: "Convex URL not configured" },
+        { status: 500 }
+      );
+    }
+
+    const userResponse = await fetch(`${convexUrl}/api/query`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        path: "users:getCurrentUser",
+        args: { clerkId: userId },
+        format: "json",
+      }),
+    });
+
+    if (!userResponse.ok) {
+      return NextResponse.json(
+        { error: "Failed to check user limits" },
+        { status: 500 }
+      );
+    }
+
+    const userData = await userResponse.json();
+    const user = userData.value;
+
+    if (!user) {
+      return NextResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+      );
+    }
+
+    const isPro = user.subscriptionStatus === "pro";
+    const emailsSent = user.emailsSent || 0;
+
+    if (!isPro && emailsSent >= 5) {
+      return NextResponse.json(
+        { error: "Free tier limit reached. Upgrade to Pro to send unlimited emails." },
+        { status: 403 }
       );
     }
 
@@ -172,6 +219,20 @@ export async function POST(request: NextRequest) {
     if (error) {
       console.error("Resend error:", error);
       return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    if (!isPro) {
+      await fetch(`${convexUrl}/api/mutation`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          path: "users:incrementEmailCount",
+          args: { userId: user._id },
+          format: "json",
+        }),
+      });
     }
 
     return NextResponse.json({ success: true, data });

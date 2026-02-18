@@ -5,6 +5,7 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
 import Navigation from "@/app/components/Navigation";
+import UsageBanner from "@/app/components/UsageBanner";
 export default function InvoicesPage() {
   const { user } = useUser();
   const currentUser = useQuery(
@@ -35,6 +36,8 @@ export default function InvoicesPage() {
             Create Invoice
           </Link>
         </div>
+
+        <UsageBanner />
 
         <div className="rounded-lg bg-white dark:bg-gray-800 shadow">
           {!invoices ? (

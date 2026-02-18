@@ -10,6 +10,25 @@ export default defineSchema({
     theme: v.optional(v.union(v.literal("light"), v.literal("dark"))),
     // Deprecated: customColors field is no longer used but kept for backwards compatibility
     customColors: v.optional(v.any()),
+    // Subscription fields
+    subscriptionStatus: v.optional(v.union(
+      v.literal("free"),
+      v.literal("pro"),
+      v.literal("cancelled")
+    )),
+    subscriptionPlan: v.optional(v.union(
+      v.literal("monthly"),
+      v.literal("quarterly"),
+      v.literal("annually")
+    )),
+    paystackSubscriptionCode: v.optional(v.string()),
+    paystackCustomerCode: v.optional(v.string()),
+    subscriptionStartDate: v.optional(v.number()),
+    subscriptionEndDate: v.optional(v.number()),
+    // Usage tracking for free tier
+    clientsCreated: v.optional(v.number()),
+    invoicesCreated: v.optional(v.number()),
+    emailsSent: v.optional(v.number()),
   }).index("by_clerk_id", ["clerkId"]),
 
   clients: defineTable({

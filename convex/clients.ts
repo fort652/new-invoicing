@@ -31,7 +31,25 @@ export const create = mutation({
     country: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
-    return await ctx.db.insert("clients", args);
+    const user = await ctx.db.get(args.userId);
+    if (!user) throw new Error("User not found");
+
+    const isPro = user.subscriptionStatus === "pro";
+    const clientsCreated = user.clientsCreated || 0;
+
+    if (!isPro && clientsCreated >= 3) {
+      throw new Error("Free tier limit reached. Upgrade to Pro to create unlimited clients.");
+    }
+
+    const clientId = await ctx.db.insert("clients", args);
+
+    if (!isPro) {
+      await ctx.db.patch(args.userId, {
+        clientsCreated: clientsCreated + 1,
+      });
+    }
+
+    return clientId;
   },
 });
 
