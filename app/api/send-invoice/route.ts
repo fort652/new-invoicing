@@ -1,10 +1,54 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { auth } from "@clerk/nextjs/server";
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "@/convex/_generated/api";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 export async function POST(request: NextRequest) {
   try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
+    const user = await convex.query(api.users.getUserByClerkId, {
+      clerkId: userId,
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+      );
+    }
+
+    const planType = user.planType || "free";
+
+    if (planType === "free") {
+      const usage = await convex.query(api.subscriptions.getUsageTracking, {
+        userId: user._id,
+      });
+
+      const currentCount = usage ? usage.emailSendCount : 0;
+      const limit = 5;
+
+      if (currentCount >= limit) {
+        return NextResponse.json(
+          {
+            error: `You have reached the limit of ${limit} email sends on the free plan. Please upgrade to Pro for unlimited email sends.`,
+          },
+          { status: 403 }
+        );
+      }
+    }
+
     const body = await request.json();
     const { to, invoice } = body;
 
@@ -172,6 +216,12 @@ export async function POST(request: NextRequest) {
     if (error) {
       console.error("Resend error:", error);
       return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    if (planType === "free") {
+      await convex.mutation(api.subscriptions.incrementEmailSendCount, {
+        userId: user._id,
+      });
     }
 
     return NextResponse.json({ success: true, data });

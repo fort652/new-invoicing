@@ -5,18 +5,23 @@ A modern, real-time invoicing application built with Next.js, Convex, and Clerk 
 ## Features
 
 - 🔐 **Authentication** - Secure user authentication with Clerk
+- 💳 **Subscription Plans** - Free and Pro plans with PayStack integration
 - 📊 **Dashboard** - Overview of all invoices with statistics
 - 📝 **Invoice Management** - Create, edit, view, and delete invoices
 - 👥 **Client Management** - Manage client information
 - ⚡ **Real-time Updates** - Instant synchronization across all devices using Convex
 - 💰 **Financial Tracking** - Track revenue, paid and pending amounts
+- 📧 **Email Invoices** - Send invoices directly to clients
 - 🎨 **Modern UI** - Beautiful, responsive design with Tailwind CSS
+- 🔒 **Usage Limits** - Automatic enforcement of plan limits
 
 ## Tech Stack
 
 - **Framework**: Next.js 15 (App Router)
 - **Database & Backend**: Convex (reactive database with TypeScript functions)
 - **Authentication**: Clerk
+- **Payments**: PayStack
+- **Email**: Resend
 - **Styling**: Tailwind CSS
 - **Language**: TypeScript
 
@@ -160,7 +165,19 @@ NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
+
+# Resend Email
+RESEND_API_KEY=re_...
+
+# PayStack Payments
+PAYSTACK_SECRET_KEY=sk_test_28067d17f921a3c69f6aba1ed64ab17422c24843
+PAYSTACK_PUBLIC_KEY=pk_test_4e4c6f7143a8fe12d4b2764743b63442b0505b1d
+
+# Application URL
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
+
+See `.env.example` for a complete template.
 
 ## Deployment
 
@@ -184,11 +201,37 @@ This will create a production deployment and give you a new `CONVEX_URL` to use 
 - **Convex Dashboard**: Monitor your database and functions at [dashboard.convex.dev](https://dashboard.convex.dev)
 - **Clerk Dashboard**: Manage authentication at [dashboard.clerk.com](https://dashboard.clerk.com)
 
+## Subscription System
+
+The app includes a complete subscription system with two plans:
+
+### Free Plan (R0/month)
+- 5 invoices per month
+- 3 clients total
+- 5 email sends per month
+
+### Pro Plan (R10/month)
+- Unlimited invoices
+- Unlimited clients
+- Unlimited email sends
+
+For detailed setup instructions, see the [Subscription Setup Guide](./docs/SUBSCRIPTION_SETUP.md).
+
+## Documentation
+
+Comprehensive documentation is available in the `docs/` directory:
+
+- **[Subscription Setup Guide](./docs/SUBSCRIPTION_SETUP.md)** - Step-by-step setup instructions
+- **[Implementation Summary](./docs/IMPLEMENTATION_SUMMARY.md)** - Overview of the subscription system
+- **[PayStack Integration](./docs/PAYSTACK_INTEGRATION.md)** - Complete PayStack API documentation
+- **[PayStack API Reference](./docs/PAYSTACK_API_REFERENCE.md)** - Quick API reference
+
 ## Learn More
 
 - [Convex Documentation](https://docs.convex.dev)
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Clerk Documentation](https://clerk.com/docs)
+- [PayStack Documentation](https://paystack.com/docs)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 
 ## License

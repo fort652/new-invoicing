@@ -88,6 +88,29 @@ export const create = mutation({
     ),
   },
   handler: async (ctx, args) => {
+    const user = await ctx.db.get(args.userId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const planType = user.planType || "free";
+
+    if (planType === "free") {
+      const usage = await ctx.db
+        .query("usageTracking")
+        .withIndex("by_user", (q) => q.eq("userId", args.userId))
+        .first();
+
+      const currentCount = usage ? usage.invoiceCount : 0;
+      const limit = 5;
+
+      if (currentCount >= limit) {
+        throw new Error(
+          `You have reached the limit of ${limit} invoices on the free plan. Please upgrade to Pro for unlimited invoices.`
+        );
+      }
+    }
+
     const { lineItems, ...invoiceData } = args;
 
     const invoiceId = await ctx.db.insert("invoices", invoiceData);
@@ -97,6 +120,27 @@ export const create = mutation({
         invoiceId,
         ...item,
       });
+    }
+
+    if (planType === "free") {
+      const usage = await ctx.db
+        .query("usageTracking")
+        .withIndex("by_user", (q) => q.eq("userId", args.userId))
+        .first();
+
+      if (usage) {
+        await ctx.db.patch(usage._id, {
+          invoiceCount: usage.invoiceCount + 1,
+        });
+      } else {
+        await ctx.db.insert("usageTracking", {
+          userId: args.userId,
+          invoiceCount: 1,
+          clientCount: 0,
+          emailSendCount: 0,
+          resetAt: Date.now() + 30 * 24 * 60 * 60 * 1000,
+        });
+      }
     }
 
     return invoiceId;
