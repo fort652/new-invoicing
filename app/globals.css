@@ -134,17 +134,18 @@ body {
     background-color: white !important;
   }
   
-  /* Black and white header */
+  /* Header with black outline only */
   #invoice-content .bg-gradient-to-r {
-    background: #000000 !important;
+    background: white !important;
     background-image: none !important;
-    color: white !important;
+    color: #000000 !important;
+    border: 3px solid #000000 !important;
     padding: 2rem !important;
-    margin: 0 !important;
+    margin: 0 0 2rem 0 !important;
   }
   
   #invoice-content .bg-gradient-to-r * {
-    color: white !important;
+    color: #000000 !important;
   }
   
   /* Main content padding */
