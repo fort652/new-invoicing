@@ -52,14 +52,34 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const isPro = user.subscriptionStatus === "pro";
-    const emailsSent = user.emailsSent || 0;
+    const planType = user.planType || "free";
+    const isPro = planType === "pro";
 
-    if (!isPro && emailsSent >= 5) {
-      return NextResponse.json(
-        { error: "Free tier limit reached. Upgrade to Pro to send unlimited emails." },
-        { status: 403 }
-      );
+    if (!isPro) {
+      const usageResponse = await fetch(`${convexUrl}/api/query`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          path: "subscriptions:getUsageTracking",
+          args: { userId: user._id },
+          format: "json",
+        }),
+      });
+
+      if (usageResponse.ok) {
+        const usageData = await usageResponse.json();
+        const usage = usageData.value;
+        const emailsSent = usage?.emailSendCount ?? 0;
+
+        if (emailsSent >= 5) {
+          return NextResponse.json(
+            { error: "Free tier limit reached. Upgrade to Pro to send unlimited emails." },
+            { status: 403 }
+          );
+        }
+      }
     }
 
     const lineItemsHtml = invoice.lineItems
@@ -228,7 +248,7 @@ export async function POST(request: NextRequest) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          path: "users:incrementEmailCount",
+          path: "subscriptions:incrementEmailSendCount",
           args: { userId: user._id },
           format: "json",
         }),

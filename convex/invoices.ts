@@ -93,11 +93,45 @@ export const create = mutation({
     const user = await ctx.db.get(args.userId);
     if (!user) throw new Error("User not found");
 
-    const isPro = user.subscriptionStatus === "pro";
-    const invoicesCreated = user.invoicesCreated || 0;
+    const planType = user.planType || "free";
+    const isPro = planType === "pro";
 
-    if (!isPro && invoicesCreated >= 5) {
-      throw new Error("Free tier limit reached. Upgrade to Pro to create unlimited invoices.");
+    if (!isPro) {
+      const usage = await ctx.db
+        .query("usageTracking")
+        .withIndex("by_user", (q) => q.eq("userId", args.userId))
+        .first();
+
+      const invoiceCount = usage?.invoiceCount ?? 0;
+
+      if (invoiceCount >= 5) {
+        throw new Error("Free tier limit reached. Upgrade to Pro to create unlimited invoices.");
+      }
+
+      const invoiceId = await ctx.db.insert("invoices", invoiceData);
+
+      for (const item of lineItems) {
+        await ctx.db.insert("lineItems", {
+          invoiceId,
+          ...item,
+        });
+      }
+
+      if (usage) {
+        await ctx.db.patch(usage._id, {
+          invoiceCount: invoiceCount + 1,
+        });
+      } else {
+        await ctx.db.insert("usageTracking", {
+          userId: args.userId,
+          clientCount: 0,
+          invoiceCount: 1,
+          emailSendCount: 0,
+          resetAt: Date.now() + 30 * 24 * 60 * 60 * 1000,
+        });
+      }
+
+      return invoiceId;
     }
 
     const invoiceId = await ctx.db.insert("invoices", invoiceData);
@@ -106,12 +140,6 @@ export const create = mutation({
       await ctx.db.insert("lineItems", {
         invoiceId,
         ...item,
-      });
-    }
-
-    if (!isPro) {
-      await ctx.db.patch(args.userId, {
-        invoicesCreated: invoicesCreated + 1,
       });
     }
 

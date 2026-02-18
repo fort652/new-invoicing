@@ -36,19 +36,14 @@ export async function POST(request: NextRequest) {
     switch (event.event) {
       case "subscription.create":
       case "charge.success": {
-        const { customer, subscription, plan } = event.data;
+        const { customer, subscription, plan, authorization } = event.data;
         
-        if (!subscription) break;
+        if (!subscription && !authorization) break;
 
         const email = customer.email;
-        const subscriptionCode = subscription.subscription_code;
+        const subscriptionCode = subscription?.subscription_code;
         const customerCode = customer.customer_code;
-
-        const planInterval = plan?.interval || subscription.plan?.interval;
-        let subscriptionPlan: "monthly" | "quarterly" | "annually" = "monthly";
-        
-        if (planInterval === "quarterly") subscriptionPlan = "quarterly";
-        else if (planInterval === "annually") subscriptionPlan = "annually";
+        const authorizationCode = authorization?.authorization_code;
 
         const usersResponse = await fetch(`${convexUrl}/api/query`, {
           method: "POST",
@@ -71,15 +66,7 @@ export async function POST(request: NextRequest) {
         if (!user) break;
 
         const now = Date.now();
-        let endDate = now;
-        
-        if (subscriptionPlan === "monthly") {
-          endDate = now + 30 * 24 * 60 * 60 * 1000;
-        } else if (subscriptionPlan === "quarterly") {
-          endDate = now + 90 * 24 * 60 * 60 * 1000;
-        } else if (subscriptionPlan === "annually") {
-          endDate = now + 365 * 24 * 60 * 60 * 1000;
-        }
+        const endDate = now + 30 * 24 * 60 * 60 * 1000;
 
         await fetch(`${convexUrl}/api/mutation`, {
           method: "POST",
@@ -87,15 +74,17 @@ export async function POST(request: NextRequest) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            path: "users:updateSubscription",
+            path: "subscriptions:createOrUpdateSubscription",
             args: {
               userId: user._id,
-              subscriptionStatus: "pro",
-              subscriptionPlan,
+              planType: "pro",
               paystackSubscriptionCode: subscriptionCode,
               paystackCustomerCode: customerCode,
-              subscriptionStartDate: now,
-              subscriptionEndDate: endDate,
+              paystackAuthorizationCode: authorizationCode,
+              status: "active",
+              currentPeriodStart: now,
+              currentPeriodEnd: endDate,
+              cancelAtPeriodEnd: false,
             },
             format: "json",
           }),
@@ -134,10 +123,9 @@ export async function POST(request: NextRequest) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            path: "users:updateSubscription",
+            path: "subscriptions:cancelSubscription",
             args: {
               userId: user._id,
-              subscriptionStatus: "cancelled",
             },
             format: "json",
           }),

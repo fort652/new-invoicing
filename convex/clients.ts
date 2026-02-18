@@ -34,22 +34,41 @@ export const create = mutation({
     const user = await ctx.db.get(args.userId);
     if (!user) throw new Error("User not found");
 
-    const isPro = user.subscriptionStatus === "pro";
-    const clientsCreated = user.clientsCreated || 0;
-
-    if (!isPro && clientsCreated >= 3) {
-      throw new Error("Free tier limit reached. Upgrade to Pro to create unlimited clients.");
-    }
-
-    const clientId = await ctx.db.insert("clients", args);
+    const planType = user.planType || "free";
+    const isPro = planType === "pro";
 
     if (!isPro) {
-      await ctx.db.patch(args.userId, {
-        clientsCreated: clientsCreated + 1,
-      });
+      const usage = await ctx.db
+        .query("usageTracking")
+        .withIndex("by_user", (q) => q.eq("userId", args.userId))
+        .first();
+
+      const clientCount = usage?.clientCount ?? 0;
+
+      if (clientCount >= 3) {
+        throw new Error("Free tier limit reached. Upgrade to Pro to create unlimited clients.");
+      }
+
+      const clientId = await ctx.db.insert("clients", args);
+
+      if (usage) {
+        await ctx.db.patch(usage._id, {
+          clientCount: clientCount + 1,
+        });
+      } else {
+        await ctx.db.insert("usageTracking", {
+          userId: args.userId,
+          clientCount: 1,
+          invoiceCount: 0,
+          emailSendCount: 0,
+          resetAt: Date.now() + 30 * 24 * 60 * 60 * 1000,
+        });
+      }
+
+      return clientId;
     }
 
-    return clientId;
+    return await ctx.db.insert("clients", args);
   },
 });
 
