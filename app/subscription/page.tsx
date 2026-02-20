@@ -5,6 +5,7 @@ import { useUser } from '@clerk/nextjs';
 import { useQuery, useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import PageHeader from '../components/PageHeader';
+import { useRequireConvexUser } from '@/app/hooks/useRequireConvexUser';
 
 interface PaystackTransaction {
   reference: string;
@@ -59,10 +60,7 @@ export default function SubscriptionPage() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
-  const user = useQuery(
-    api.users.getCurrentUser,
-    clerkUser?.id ? { clerkId: clerkUser.id } : 'skip'
-  );
+  const { currentUser: user, revoked } = useRequireConvexUser();
 
   const usageLimits = useQuery(
     api.users.checkUsageLimits,
@@ -161,6 +159,14 @@ export default function SubscriptionPage() {
       }
     }
   };
+
+  if (revoked) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-xl">Signing out...</div>
+      </div>
+    );
+  }
 
   if (!user || !usageLimits) {
     return (

@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
@@ -8,6 +7,7 @@ import Navigation from "@/app/components/Navigation";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
+import { useRequireConvexUser } from "@/app/hooks/useRequireConvexUser";
 
 type LineItem = {
   description: string;
@@ -18,11 +18,7 @@ type LineItem = {
 
 export default function NewInvoicePage() {
   const router = useRouter();
-  const { user } = useUser();
-  const currentUser = useQuery(
-    api.users.getCurrentUser,
-    user ? { clerkId: user.id } : "skip"
-  );
+  const { currentUser, revoked } = useRequireConvexUser();
   const clients = useQuery(
     api.clients.list,
     currentUser ? { userId: currentUser._id } : "skip"
@@ -95,6 +91,14 @@ export default function NewInvoicePage() {
 
     router.push("/invoices");
   };
+
+  if (revoked) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-xl">Signing out...</div>
+      </div>
+    );
+  }
 
   if (!currentUser || !clients) {
     return <div className="flex min-h-screen items-center justify-center">Loading...</div>;

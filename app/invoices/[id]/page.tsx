@@ -8,11 +8,13 @@ import { useParams, useRouter } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
 import { useState } from "react";
 import InvoiceTemplate, { generateInvoiceHTML } from "@/app/components/InvoiceTemplate";
+import { useRequireConvexUser } from "@/app/hooks/useRequireConvexUser";
 
 export default function InvoiceDetailPage() {
   const params = useParams();
   const router = useRouter();
   const invoiceId = params.id as Id<"invoices">;
+  const { revoked } = useRequireConvexUser();
 
   const invoice = useQuery(api.invoices.get, { id: invoiceId });
   const updateInvoice = useMutation(api.invoices.update);
@@ -226,6 +228,14 @@ export default function InvoiceDetailPage() {
       </html>
     `;
   };
+
+  if (revoked) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-xl">Signing out...</div>
+      </div>
+    );
+  }
 
   if (!invoice) {
     return (

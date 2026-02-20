@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
@@ -8,13 +7,10 @@ import Navigation from "@/app/components/Navigation";
 import UsageBanner from "@/app/components/UsageBanner";
 import { useState } from "react";
 import { Id } from "@/convex/_generated/dataModel";
+import { useRequireConvexUser } from "@/app/hooks/useRequireConvexUser";
 
 export default function ClientsPage() {
-  const { user } = useUser();
-  const currentUser = useQuery(
-    api.users.getCurrentUser,
-    user ? { clerkId: user.id } : "skip"
-  );
+  const { currentUser, revoked } = useRequireConvexUser();
   const clients = useQuery(
     api.clients.list,
     currentUser ? { userId: currentUser._id } : "skip"
@@ -109,6 +105,14 @@ export default function ClientsPage() {
       await deleteClient({ id });
     }
   };
+
+  if (revoked) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-xl">Signing out...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">

@@ -49,14 +49,6 @@ export const getCurrentUser = query({
   },
 });
 
-export const hasAnyUser = query({
-  args: {},
-  handler: async (ctx) => {
-    const first = await ctx.db.query("users").first();
-    return first !== null;
-  },
-});
-
 export const list = query({
   args: {},
   handler: async (ctx) => {

@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
@@ -8,6 +7,7 @@ import Navigation from "@/app/components/Navigation";
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
+import { useRequireConvexUser } from "@/app/hooks/useRequireConvexUser";
 
 type LineItem = {
   description: string;
@@ -20,12 +20,7 @@ export default function EditInvoicePage() {
   const router = useRouter();
   const params = useParams();
   const invoiceId = params.id as Id<"invoices">;
-  const { user } = useUser();
-  
-  const currentUser = useQuery(
-    api.users.getCurrentUser,
-    user ? { clerkId: user.id } : "skip"
-  );
+  const { currentUser, revoked } = useRequireConvexUser();
   const clients = useQuery(
     api.clients.list,
     currentUser ? { userId: currentUser._id } : "skip"
@@ -121,6 +116,14 @@ export default function EditInvoicePage() {
 
     router.push(`/invoices/${invoiceId}`);
   };
+
+  if (revoked) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-xl">Signing out...</div>
+      </div>
+    );
+  }
 
   if (!currentUser || !clients || !invoice || !isLoaded) {
     return <div className="flex min-h-screen items-center justify-center">Loading...</div>;
