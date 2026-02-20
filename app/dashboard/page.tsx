@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
+import { useUser, useClerk } from "@clerk/nextjs";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useEffect } from "react";
@@ -9,11 +9,13 @@ import Navigation from "@/app/components/Navigation";
 
 export default function DashboardPage() {
   const { user } = useUser();
+  const { signOut } = useClerk();
   const syncUser = useMutation(api.users.syncUser);
   const currentUser = useQuery(
     api.users.getCurrentUser,
     user ? { clerkId: user.id } : "skip"
   );
+  const hasAnyUser = useQuery(api.users.hasAnyUser);
   const stats = useQuery(
     api.invoices.getStats,
     currentUser ? { userId: currentUser._id } : "skip"
@@ -28,7 +30,13 @@ export default function DashboardPage() {
   );
 
   useEffect(() => {
-    if (user && !currentUser) {
+    if (user && currentUser === null && hasAnyUser === true) {
+      signOut({ redirectUrl: "/access-revoked" });
+    }
+  }, [user, currentUser, hasAnyUser, signOut]);
+
+  useEffect(() => {
+    if (user && currentUser === null && hasAnyUser === false) {
       syncUser({
         clerkId: user.id,
         email: user.emailAddresses[0]?.emailAddress || "",
@@ -36,7 +44,15 @@ export default function DashboardPage() {
         imageUrl: user.imageUrl || undefined,
       });
     }
-  }, [user, currentUser, syncUser]);
+  }, [user, currentUser, hasAnyUser, syncUser]);
+
+  if (user && currentUser === null && hasAnyUser === true) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-xl">Signing out...</div>
+      </div>
+    );
+  }
 
   if (!currentUser || !stats) {
     return (

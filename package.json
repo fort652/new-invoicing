@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:wipe:prod": "npx convex deploy --yes && npx convex run --prod wipeAllTables:wipeAllTables '{\"confirm\":\"WIPE_ALL_DATA\"}'",
+    "db:wipe:dev": "CONVEX_DEPLOYMENT=dev:energetic-bobcat-927 npx convex run --push wipeAllTables:wipeAllTables '{\"confirm\":\"WIPE_ALL_DATA\"}'"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.37.4",
