@@ -20,9 +20,11 @@ export default function ClientsPage() {
     currentUser ? { userId: currentUser._id } : "skip"
   );
   const createClient = useMutation(api.clients.create);
+  const updateClient = useMutation(api.clients.update);
   const deleteClient = useMutation(api.clients.remove);
 
   const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState<Id<"clients"> | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -41,10 +43,17 @@ export default function ClientsPage() {
 
     try {
       setError(null);
-      await createClient({
-        userId: currentUser._id,
-        ...formData,
-      });
+      if (editingId) {
+        await updateClient({
+          id: editingId,
+          ...formData,
+        });
+      } else {
+        await createClient({
+          userId: currentUser._id,
+          ...formData,
+        });
+      }
 
       setFormData({
         name: "",
@@ -57,9 +66,42 @@ export default function ClientsPage() {
         country: "",
       });
       setShowForm(false);
+      setEditingId(null);
     } catch (err: any) {
-      setError(err.message || "Failed to create client");
+      setError(err.message || `Failed to ${editingId ? 'update' : 'create'} client`);
     }
+  };
+
+  const handleEdit = (client: any) => {
+    setFormData({
+      name: client.name,
+      email: client.email,
+      phone: client.phone || "",
+      address: client.address || "",
+      city: client.city || "",
+      state: client.state || "",
+      zipCode: client.zipCode || "",
+      country: client.country || "",
+    });
+    setEditingId(client._id);
+    setShowForm(true);
+    setError(null);
+  };
+
+  const handleCancelEdit = () => {
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      address: "",
+      city: "",
+      state: "",
+      zipCode: "",
+      country: "",
+    });
+    setEditingId(null);
+    setShowForm(false);
+    setError(null);
   };
 
   const handleDelete = async (id: Id<"clients">) => {
@@ -81,7 +123,13 @@ export default function ClientsPage() {
             </p>
           </div>
           <button
-            onClick={() => setShowForm(!showForm)}
+            onClick={() => {
+              if (showForm) {
+                handleCancelEdit();
+              } else {
+                setShowForm(true);
+              }
+            }}
             className="rounded-lg bg-blue-600 px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base text-white hover:bg-blue-700"
           >
             {showForm ? "Cancel" : "Add Client"}
@@ -92,7 +140,9 @@ export default function ClientsPage() {
 
         {showForm && (
           <div className="mb-8 rounded-lg bg-white dark:bg-gray-800 p-6 shadow">
-            <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">New Client</h3>
+            <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+              {editingId ? "Edit Client" : "New Client"}
+            </h3>
             {error && (
               <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
                 {error}
@@ -207,12 +257,23 @@ export default function ClientsPage() {
                   />
                 </div>
               </div>
-              <button
-                type="submit"
-                className="rounded-lg bg-blue-600 px-6 py-2 text-white hover:bg-blue-700"
-              >
-                Create Client
-              </button>
+              <div className="flex gap-2">
+                <button
+                  type="submit"
+                  className="rounded-lg bg-blue-600 px-6 py-2 text-white hover:bg-blue-700"
+                >
+                  {editingId ? "Update Client" : "Create Client"}
+                </button>
+                {editingId && (
+                  <button
+                    type="button"
+                    onClick={handleCancelEdit}
+                    className="rounded-lg bg-gray-300 dark:bg-gray-600 px-6 py-2 text-gray-900 dark:text-white hover:bg-gray-400 dark:hover:bg-gray-500"
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
             </form>
           </div>
         )}
@@ -270,12 +331,20 @@ export default function ClientsPage() {
                           : client.city || client.state || "-"}
                       </td>
                       <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm">
-                        <button
-                          onClick={() => handleDelete(client._id)}
-                          className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300"
-                        >
-                          Delete
-                        </button>
+                        <div className="flex gap-3">
+                          <button
+                            onClick={() => handleEdit(client)}
+                            className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDelete(client._id)}
+                            className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300"
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}

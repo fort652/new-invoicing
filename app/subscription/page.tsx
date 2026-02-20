@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
-import { useQuery } from 'convex/react';
+import { useQuery, useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import PageHeader from '../components/PageHeader';
 
@@ -13,6 +13,8 @@ interface PaystackTransaction {
   message: string;
   transaction: string;
   trxref: string;
+  customer_code?: string;
+  authorization_code?: string;
 }
 
 interface SubscriptionPlan {
@@ -26,20 +28,20 @@ interface SubscriptionPlan {
 const subscriptionPlans: Record<string, SubscriptionPlan> = {
   monthly: {
     name: 'Pro Plan (Monthly)',
-    amount: 19900,
+    amount: 2000,
     interval: 'monthly',
     description: 'Billed monthly',
   },
   quarterly: {
     name: 'Pro Plan (Quarterly)',
-    amount: 54000,
+    amount: 5400,
     interval: 'quarterly',
     description: 'Billed every 3 months',
-    savings: 'Save 9%',
+    savings: 'Save 10%',
   },
   annually: {
     name: 'Pro Plan (Annual)',
-    amount: 199000,
+    amount: 19900,
     interval: 'annually',
     description: 'Billed yearly',
     savings: 'Save 17%',
@@ -62,6 +64,8 @@ export default function SubscriptionPage() {
     api.users.checkUsageLimits,
     user?._id ? { userId: user._id } : 'skip'
   );
+
+  const createOrUpdateSubscription = useMutation(api.subscriptions.createOrUpdateSubscription);
 
   useEffect(() => {
     const loadPaystack = async () => {
@@ -90,11 +94,26 @@ export default function SubscriptionPage() {
         amount: plan.amount,
         currency: 'ZAR',
         planInterval: plan.interval,
-        onSuccess: (transaction: PaystackTransaction) => {
-          setMessage({
-            type: 'success',
-            text: `Subscription activated! Reference: ${transaction.reference}`,
-          });
+        onSuccess: async (transaction: PaystackTransaction) => {
+          try {
+            await createOrUpdateSubscription({
+              userId: user._id,
+              planType: "pro",
+              paystackSubscriptionCode: transaction.reference,
+              paystackCustomerCode: transaction.customer_code,
+              paystackAuthorizationCode: transaction.authorization_code,
+              status: "active",
+            });
+            setMessage({
+              type: 'success',
+              text: `Subscription activated! Reference: ${transaction.reference}`,
+            });
+          } catch (error: any) {
+            setMessage({
+              type: 'error',
+              text: `Failed to activate subscription: ${error.message}`,
+            });
+          }
           setLoading(false);
         },
         onCancel: () => {
