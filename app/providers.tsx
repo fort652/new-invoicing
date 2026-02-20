@@ -5,6 +5,7 @@ import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { ConvexReactClient } from "convex/react";
 import { ReactNode } from "react";
 import { ThemeProvider } from "./theme-provider";
+import { ConvexUserGuard } from "./components/ConvexUserGuard";
 
 const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL || "https://placeholder.convex.cloud";
 
@@ -15,7 +16,7 @@ export function Providers({ children }: { children: ReactNode }) {
     <ClerkProvider>
       <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
         <ThemeProvider>
-          {children}
+          <ConvexUserGuard>{children}</ConvexUserGuard>
         </ThemeProvider>
       </ConvexProviderWithClerk>
     </ClerkProvider>
