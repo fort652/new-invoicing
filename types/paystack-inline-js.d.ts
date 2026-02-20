@@ -15,7 +15,8 @@ declare module '@paystack/inline-js' {
     currency?: string;
     firstName?: string;
     lastName?: string;
-    planInterval?: 'hourly' | 'daily' | 'weekly' | 'monthly' | 'quarterly' | 'biannually' | 'annually';
+    plan?: string;
+    planInterval?: 'monthly' | 'quarterly' | 'annually';
     onSuccess?: (transaction: PaystackTransaction) => void;
     onLoad?: (response: any) => void;
     onCancel?: () => void;

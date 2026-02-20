@@ -23,6 +23,7 @@ interface SubscriptionPlan {
   interval: 'monthly' | 'quarterly' | 'annually';
   description: string;
   savings?: string;
+  planCode: string;
 }
 
 const subscriptionPlans: Record<string, SubscriptionPlan> = {
@@ -31,6 +32,7 @@ const subscriptionPlans: Record<string, SubscriptionPlan> = {
     amount: 2000,
     interval: 'monthly',
     description: 'Billed monthly',
+    planCode: process.env.NEXT_PUBLIC_PAYSTACK_MONTHLY_PLAN,
   },
   quarterly: {
     name: 'Pro Plan (Quarterly)',
@@ -38,6 +40,7 @@ const subscriptionPlans: Record<string, SubscriptionPlan> = {
     interval: 'quarterly',
     description: 'Billed every 3 months',
     savings: 'Save 10%',
+    planCode: process.env.NEXT_PUBLIC_PAYSTACK_QUARTERLY_PLAN,
   },
   annually: {
     name: 'Pro Plan (Annual)',
@@ -45,6 +48,7 @@ const subscriptionPlans: Record<string, SubscriptionPlan> = {
     interval: 'annually',
     description: 'Billed yearly',
     savings: 'Save 17%',
+    planCode: process.env.NEXT_PUBLIC_PAYSTACK_ANNUAL_PLAN || '',
   },
 };
 
@@ -91,9 +95,7 @@ export default function SubscriptionPage() {
       await popup.checkout({
         key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || '',
         email: clerkUser.primaryEmailAddress?.emailAddress || '',
-        amount: plan.amount,
-        currency: 'ZAR',
-        planInterval: plan.interval,
+        plan: plan.planCode,
         onSuccess: async (transaction: PaystackTransaction) => {
           try {
             await createOrUpdateSubscription({
